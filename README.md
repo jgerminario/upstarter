@@ -1,3 +1,3 @@
 # Upstarter
 
-Upstarter is your source for information about about the most up-and-coming startups.
+Upstarter is your source for information about up-and-coming startups.
