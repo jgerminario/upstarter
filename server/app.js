@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose')
+var fs = require('fs')
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -31,6 +33,8 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
+
+mongoose.connect('mongodb://upstarterteam:upstarter23@ds041157.mongolab.com:41157/upstarter')
 
 // error handlers
 
