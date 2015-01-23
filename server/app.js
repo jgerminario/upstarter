@@ -50,6 +50,10 @@ if (app.get('env') === 'development') {
     });
 }
 
+fs.readdirSync(__dirname + '/models').forEach(function(filename) {
+    if (~filename.indexOf('.js')) require(__dirname + '/models/' + filename)
+});
+
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
