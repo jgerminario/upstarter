@@ -9,6 +9,7 @@ var fs = require('fs')
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var startups = require('./routes/startups');
 
 var app = express();
 
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/startups', startups);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -34,7 +36,7 @@ app.use(function(req, res, next) {
     next(err);
 });
 
-mongoose.connect('mongodb://upstarterteam:upstarter23@ds041157.mongolab.com:41157/upstarter')
+mongoose.connect('mongodb://admin:upstarter@ds041157.mongolab.com:41157/upstarter')
 
 // error handlers
 
