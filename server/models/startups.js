@@ -4,8 +4,16 @@ var Schema = mongoose.Schema;
 
 startupsSchema = new Schema({
 	name: { type: String, required: true},
-  slug: { type: String, required: true, unique: true }
-})
+  slug: { type: String, required: true, unique: true },
+  fundraiseRate: { type: Number },
+  fundraisePercentile: { type: Number }
+});
+
+startupsSchema.pre('save', function (next) {
+  this.fundraiseRate = 0;
+  this.fundraisePercentile = 0;
+  next();
+});
 
 // startupsSchema.plugin(uniqueValidator);
 
