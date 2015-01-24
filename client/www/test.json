@@ -1,26 +1,13 @@
 {
- "metadata": {
-  "version": 2,
-  "www_path_prefix": "https://www.crunchbase.com/",
-  "api_path_prefix": "https://api.crunchbase.com/v/2/",
-  "image_path_prefix": "https://res.cloudinary.com/crunchbase-production/"
- },
  "data": {
-  "uuid": "5d82a21161c0c63ba6a75649b6f5a5a8",
-  "type": "Organization",
   "properties": {
-   "role_company": true,
-   "email_address": "contact@crowdtilt.com",
    "short_description": "Tilt is a group-funding platform allowing users to start fundraising campaigns for non-profit organizations and activities.",
    "founded_on_day": 8,
    "founded_on_month": 2,
    "founded_on_year": 2012,
    "founded_on": "2012-02-08",
-   "founded_on_trust_code": 7,
    "permalink": "crowdtilt",
-   "primary_role": "company",
    "is_closed": false,
-   "closed_on_trust_code": 0,
    "homepage_url": "http://www.tilt.com",
    "name": "Tilt",
    "closed_on_day": null,
