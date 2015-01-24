@@ -2,7 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 startupsSchema = new Schema({
-	name: String
+	name: String,
+  slug: String
 })
 
 var Startup = mongoose.model('startups', startupsSchema)
