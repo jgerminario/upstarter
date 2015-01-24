@@ -5,15 +5,11 @@ var Startup = require('../models/startups')
 
 /* GET users listing. */
 router.get('/', function(req, res) {
- 	request('https://api.crunchbase.com/v/2/organization/findery?user_key=2c7e457b872b77f865562e75967f76ef', function (error, response, body) {
+ 	request('https://api.crunchbase.com/v/2/organization/crowdtilt?user_key=2c7e457b872b77f865562e75967f76ef', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             var name = JSON.parse(body).data.properties.name
-            var path = JSON.parse(body).data.properties.permalink
-            console.log(path)
-            console.log(name)
             var newStartup = new Startup({
-               name: name,
-               slug: "organization/" + path
+               name: name
             })
             newStartup.save(function(err){
               if (!err) {
