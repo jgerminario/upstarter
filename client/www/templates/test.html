@@ -1,20 +1,9 @@
-<h1> 4rweqr</h1>
-
-Enable Friends<br/>Enable Friends<br/>
 <ion-view view-title="Test">
   <ion-content>
-    <ion-list>
-      <ion-item class="item-toggle">
-        ewrweqrewr 
-        Enable Friends
-        <label class="toggle">
-          <input type="checkbox" ng-model="settings.enableFriends">
-          <div class="track">
-            <div class="handle"></div>
-          </div>
-        </label>
-      </ion-item>
-    </ion-list>
-  {{startup}}
+    <p>{{startup.data.properties.short_description}}</p>
+    <p>{{startup.data.properties.name}}</p>
+    {{startup.data.properties.homepage_url}}
+    {{startup.data.properties.description}}
+    {{startup.data.properties.total_funding_usd}}
   </ion-content>
 </ion-view>

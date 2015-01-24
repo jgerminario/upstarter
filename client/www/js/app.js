@@ -31,7 +31,12 @@ angular.module('upstarter', ['ionic', 'upstarter.controllers', 'upstarter.servic
     url: "/",
     templateUrl: "templates/test.html",
     controller: 'TestCtrl'
+  })
 
+    .state('search', {
+    url: "/search",
+    templateUrl: "templates/search.html",
+    controller: 'SearchCtrl'
   })
 
   $urlRouterProvider.otherwise('/');
