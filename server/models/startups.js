@@ -17,7 +17,8 @@ startupsSchema.pre('save', function (next) {
 
 startupsSchema.pre('save', calculateFundraiseRate);
 
-startupsSchema.method.calculateFundraiseRate = function () {
+startupsSchema.method.calculateFundraiseRate = function (fundraiseRounds) {
+  // TODO: Check that this works as a hook for new startups created
     var fundraiseArray = [];
     var total = 0;
     var totalRate = 0;
@@ -32,7 +33,7 @@ startupsSchema.method.calculateFundraiseRate = function () {
       total += amount
     })
     totalRate = total/3
-    return totalRate
+    return totalRate;
 };
 
 startupsSchema.statics.calculateFundraisePercentile = function () {
