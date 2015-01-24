@@ -1,13 +1,13 @@
 var mongoose = require('mongoose');
-var uniqueValidator = require('mongoose-unique-validator')
+// var uniqueValidator = require('mongoose-unique-validator')
 var Schema = mongoose.Schema;
 
 startupsSchema = new Schema({
-	name: { type: String, required: true, unique: true },
+	name: { type: String, required: true},
   slug: { type: String, required: true, unique: true }
 })
 
-startupsSchema.plugin(uniqueValidator);
+// startupsSchema.plugin(uniqueValidator);
 
 var Startup = mongoose.model('startups', startupsSchema);
 
