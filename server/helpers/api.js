@@ -6,7 +6,13 @@ var Startup = require('../models/startups');
 
 var organizationEndpoint = (function (){
 
-  var parseFields = function (error, response, body){
+  var parseFields = function (res, id, error, response, body){
+    // Startup.findById(id, function(err, data){
+    //   console.log("DATA HERE")
+    //   console.log(data)
+    // })
+    if (error) { console.log(error) }
+    if (response.statusCode == 401) { console.log(response.body) }
     if (!error && response.statusCode == 200) {
       var name = JSON.parse(body).data.properties.name
       var path = 'organization/' + JSON.parse(body).data.properties.permalink
@@ -54,7 +60,8 @@ var organizationEndpoint = (function (){
         });
       }
 
-      var newStartup = new Startup({
+
+      var attributes = {
        name: name,
        funding_rounds: fundraiseRounds,
        slug: path,
@@ -70,22 +77,31 @@ var organizationEndpoint = (function (){
        primary_image: primary_image,
        websites: websites,
        number_of_employees: number_of_employees
-     });
+     };
 
-      newStartup.save(function(err){
-        if (!err) {
-          console.log('success')
-        } else {
-          console.log('fail')
-        }
+     console.log(id);
+
+      Startup.findByIdAndUpdate(id, attributes, function(err, startup){
+        console.log("startup is")
+        console.log(startup)
+        res.send(startup);
       });
+      // newStartup.save(function(err){
+      //   if (!err) {
+      //     console.log('success')
+      //   } else {
+      //     console.log('fail')
+      //   }
+      // });
     }
   };
 
   return {
-    sendCBRequest: function(permalink){
+    sendCBRequest: function(res, id, permalink){
       var user_key = process.env.CB_KEY;
-      request('https://api.crunchbase.com/v/2/' + permalink + 'organization/robin?user_key=' + user_key, parseFields);
+      request('https://api.crunchbase.com/v/2/' + permalink + '?user_key=' + user_key, function(error, response, body){
+        parseFields(res, id, error, response, body);
+      });
     }
   };
 
