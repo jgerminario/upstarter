@@ -3,19 +3,31 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 startupsSchema = new Schema({
-	name: { type: String, required: true},
+  name: { type: String, required: true},
   slug: { type: String, required: true, unique: true },
-  fundraiseRate: { type: Number },
-  fundraisePercentile: { type: Number }
+  short_description: String,
+  founded_on: String,
+  homepage_url: String,
+  description: String,
+  total_funding_usd: Number,
+  number_of_investments: Number,
+  offices: Array,
+  categories: Array,
+  founders: Array,
+  primary_image: Array,
+  websites: Array,
+  funding_rounds: Array,
+  fundraiseRate: Number,
+  fundraisePercentile: Number
 });
 
 startupsSchema.pre('save', function (next) {
-  this.fundraiseRate = calculateFundraiseRate
+  this.fundraiseRate = 0;
   this.fundraisePercentile = 0;
   next();
 });
 
-startupsSchema.pre('save', calculateFundraiseRate);
+// startupsSchema.pre('save', calculateFundraiseRate);
 
 startupsSchema.method.calculateFundraiseRate = function (fundraiseRounds) {
   // TODO: Check that this works as a hook for new startups created
