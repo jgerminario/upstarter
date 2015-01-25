@@ -1,10 +1,11 @@
-angular.module('upstarter', [])
+angular.module('upstarter.filters', [])
 
 .filter('cityFilter', function() {
   return function(input) {
     // the filter takes and input and if true then checkmark
-    if (input === $scope.startup.city){
-      return $scope.startup.city;
+      if (input.city === main.cityInput){
+        return input
+
     }
   };
 });
