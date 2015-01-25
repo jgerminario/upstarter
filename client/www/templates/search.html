@@ -1,11 +1,15 @@
 <ion-view view-title="Search">
   <ion-content>
-    <div class="input-group">
-      <span class="input-group-addon">
-      <span class="glyphicon glyphicon-search"></span></span> <!-- bootstrappy stuff -->
-      <input type="text" class="form-control" ng-model="main.searchInput"><!-- ties to the main searchInput below so that when this changes, it changes. AWESOME -->
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" ng-model="main.searchInput" placeholder="Search">
+      </label>
     </div>
-    <!-- <p>{{startups}}</p> -->
+    <p>{{main.searchInput}}</p>
+    <ul class="list-group">
+    <li class="list-group-item" ng-repeat="company in companies"><span class="glyphicon glyphicon-star" ng-if="show.favorite"></span> {{show.title}} <span class="badge">{{show.year}}</span></li>
+</ul>
   </ion-content>
 </ion-view>
 
