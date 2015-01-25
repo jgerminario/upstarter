@@ -23,7 +23,7 @@ startupsSchema = new Schema({
 });
 
 startupsSchema.pre('save', function (next) {
-  this.fundraiseRate = 0;
+  this.fundraiseRate = this.calculateFundraiseRate;
   this.fundraisePercentile = 0;
   next();
 });
@@ -53,11 +53,16 @@ startupsSchema.statics.calculateFundraisePercentile = function () {
   }));
 
   Startup.count({}, function(err,count){
-    Startup.find().sort([['name', 'ascending']]).exec(function(err, docs){
+    Startup.find().sort([['fundraiseRate', 'ascending']]).exec(function(err, docs){
       // console.log(docs);
       // console.log(count);
       docs.forEach(function(company, index){
-
+        company.fundraisePercentile = (index+1)/(count+1) * 100
+        company.save(function(err){
+          if (err) {
+            return "error saving " + company.name
+          }
+        })
       })
       // R/(c+1)*100
     });
