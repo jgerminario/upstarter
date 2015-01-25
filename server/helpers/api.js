@@ -51,7 +51,7 @@ var organizationEndpoint = (function (){
         var fundraiseArray = JSON.parse(body).data.relationships.funding_rounds.items
         fundraiseArray.forEach(function(round){
           if (round.name.match(/\d{4,}/)) {
-            fundraiseRounds.push({amount: round.name.match(/\d{4,}/), date: round.created_at})
+            fundraiseRounds.push({amount: round.name.match(/\d{4,}/), date: new Date(round.created_at * 1000)})
           }
         });
       }
