@@ -28,8 +28,6 @@ startupsSchema.pre('save', function (next) {
   next();
 });
 
-// startupsSchema.pre('save', calculateFundraiseRate);
-
 startupsSchema.method.calculateFundraiseRate = function (fundraiseRounds) {
   // TODO: Check that this works as a hook for new startups created
     var fundraiseArray = [];
@@ -50,11 +48,14 @@ startupsSchema.method.calculateFundraiseRate = function (fundraiseRounds) {
 };
 
 startupsSchema.statics.calculateFundraisePercentile = function () {
+  console.log(Startup.find().exec(function(err,docs){
+    console.log(docs);
+  }));
 
   Startup.count({}, function(err,count){
     Startup.find().sort([['name', 'ascending']]).exec(function(err, docs){
-      console.log(docs);
-      console.log(count);
+      // console.log(docs);
+      // console.log(count);
       docs.forEach(function(company, index){
 
       })
