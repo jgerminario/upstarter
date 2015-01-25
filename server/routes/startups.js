@@ -5,8 +5,8 @@ var Startup = require('../models/startups');
 var startupAPI = require('../helpers/seeds');
 
 /* GET users listing. */
-router.get('/', function(req, res) {
-   startupAPI.updateStartup(res);
+// router.get('/', function(req, res) {
+//    startupAPI.updateStartup(res);
  	// request('https://api.crunchbase.com/v/2/organization/robin?user_key=2c7e457b872b77f865562e75967f76ef', function (error, response, body) {
   //       if (!error && response.statusCode == 200) {
   //           var name = JSON.parse(body).data.properties.name
@@ -84,7 +84,31 @@ router.get('/', function(req, res) {
   //           res.send(newStartup)
   //       }
   //   })
-});
+// });
+
+
+/////////////////////////////////
+/// endpoints for our client ///
+///////////////////////////////
+
+// GET list of all company names //
+router.get('/', function(req, res){
+  var query = Startup.find({}).select('name -_id');
+
+  query.exec(function (err, data){
+    if (err) { console.log(err) }
+    res.send(data)
+  })
+})
+
+
+
+
+
+
+
+
+
 
 
 router.get('/initial-seed', function(req, res) {
