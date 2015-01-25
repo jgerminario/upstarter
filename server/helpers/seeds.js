@@ -1,12 +1,13 @@
 
 var express = require('express');
 var router = express.Router();
-var request = require('request')
+var request = require('request');
 var Startup = require('../models/startups');
+var organizationEndpoint = require('./api.js');
 
 var startupAPI = (function (){
 
-  var findRandomStartup = function (err, startups){
+  var findRandomStartup = function (res, err, startups){
     var count = startups.length,
         rand_num = Math.floor(Math.random() * count),
         startup_to_update = startups[rand_num];
@@ -14,16 +15,20 @@ var startupAPI = (function (){
       rand_num = Math.floor(Math.random() * count);
       startup_to_update = startups[rand_num];
     }
-    Startup.findById(startup_to_update.id, makeAPICall);
+    Startup.findById(startup_to_update.id, function(err, data){
+      makeAPICall(res, err, data);
+    });
   };
 
-  var makeAPICall = function (err, startup){
-
+  var makeAPICall = function (res, err, startup){
+    organizationEndpoint.sendCBRequest(res, startup._id, startup.slug);
   };
 
   return {
-    updateStartup: function(){
-      Startup.find(findRandomStartup);
+    updateStartup: function(res){
+      Startup.find(function(err, data){
+        findRandomStartup(res, err, data);
+      });
     }
   };
 
