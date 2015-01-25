@@ -15,6 +15,8 @@
     "mongoose": "^3.8.21",
     "morgan": "~1.5.1",
     "request": "*",
+    "redis": "*",
+    "kue": "~0.6.2",
     "serve-favicon": "~2.2.0"
   }
 }
