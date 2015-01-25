@@ -49,5 +49,5 @@ angular.module('upstarter.services', ['ngResource'])
   //   return name_array
   // }
 
-  
+
 }])
