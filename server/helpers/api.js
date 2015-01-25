@@ -7,10 +7,6 @@ var Startup = require('../models/startups');
 var organizationEndpoint = (function (){
 
   var parseFields = function (res, id, error, response, body){
-    // Startup.findById(id, function(err, data){
-    //   console.log("DATA HERE")
-    //   console.log(data)
-    // })
     if (error) { console.log(error) }
     if (response.statusCode == 401) { console.log(response.body) }
     if (!error && response.statusCode == 200) {
@@ -60,30 +56,29 @@ var organizationEndpoint = (function (){
         });
       }
 
-
       var attributes = {
        name: name,
        funding_rounds: fundraiseRounds,
        slug: path,
-       founded_on: founded_on,
-       homepage_url: homepage_url,
-       short_description: short_description,
-       description: description,
-       total_funding_usd: total_funding_usd,
-       number_of_investments: number_of_investments,
-       offices: offices,
-       founders: founders,
-       categories: categories,
-       primary_image: primary_image,
-       websites: websites,
-       number_of_employees: number_of_employees
+       founded_on: founded_on || "",
+       homepage_url: homepage_url || "",
+       short_description: short_description || "",
+       description: description || "",
+       total_funding_usd: total_funding_usd || 0,
+       number_of_investments: number_of_investments || 0,
+       offices: offices || [],
+       founders: founders || [],
+       categories: categories || [],
+       primary_image: primary_image || [],
+       websites: websites || [],
+       number_of_employees: number_of_employees || 0
      };
+      console.log(attributes);
 
      console.log(id);
 
       Startup.findByIdAndUpdate(id, attributes, function(err, startup){
-        console.log("startup is")
-        console.log(startup)
+        if (err) { console.log(err); }
         res.send(startup);
       });
       // newStartup.save(function(err){
