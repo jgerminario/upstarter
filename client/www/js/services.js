@@ -20,11 +20,12 @@ angular.module('upstarter.services', ['ngResource'])
   console.log(deferred)
   $http.get('names.json')
     .success(function(data){
-      name_array = []
+      company_array = []
       angular.forEach(data.data.items, function(value, key){
-        name_array.push(value.name);
+        company_array.push(value);
+        console.log(value)
       })
-      deferred.resolve(name_array);
+      deferred.resolve(company_array);
       console.log(deferred)
     })
     .error(function(){
