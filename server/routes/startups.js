@@ -6,6 +6,7 @@ var Startup = require('../models/startups')
 /* GET users listing. */
 router.get('/', function(req, res) {
  	request('https://api.crunchbase.com/v/2/organization/robin?user_key=2c7e457b872b77f865562e75967f76ef', function (error, response, body) {
+      console.log(req);
         if (!error && response.statusCode == 200) {
             var name = JSON.parse(body).data.properties.name
             var path = 'organization/' + JSON.parse(body).data.properties.permalink
