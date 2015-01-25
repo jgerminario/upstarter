@@ -1,0 +1,10 @@
+<ion-view view-title="Companies">
+  <ion-content>
+  <ul ng-repeat="company in companies">
+    <li>{{startup.data.properties.short_description}}</li>
+    <li>{{startup.data.properties.name}}</li>
+    {{startup.data.properties.homepage_url}}
+    {{startup.data.properties.description}}
+    {{startup.data.properties.total_funding_usd}}
+  </ion-content>
+</ion-view>
