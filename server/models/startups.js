@@ -17,6 +17,7 @@ startupsSchema = new Schema({
   primary_image: Array,
   websites: Array,
   funding_rounds: Array,
+  number_of_employees: Number,
   fundraiseRate: Number,
   fundraisePercentile: Number
 });

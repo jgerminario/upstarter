@@ -16,6 +16,7 @@ router.get('/', function(req, res) {
             var total_funding_usd = JSON.parse(body).data.properties.total_funding_usd
             var number_of_investments = JSON.parse(body).data.properties.number_of_investments
             var officesArray = JSON.parse(body).data.relationships.offices.items
+            var number_of_employees = JSON.parse(body).data.properties.number_of_employees
             var offices = []
             officesArray.forEach(function(office){
               offices.push({street_1: office.street_1, street_2: office.street_2, postal_code: office.postal_code, city: office.city, region: office.region, country: office.country, latitude: office.latitude, longitude: office.longitude})
@@ -24,11 +25,6 @@ router.get('/', function(req, res) {
             var categories = []
             categoriesArray.forEach(function(category){
               categories.push(category.name)
-            })
-            var foundersArray = JSON.parse(body).data.relationships.founders.items
-            var founders = []
-            foundersArray.forEach(function(founder){
-              founders.push({name: founder.name, path: founder.path})
             })
             var primaryImageArray = JSON.parse(body).data.relationships.primary_image.items
             var primary_image = []
@@ -40,7 +36,13 @@ router.get('/', function(req, res) {
             websitesArray.forEach(function(website){
               websites.push({title: website.title, url: website.url})
             })
-
+            if (JSON.parse(body).data.relationships.founders) {
+              var foundersArray = JSON.parse(body).data.relationships.founders.items
+              var founders = []
+              foundersArray.forEach(function(founder){
+                founders.push({name: founder.name, path: founder.path})
+              })
+            }
             if (JSON.parse(body).data.relationships.funding_rounds) {
               var fundraiseRounds = []
               var fundraiseArray = JSON.parse(body).data.relationships.funding_rounds.items
@@ -65,7 +67,8 @@ router.get('/', function(req, res) {
                founders: founders,
                categories: categories,
                primary_image: primary_image,
-               websites: websites
+               websites: websites,
+               number_of_employees: number_of_employees
             })
 
             newStartup.save(function(err){
@@ -75,6 +78,7 @@ router.get('/', function(req, res) {
                 console.log('fail')
               }
             })
+
             res.send(newStartup)
         }
     })
