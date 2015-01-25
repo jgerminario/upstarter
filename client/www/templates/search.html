@@ -1,21 +1,33 @@
 <ion-view view-title="Search">
   <ion-content>
-  <p>Search by : {{selectedItem}}</p>
-      <select ng-model="selectedItem">
-        <option>City</option>
-        <option>Number of Employees
-        </option>
-      </select>
+
+
     <div class="list list-inset">
       <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="text" ng-model="main.searchInput" placeholder="Search">
+        <input type="search" ng-model="main.searchInput" placeholder="Search">
       </label>
     </div>
+      <ul class="list-group">
+    <li class="list-group-item" ng-repeat="startup in startups | filter:main.searchInput | limitTo:10 track by $index"><span class="badge" ng-if="main.searchInput">{{startup.name}}</span></li>
+</ul>
+
+    <h3>Search by : {{selectedItem}}</h3>
+
+
+<div class="button-bar">
+  <a ui-sref=".city" class="button">Location{{}}</a>
+  <a ui-sref=".employees" class="button">Employees{{employnum}}</a>
+</div>
+<div ui-view></div>
+
 
     <ul class="list-group">
-    <li class="list-group-item" ng-repeat="startup in startups | filter:main.searchInput track by $index"><span class="glyphicon glyphicon-star" ></span><span class="badge" ng-if="main.searchInput">{{startup.name}}</span></li>
-</ul>
+    <li class="list-group-item" ng-repeat="startup in startups | filter:main.cityInput track by $index"><span class="badge" ng-if="main.cityInput"><span class="badge">{{startup.city}}</span></li>
+  </ul>
+
+
+
   </ion-content>
 </ion-view>
 

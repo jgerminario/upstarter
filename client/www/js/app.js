@@ -43,15 +43,14 @@ angular.module('upstarter', ['ionic', 'upstarter.controllers', 'upstarter.servic
     templateUrl: "templates/search.html",
     controller: 'SearchCtrl'
   })
-  //  .state('companies', {
-  //   url: "/companies",
-  //   templateUrl: "templates/search.html",
-  //   controller: 'CompanyCtrl'
-  // })
-  //     .state('companyId', {
-  //   url: "/companies/:companyId",
-  //   templateUrl: "templates/search.html",
-  //   controller: 'CompanyDetailCtrl'
-  // })
+   .state('search.city', {
+    url: "/city",
+    templateUrl: "templates/city.html"
+
+  })
+      .state('search.employees', {
+    url: "/employees",
+    templateUrl: "templates/employees.html"
+  })
   $urlRouterProvider.otherwise('/');
 });
