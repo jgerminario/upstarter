@@ -57,7 +57,7 @@ describe('server', function () {
       request
         .get('http://localhost:' + port + '/startups') // function(error, response, body) is alternative, this seems more robust but also harder to get data out
         .on('data', function(data){
-          console.log(data.toString()); // shows what data comes in asynchronously
+          // console.log(data.toString()); // shows what data comes in asynchronously
         })
         .on('response', function(response){
           expect(response.statusCode).to.equal(200); // response has no body in this case, need to gather from data above to get full body
