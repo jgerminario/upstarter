@@ -20,3 +20,13 @@ angular.module('upstarter.controllers', [])
     // $http.get("http://api.crunchbase.com/v/2/organization/crowdtilt?user_key=2c7e457b872b77f865562e75967f76ef").success(function(data){
   }])
 
+// .controller('FilterCtrl', function(){
+//   this.tab = null;
+//   this.selectTab = function(setTab) {
+//     this.tab = setTab;
+//   };
+//   this.isSelected = function(checkTab){
+//     return this.tab === checkTab;
+//     console.log(this.tab)
+//   };
+// })
