@@ -3,7 +3,8 @@
   <p>Search by : {{selectedItem}}</p>
       <select ng-model="selectedItem">
         <option>City</option>
-        <option>Number of Employees</option>
+        <option>Number of Employees
+        </option>
       </select>
     <div class="list list-inset">
       <label class="item item-input">
@@ -13,7 +14,7 @@
     </div>
 
     <ul class="list-group">
-    <li class="list-group-item" ng-repeat="startup in startups | filter:main.searchInput track by $index"><span class="glyphicon glyphicon-star" ></span><span class="badge" ng-if="main.searchInput">{{startup}}</span></li>
+    <li class="list-group-item" ng-repeat="startup in startups | filter:main.searchInput track by $index"><span class="glyphicon glyphicon-star" ></span><span class="badge" ng-if="main.searchInput">{{startup.name}}</span></li>
 </ul>
   </ion-content>
 </ion-view>
