@@ -1,0 +1,61 @@
+{
+ "metadata": {
+  "image_path_prefix": "https://res.cloudinary.com/crunchbase-production/",
+  "www_path_prefix": "https://www.crunchbase.com/",
+  "api_path_prefix": "https://api.crunchbase.com/v/2/",
+  "version": 2
+ },
+ "data": {
+  "paging": {
+   "items_per_page": 1000,
+   "current_page": 1,
+   "number_of_pages": 293,
+   "next_page_url": "https://api.crunchbase.com/v/2/organizations?organization_types=company&page=2",
+   "prev_page_url": null,
+   "total_items": 292868,
+   "sort_order": "custom"
+  },
+  "items": [
+   {
+    "updated_at": 1421995469,
+    "created_at": 1398010616,
+    "path": "organization/google",
+    "name": "Google",
+    "type": "Organization",
+    "city": "San Francisco"
+   },
+   {
+    "updated_at": 1421997051,
+    "created_at": 1399896058,
+    "path": "organization/microsoft",
+    "name": "Microsoft",
+    "type": "Organization",
+    "city": "Seattle"
+   },
+   {
+    "updated_at": 1421998099,
+    "created_at": 1198326533,
+    "path": "organization/apple",
+    "name": "Apple",
+    "type": "Organization",
+    "city": "San Francisco"
+   },
+   {
+    "updated_at": 1421825288,
+    "created_at": 1180153335,
+    "path": "organization/facebook",
+    "name": "Facebook",
+    "type": "Organization",
+    "city": "Los Angeles"
+   },
+   {
+    "updated_at": 1421986021,
+    "created_at": 1194169695,
+    "path": "organization/yahoo",
+    "name": "Yahoo!",
+    "type": "Organization",
+    "city": "Atlanta"
+   }
+  ]
+ }
+}

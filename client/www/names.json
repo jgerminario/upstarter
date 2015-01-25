@@ -21,35 +21,40 @@
     "created_at": 1398010616,
     "path": "organization/google",
     "name": "Google",
-    "type": "Organization"
+    "type": "Organization",
+    "city": "San Francisco"
    },
    {
     "updated_at": 1421997051,
     "created_at": 1399896058,
     "path": "organization/microsoft",
     "name": "Microsoft",
-    "type": "Organization"
+    "type": "Organization",
+    "city": "Seattle"
    },
    {
     "updated_at": 1421998099,
     "created_at": 1198326533,
     "path": "organization/apple",
     "name": "Apple",
-    "type": "Organization"
+    "type": "Organization",
+    "city": "San Francisco"
    },
    {
     "updated_at": 1421825288,
     "created_at": 1180153335,
     "path": "organization/facebook",
     "name": "Facebook",
-    "type": "Organization"
+    "type": "Organization",
+    "city": "Los Angeles"
    },
    {
     "updated_at": 1421986021,
     "created_at": 1194169695,
     "path": "organization/yahoo",
     "name": "Yahoo!",
-    "type": "Organization"
+    "type": "Organization",
+    "city": "Atlanta"
    },
    {
     "updated_at": 1421919823,
