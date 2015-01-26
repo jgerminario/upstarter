@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var request = require('request')
+var request = require('request');
 var Startup = require('../models/startups');
 var startupAPI = require('../helpers/seeds');
-
 
 /////////////////////////////////
 /// endpoints for our client ///
@@ -30,7 +29,12 @@ router.get('/', function(req, res){
     })
   res.json(jsonResponse)
   })
-})
+
+
+/* GET users listing. */
+router.get('/', function(req, res) {
+   startupAPI.updateStartup();
+});
 
 
 

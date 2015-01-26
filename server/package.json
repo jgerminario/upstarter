@@ -16,10 +16,13 @@
     "mongoose": "^3.8.21",
     "morgan": "~1.5.1",
     "request": "*",
-    "serve-favicon": "~2.2.0"
+    "serve-favicon": "~2.2.0",
+    "kue": "*"
   },
   "devDependencies": {
     "mocha": "*",
-    "expect.js": "*"
+    "expect.js": "*",
+    "chai": "*",
+    "nock": "*"
   }
 }
