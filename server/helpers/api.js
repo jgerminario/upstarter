@@ -110,12 +110,8 @@ var organizationEndpoint = (function (){
         var total = 0;
         var totalRate = 0;
         var d = new Date();
-        console.log(d)
         d.setYear(d.getFullYear()-years);
         fundraisingRounds.forEach(function(round){
-        console.log(d)
-        console.log(round.date)
-        console.log(round.date >= d)
           if (round.date >= d){
             fundraiseArray.push(round.amount[0]);
           }

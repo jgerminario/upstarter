@@ -54,25 +54,34 @@ startupsSchema.statics.calculateFundraisePercentile = function () {
   // console.log(Startup.find().exec(function(err,docs){
   //   console.log(docs);
   // }));
+  console.log("test")
+  var self = this
 
-  Startup.count({}, function(err,count){
-    Startup.find().sort([['momentumScore', 'ascending']]).exec(function(err, docs){
+  this.where({ 'acquired': false, 'public': false, 'closed': false, momentumScore: {$gt: 0} }).count().exec(function(err,count){
+    console.log("test3")
+    self.find().sort([['momentumScore', 'ascending']]).exec(function(err, docs){
+      console.log("test2")
       // console.log(docs);
       // console.log(count);
       docs.forEach(function(company, index){
-        company.fundraisePercentile = (index+1)/(count+1) * 100
+        if (company.closed || company.acquired || company.public || company.momentumScore === 0) {
+          company.fundraisePercentile = 0;
+        } else {
+          company.fundraisePercentile = (index+1)/(count+1) * 100;
+        }
+        console.log(index + " " + company + " " + company.fundraisePercentile)
         company.save(function(err){
           if (err) {
             return "error saving " + company.name
           }
-        })
-      })
+        });
+      });
       // R/(c+1)*100
     });
   });
 };
 
-// startupsSchema.pre('save', function (next) {
+// StartupsSchema.pre('save', function (next) {
 //   // this.threeYearRate = calculateFundraiseRate(this.funding_rounds, 3);
 //   // this.twoYearRate = calculateFundraiseRate(this.funding_rounds, 2);
 //   // this.oneYearRate = calculateFundraiseRate(this.funding_rounds, 1);
