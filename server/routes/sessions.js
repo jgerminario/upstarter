@@ -19,34 +19,49 @@ passport.use(new LinkedInStrategy({
     clientID: process.env.API_KEY,
     clientSecret: process.env.SECRET_KEY,
     callbackURL:  "http://localhost:3000/auth/linkedin/callback",
-    scope:        [ 'r_basicprofile', 'r_emailaddress'],
-    passReqToCallback: true
+    scope:        [ 'r_fullprofile', 'r_emailaddress', 'r_contactinfo'],
+    passReqToCallback: true,
+    state: true
   },
   function(req, accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
     req.session.accessToken = accessToken;
+    // console.log(profile.id)
+    // console.log("refresh token: " + refreshToken)
+    var following = []
+    profile._json.following.companies.values.forEach(function(company){
+      following.push(company.name)
+    })
     process.nextTick(function () {
-      // To keep the example simple, the user's Linkedin profile is returned to
-      // represent the logged-in user.  In a typical application, you would want
-      // to associate the Linkedin account with a user record in your database,
-      // and return that user instead.
+     User.findOne({email: profile.email}, function(err, user){
+        if (user) {
+          user.linkedin.token = accessToken;
+          user.linkedin.email = profile._json.emailAddress;
+          user.linkedin.following = following
+          user.save(function(err){
+            if (err) {throw err}
+          })
+        } else {
+            newUser = new User({
+            linkedin: {
+              id: profile.id,
+              token: accessToken,
+              name: profile.displayName,
+              email: profile._json.emailAddress,
+              following: following
+            }
+          });
+          newUser.save(function(err){
+            if (err) {throw err}
+          })
+          return newUser
+        }
+      })
       return done(null, profile);
     });
   }
 ));
 
-
-// passport.use(new LinkedInStrategy({
-//     consumerKey: process.env.API_KEY,
-//     consumerSecret: process.env.SECRET_KEY,
-//     callbackURL: "http://localhost:3000/auth/linkedin/callback"
-//   },
-//   function(token, tokenSecret, profile, done) {
-//     User.findOrCreate({ linkedinId: profile.id }, function (err, user) {
-//       return done(err, user);
-//     });
-//   }
-// ));
 
 router.get('/', function(req, res){
   res.render('index', { user: req.user });
@@ -66,7 +81,7 @@ router.get('/login', function(req, res){
 //   redirecting the user to linkedin.com.  After authorization, LinkedIn will
 //   redirect the user back to this application at /auth/linkedin/callback
 router.get('/auth/linkedin',
-  passport.authenticate('linkedin', { state: 'SOME STATE'  }),
+  passport.authenticate('linkedin'),
   function(req, res){
     // The request will be redirected to LinkedIn for authentication, so this
     // function will not be called.
@@ -80,8 +95,6 @@ router.get('/auth/linkedin',
 router.get('/auth/linkedin/callback',
   passport.authenticate('linkedin', { failureRedirect: '/login' }),
   function(req, res) {
-    console.log("oAuth token: " + req.query.oauth_token)
-    console.log("oAuth verifier: " + req.query.oauth_verifier)
     res.redirect('/');
   });
 
