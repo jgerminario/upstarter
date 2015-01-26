@@ -12,16 +12,20 @@ angular.module('upstarter.filters', [])
 
 .filter('employeeRange', function () {
   //need to use items for an array
-  return function (items, number) {
+  return function (items, strNumber) {
 
     var filtered = [];
+    var number = parseInt(strNumber);
 //need to loop through our array of objects
     for (var i = 0; i < items.length; i++) {
       var item = items[i];
 
+
 //then create a test to filter them by
-      if ( (item.employees <= number + 100) && (item.employees >= number - 100)) {
+      if ((item.employees >= number - 100) && (item.employees <= number + 100)) {
+
         filtered.push(item);
+
       }
     }
     return filtered;
