@@ -9,21 +9,26 @@ var organizationEndpoint = (function (){
 
 
   var saveStartupPage = function(error, response, body) {
+    if (error) { console.log(error); }
+    if (response.statusCode != 200) { console.log(response.body); }
     if (!error && response.statusCode == 200) {
-      var items = JSON.parse(body).data.items
-      var counter = 0
+      var items = JSON.parse(body).data.items;
+      console.log(items.length);
+      var counter = 0;
       for (var i=0; i<items.length; i++) {
 
         var newEntry = new Startup({
           slug: items[i].path,
           name: items[i].name
-        })
-        newEntry.save(function(err) {
+        });
+        // console.log(newEntry)
+        newEntry.save(function(err, data) {
           if (!err) {
-            console.log(counter, 'success')
-            counter += 1
+            console.log(counter + ' success');
+            counter += 1;
           } else {
-            // console.log('fail')
+            console.log(err);
+            counter +=1;
           }
         });
       }
@@ -170,10 +175,10 @@ var organizationEndpoint = (function (){
   };
 
   return {
-    sendCBRequest: function(id, permalink, res){
+    sendCBRequest: function(id, permalink){
       var user_key = process.env.CB_KEY;
       request('https://api.crunchbase.com/v/2/' + permalink + '?user_key=' + user_key, function(error, response, body){
-        parseFields(id, error, response, body, res);
+        parseFields(id, error, response, body);
       });
     },
 
