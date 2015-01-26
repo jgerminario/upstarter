@@ -51,27 +51,54 @@ var organizationEndpoint = (function (){
         var fundraiseArray = JSON.parse(body).data.relationships.funding_rounds.items
         fundraiseArray.forEach(function(round){
           if (round.name.match(/\d{4,}/)) {
-            fundraiseRounds.push({amount: round.name.match(/\d{4,}/), date: round.created_at})
+            fundraiseRounds.push({amount: round.name.match(/\d{4,}/), date: new Date(round.created_at * 1000)})
           }
         });
       }
 
+      function calculateFundraiseRate(fundraisingRounds, years) {
+        // TODO: Check that this works as a hook for new startups created
+            var fundraiseArray = [];
+            var total = 0;
+            var totalRate = 0;
+            var d = new Date();
+            d.setYear(d.getYear()-years);
+            fundraisingRounds.forEach(function(round){
+              if (round.date >= d){
+                fundraiseArray.push(round.amount[0]);
+              }
+            });
+            fundraiseArray.forEach(function(amount){
+              total += parseInt(amount)
+            })
+            totalRate = total/years
+            return totalRate;
+      };
+
+      function calculateMomentumScore() {
+        return (calculateFundraiseRate(fundraiseRounds, 3) * 0.5 + calculateFundraiseRate(fundraiseRounds, 2) + calculateFundraiseRate(fundraiseRounds, 1) * 2)/number_of_employees
+      }
+
       var attributes = {
-       name: name,
-       funding_rounds: fundraiseRounds,
-       slug: path,
-       founded_on: founded_on || "",
-       homepage_url: homepage_url || "",
-       short_description: short_description || "",
-       description: description || "",
-       total_funding_usd: total_funding_usd || 0,
-       number_of_investments: number_of_investments || 0,
-       offices: offices || [],
-       founders: founders || [],
-       categories: categories || [],
-       primary_image: primary_image || [],
-       websites: websites || [],
-       number_of_employees: number_of_employees || 0
+        name: name,
+        funding_rounds: fundraiseRounds,
+        slug: path,
+        founded_on: founded_on || "",
+        homepage_url: homepage_url || "",
+        short_description: short_description || "",
+        description: description || "",
+        total_funding_usd: total_funding_usd || 0,
+        number_of_investments: number_of_investments || 0,
+        offices: offices || [],
+        founders: founders || [],
+        categories: categories || [],
+        primary_image: primary_image || [],
+        websites: websites || [],
+        number_of_employees: number_of_employees || 0,
+        threeYearRate: calculateFundraiseRate(fundraiseRounds, 3) || 0,
+        twoYearRate: calculateFundraiseRate(fundraiseRounds, 2) || 0,
+        oneYearRate: calculateFundraiseRate(fundraiseRounds, 1) || 0,
+        momentumScore: calculateMomentumScore() || 0
      };
       console.log(attributes);
 
