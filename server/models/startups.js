@@ -14,6 +14,7 @@ startupsSchema = new Schema({
   description: String,
   total_funding_usd: Number,
   number_of_investments: Number,
+  headquarters: Array,
   offices: Array,
   categories: Array,
   founders: Array,
