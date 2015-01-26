@@ -5,52 +5,54 @@
     <div class="list list-inset">
       <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" ng-model="main.searchInput" placeholder="Search">
+          <input type="search" ng-model="main.searchInput" placeholder="Search">
       </label>
     </div>
       <ul class="list-group">
-    <li class="list-group-item" ng-repeat="startup in startups | filter:main.searchInput | limitTo:10 track by $index"><span class="badge" ng-if="main.searchInput">{{startup.name}}</span></li>
-</ul>
+        <li class="list-group-item" ng-repeat="startup in startups | filter:main.searchInput | limitTo:10 track by $index"><span class="badge" ng-if="main.searchInput">{{startup.name}}</span></li>
+      </ul>
 
     <h3>Search by : </h3>
 
 
-<div class="button-bar">
-  <a href="#" ng-click="city = !city" class="button">Location {{main.cityInput}}</a>
-  <a href="#" ng-click="employees = !employees" class="button">number of employees {{employnum}}</a>
-</div>
-
-
- <div class="card" ng-show="city">
-  <div class="item item-text-wrap">
-  <div class="list" ng-hide= "">
-      <label class="item item-input">
-        <i class="icon ion-search placeholder-icon"></i>
-        <input type="text" ng-model="main.cityInput" placeholder="enter city">
-      </label>
+    <div class="button-bar">
+      <a href="#" ng-click="city = !city" class="button">Location {{main.cityInput}}</a>
+      <a href="#" ng-click="employees = !employees" class="button">number of employees {{employnum}}</a>
     </div>
-      </div>
-</div>
 
- <div class="card" ng-show="employees">
-  <div class="item item-text-wrap">
- <div class="list">
+
+    <div class="card" ng-show="city">
+      <div class="item item-text-wrap">
+        <div class="list" ng-hide= "">
+          <label class="item item-input">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="text" ng-model="main.cityInput" placeholder="enter city">
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" ng-show="employees">
+      <div class="item item-text-wrap">
+        <div class="list">
       Number of Employees : {{employnum}}
-  <div class="item range range-positive">
-    <i class="icon ion-ios7"></i>
-    <input type="range"  min="0" max="1000" ng-model="employnum">
-    <i class="icon ion-ios7"></i>
-  </div>
-</div>
-  </div>
-</div>
+          <div class="item range range-positive">
+            <i class="icon ion-ios7"></i>
+              <input type="range"  min="0" max="1000" ng-model="employnum">
+            <i class="icon ion-ios7"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ul class="list-group">
+      <li class="list-group-item" ng-repeat="startup in startups | employeeRange:employnum track by $index"><span class="badge" ng-if="employnum">{{startup.name}} {{startup.employees}}</span></li>
+    </ul>
 
 
     <ul class="list-group">
-    <li class="list-group-item" ng-repeat="startup in startups | filter:main.cityInput track by $index"><span class="badge" ng-if="main.cityInput"><span class="badge">{{startup.city}}</span></li>
-  </ul>
-
-
+      <li class="list-group-item" ng-repeat="startup in startups | filter:main.cityInput | limitTo:10 track by $index"><span class="badge" ng-if="main.cityInput"><span class="badge">{{startup.name}} {{startup.city}}</span></li>
+    </ul>
 
   </ion-content>
 </ion-view>
