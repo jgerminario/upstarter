@@ -18,42 +18,41 @@ startupsSchema = new Schema({
   websites: Array,
   funding_rounds: Array,
   number_of_employees: Number,
-  fundraiseRate: Number,
-  fundraisePercentile: Number
+  threeYearRate: Number,
+  twoYearRate: Number,
+  oneYearRate: Number,
+  momentumScore: Number,
+  fundraisePercentile: { type: Number, default: 0 }
 });
 
-startupsSchema.pre('save', function (next) {
-  this.fundraiseRate = this.calculateFundraiseRate;
-  this.fundraisePercentile = 0;
-  next();
-});
+// startupsSchema.statics.calculateFundraiseRate = function(fundraiseRounds, years) {
+//   // TODO: Check that this works as a hook for new startups created
+//       if (err) { console.log(err) }
+//       var fundraiseArray = [];
+//       var total = 0;
+//       var totalRate = 0;
+//       var d = new Date();
+//       d.setYear(d.getYear()-years);
+//       fundraiseRounds.forEach(function(round){
+//         if (round.date >= d){
+//           fundraiseArray.push(round.amount);
+//         }
+//       });
+//       fundraiseArray.forEach(function(amount){
+//         total += amount
+//       })
+//       totalRate = total/years
+//       return totalRate;
+// };
 
-startupsSchema.method.calculateFundraiseRate = function (fundraiseRounds) {
-  // TODO: Check that this works as a hook for new startups created
-    var fundraiseArray = [];
-    var total = 0;
-    var totalRate = 0;
-    var d = new Date();
-    d.setYear(d.getYear()-3);
-    this.fundraiseRounds.forEach(function(round){
-      if (round.date >= d){
-        fundraiseArray.push(round.amount);
-      }
-    });
-    fundraiseArray.forEach(function(amount){
-      total += amount
-    })
-    totalRate = total/3
-    return totalRate;
-};
 
 startupsSchema.statics.calculateFundraisePercentile = function () {
-  console.log(Startup.find().exec(function(err,docs){
-    console.log(docs);
-  }));
+  // console.log(Startup.find().exec(function(err,docs){
+  //   console.log(docs);
+  // }));
 
   Startup.count({}, function(err,count){
-    Startup.find().sort([['fundraiseRate', 'ascending']]).exec(function(err, docs){
+    Startup.find().sort([['momentumScore', 'ascending']]).exec(function(err, docs){
       // console.log(docs);
       // console.log(count);
       docs.forEach(function(company, index){
@@ -68,6 +67,13 @@ startupsSchema.statics.calculateFundraisePercentile = function () {
     });
   });
 };
+
+// startupsSchema.pre('save', function (next) {
+//   // this.threeYearRate = calculateFundraiseRate(this.funding_rounds, 3);
+//   // this.twoYearRate = calculateFundraiseRate(this.funding_rounds, 2);
+//   // this.oneYearRate = calculateFundraiseRate(this.funding_rounds, 1);
+//   next();
+// });
 
 // startupsSchema.plugin(uniqueValidator);
 
