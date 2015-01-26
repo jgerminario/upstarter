@@ -35,53 +35,63 @@ var organizationEndpoint = (function (){
     if (error) { console.log(error) }
       if (response.statusCode != 200) { console.log(response.body) }
         if (!error && response.statusCode == 200) {
-          var name = JSON.parse(body).data.properties.name
-          var path = 'organization/' + JSON.parse(body).data.properties.permalink
-          var founded_on = JSON.parse(body).data.properties.founded_on
-          var homepage_url = JSON.parse(body).data.properties.homepage_url
-          var short_description = JSON.parse(body).data.properties.short_description
-          var description = JSON.parse(body).data.properties.description
-          var total_funding_usd = JSON.parse(body).data.properties.total_funding_usd
-          var number_of_investments = JSON.parse(body).data.properties.number_of_investments
-          if (JSON.parse(body).data.relationships.offices){
-            var officesArray = JSON.parse(body).data.relationships.offices.items
+          var json_body = JSON.parse(body).data;
+          var name = json_body.properties.name
+          var path = 'organization/' + json_body.properties.permalink
+          if (json_body.properties.closed_on != null || json_body.properties.is_closed == true){
+            var closed = true;
+          }
+          if (json_body.relationships.acquired_by != null){
+            var acquired = true;
+          }
+          if (json_body.properties.stock_symbol != null || json_body.relationships.ipo != null){
+            var public = true;
+          } 
+          var founded_on = json_body.properties.founded_on
+          var homepage_url = json_body.properties.homepage_url
+          var short_description = json_body.properties.short_description
+          var description = json_body.properties.description
+          var total_funding_usd = json_body.properties.total_funding_usd
+          var number_of_investments = json_body.properties.number_of_investments
+          if (json_body.relationships.offices){
+            var officesArray = json_body.relationships.offices.items
             var offices = []
             officesArray.forEach(function(office){
               offices.push({street_1: office.street_1, street_2: office.street_2, postal_code: office.postal_code, city: office.city, region: office.region, country: office.country, latitude: office.latitude, longitude: office.longitude})
             })
           }
-          var number_of_employees = JSON.parse(body).data.properties.number_of_employees
-          if (JSON.parse(body).data.relationships.categories){
-            var categoriesArray = JSON.parse(body).data.relationships.categories.items
+          var number_of_employees = json_body.properties.number_of_employees
+          if (json_body.relationships.categories){
+            var categoriesArray = json_body.relationships.categories.items
             var categories = []
             categoriesArray.forEach(function(category){
               categories.push(category.name)
             })
           }
-          if (JSON.parse(body).data.relationships.primary_image){
-            var primaryImageArray = JSON.parse(body).data.relationships.primary_image.items
+          if (json_body.relationships.primary_image){
+            var primaryImageArray = json_body.relationships.primary_image.items
             var primary_image = []
             primaryImageArray.forEach(function(image){
               primary_image.push(image.path)
             })
           }
-          if (JSON.parse(body).data.relationships.websites){
-            var websitesArray = JSON.parse(body).data.relationships.websites.items
+          if (json_body.relationships.websites){
+            var websitesArray = json_body.relationships.websites.items
             var websites = []
             websitesArray.forEach(function(website){
               websites.push({title: website.title, url: website.url})
             })
           }
-          if (JSON.parse(body).data.relationships.founders) {
-            var foundersArray = JSON.parse(body).data.relationships.founders.items
+          if (json_body.relationships.founders) {
+            var foundersArray = json_body.relationships.founders.items
             var founders = []
             foundersArray.forEach(function(founder){
               founders.push({name: founder.name, path: founder.path})
             })
           }
           var fundraiseRounds = []
-          if (JSON.parse(body).data.relationships.funding_rounds) {
-            var fundraiseArray = JSON.parse(body).data.relationships.funding_rounds.items
+          if (json_body.relationships.funding_rounds) {
+            var fundraiseArray = json_body.relationships.funding_rounds.items
             fundraiseArray.forEach(function(round){
               if (round.name.match(/\d{4,}/)) {
                 fundraiseRounds.push({amount: round.name.match(/\d{4,}/), date: new Date(round.created_at * 1000)})
@@ -117,6 +127,9 @@ var organizationEndpoint = (function (){
         funding_rounds: fundraiseRounds || [],
         slug: path,
         founded_on: founded_on || "",
+        acquired: acquired || false,
+        closed: closed || false,
+        public: public || false,
         homepage_url: homepage_url || "",
         short_description: short_description || "",
         description: description || "",
@@ -133,14 +146,13 @@ var organizationEndpoint = (function (){
         oneYearRate: calculateFundraiseRate(fundraiseRounds, 1) || 0,
         momentumScore: calculateMomentumScore() || 0
       };
-      console.log(attributes);
 
-      console.log(id);
 
       Startup.findByIdAndUpdate(id, attributes, function(err, startup){
         if (err) { console.log(err); }
         // res.send(startup);
         console.log(startup);
+        console.log(startup._id);
       });
     }
   };
