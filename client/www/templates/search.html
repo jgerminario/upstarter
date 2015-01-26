@@ -1,7 +1,7 @@
 <ion-view view-title="Search">
   <ion-content>
 
-
+  <div class= filter-wrapper>
     <div class="list list-inset">
       <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
@@ -14,6 +14,21 @@
         <input type="search" ng-model="main.cityInput.city" placeholder="Search Cities">
       </label>
     </div>
+    <a ng-click="employees = !employees" class="button button-outline icon-right ion-navicon button-balanced">Filter</a>
+  </div>
+     <div class="card" ng-show="employees">
+      <div class="item item-text-wrap">
+        <div class="list">
+      Number of Employees : {{employnum}}
+          <div class="item range range-positive">
+            <i class="icon ion-ios7"></i>
+              <input type="range"  min="0" max="1000" ng-model="employnum">
+            <i class="icon ion-ios7"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <div class="hotstartups">
       Hot Startups
@@ -23,9 +38,11 @@
         <li class="list-group-item" ng-repeat="startup in startups | filter:main.searchInput track by $index | filter:main.cityInput" type="item-text-wrap" href="#/companies/{{companies.id}}"><option class="badge">{{startup.name}}</span></li>
       </ul> -->
        <ion-list>
-      <ion-item ng-repeat="startup in startups | filter:main.searchInput | filter:main.cityInput | limitTo:10" type="item-text-wrap" href="#/companies/{{companies.id}}">
+      <ion-item ng-repeat="startup in startups | filter:main.searchInput | filter:main.cityInput | employeeRange:employnum" type="item-text-wrap" href="#/companies/{{companies.id}}">
         <img ng-src="{{startup.thumb}}">
-        <h2>{{startup.name}}</h2>
+        <h2 class="startup-name">{{startup.name}}</h2>
+        <h2 class="startup-score">{{startup.score}}</h2>
+        <h2 class="startup-score">{{startup.description}}</h2>
       </ion-item>
     </ion-list>
 <!--        <ul class="list-group">

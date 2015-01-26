@@ -23,7 +23,8 @@
     "name": "Google",
     "type": "Organization",
     "city": "San Francisco",
-    "employees": 800
+    "employees": 800,
+    "score": 99
    },
    {
     "updated_at": 1421997051,
@@ -32,7 +33,8 @@
     "name": "Microsoft",
     "type": "Organization",
     "city": "Seattle",
-    "employees": 250
+    "employees": 250,
+    "score": 98
    },
    {
     "updated_at": 1421998099,
@@ -41,7 +43,8 @@
     "name": "Apple",
     "type": "Organization",
     "city": "San Francisco",
-    "employees": 500
+    "employees": 500,
+    "score": 96
    },
    {
     "updated_at": 1421825288,
@@ -50,7 +53,8 @@
     "name": "Facebook",
     "type": "Organization",
     "city": "Los Angeles",
-    "employees": 160
+    "employees": 160,
+    "score": 93
    },
    {
     "updated_at": 1421986021,
@@ -59,7 +63,8 @@
     "name": "Yahoo!",
     "type": "Organization",
     "city": "Atlanta",
-    "employees": 10
+    "employees": 10,
+    "score": 92
    },
    {
     "updated_at": 1421919823,
