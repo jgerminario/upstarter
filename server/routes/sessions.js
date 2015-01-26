@@ -14,7 +14,6 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-
 passport.use(new LinkedInStrategy({
     clientID: process.env.API_KEY,
     clientSecret: process.env.SECRET_KEY,
@@ -33,45 +32,53 @@ passport.use(new LinkedInStrategy({
       following.push(company.name)
     })
     process.nextTick(function () {
-     User.findOne({email: profile.email}, function(err, user){
+     User.findOne({ email: profile._json.emailAddress}, function(err, user){
         if (user) {
           user.linkedin.token = accessToken;
-          user.linkedin.email = profile._json.emailAddress;
+          user.email = profile._json.emailAddress;
           user.linkedin.following = following
           user.save(function(err){
             if (err) {throw err}
           })
+          console.log("user: ")
+          console.log(user)
+          return done(null, user);
         } else {
             newUser = new User({
-            linkedin: {
-              id: profile.id,
-              token: accessToken,
-              name: profile.displayName,
               email: profile._json.emailAddress,
-              following: following
-            }
-          });
-          newUser.save(function(err){
-            if (err) {throw err}
-          })
-          return newUser
+              name: profile.displayName,
+              linkedin: {
+                id: profile.id,
+                token: accessToken,
+                following: following
+              }
+            })
+            newUser.save(function(err){
+              if (err) {throw err}
+            })
+            console.log("newuser: ")
+            console.log(newUser)
+            return done(null, newUser);
         }
       })
-      return done(null, profile);
+     // console.log(req.user)
     });
   }
 ));
 
 
 router.get('/', function(req, res){
+  // console.log(req)
   res.render('index', { user: req.user });
 });
 
 router.get('/account', ensureAuthenticated, function(req, res){
+  // console.log(req.session)
   res.render('account', { user: req.user });
 });
 
 router.get('/login', function(req, res){
+  // console.log(req.session)
   res.render('login', { user: req.user });
 });
 
