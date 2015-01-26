@@ -8,4 +8,5 @@ var startupAPI = require('./seeds');
 
 mongoose.connect('mongodb://admin:upstarter@ds041157.mongolab.com:41157/upstarter');
 
+// Startup.resetFundraisePercentile();
 Startup.calculateFundraisePercentile();
