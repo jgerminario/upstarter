@@ -20,7 +20,7 @@
     "serve-favicon": "~2.2.0",
     "kue": "*",
     "passport": "*",
-    "passport-linkedin": "*",
+    "passport-linkedin-oauth2": "*",
     "express-session": "*",
     "bcrypt-nodejs": "*",
     "dotenv": "*"
