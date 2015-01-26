@@ -31,7 +31,7 @@ var organizationEndpoint = (function (){
   }
 
 
-  var parseFields = function (id, error, response, body){
+  var parseFields = function (id, error, response, body, res){
     if (error) { console.log(error) }
       if (response.statusCode != 200) { console.log(response.body) }
         if (!error && response.statusCode == 200) {
@@ -160,7 +160,9 @@ var organizationEndpoint = (function (){
 
       Startup.findByIdAndUpdate(id, attributes, function(err, startup){
         if (err) { console.log(err); }
-        // res.send(startup);
+        if (res) {
+          res.send(startup);
+        }
         console.log(startup);
         console.log(startup._id);
       });
@@ -168,10 +170,10 @@ var organizationEndpoint = (function (){
   };
 
   return {
-    sendCBRequest: function(id, permalink){
+    sendCBRequest: function(id, permalink, res){
       var user_key = process.env.CB_KEY;
       request('https://api.crunchbase.com/v/2/' + permalink + '?user_key=' + user_key, function(error, response, body){
-        parseFields(id, error, response, body);
+        parseFields(id, error, response, body, res);
       });
     },
 
