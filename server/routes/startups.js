@@ -3,7 +3,7 @@ var router = express.Router();
 var request = require('request');
 var Startup = require('../models/startups');
 var startupAPI = require('../helpers/seeds');
-var organizationEndpoint = require('../helpers/api')
+var organizationEndpoint = require('../helpers/api');
 
 /////////////////////////////////
 /// endpoints for our client ///
@@ -12,16 +12,16 @@ var organizationEndpoint = require('../helpers/api')
 
 // GET list of all company names //
 
-router.get('/', function(req, res){
+router.get('/', function(req, res) {
 
   var query = Startup.find({}).select('name slug -_id');
 
-  var jsonResponse = []
+  var jsonResponse = [];
 
   query.exec(function (err, data) {
     if (err) { console.log(err) }
 
-    data.forEach(function(startup){
+    data.forEach(function(startup) {
 
       var startupObject = {}
       startupObject.name = startup.name
@@ -30,6 +30,7 @@ router.get('/', function(req, res){
     })
   res.json(jsonResponse)
   })
+})
 
 
 /* GET users listing. */
@@ -41,7 +42,7 @@ router.get('/', function(req, res) {
 
 // GET individual company listing //
 
-router.get('/:slug', function(req, res){ // lotus-development-corporation
+router.get('/:slug', function(req, res) { // lotus-development-corporation
 
   var orgSlug  = 'organization/' + req.params.slug
   var query = Startup.find( { slug: orgSlug } )
@@ -49,14 +50,18 @@ router.get('/:slug', function(req, res){ // lotus-development-corporation
   query.exec(function (err, data) {
     if (err) { console.log(err) }
     if (data[0].description) {
+      console.log("has description")
       res.json(data)
     }
     else {
-      res.send("This result has NO description")
+      console.log("doesnt have descipriont")
+      organizationEndpoint.sendCBRequest(data[0].id, data[0].slug)
+      var query = Startup.find( { slug: orgSlug } )
+      query.exec(function (err, data) {
+        if (err) { console.log(err) }
+        res.json(data)
+      }) // check
     }
-  // if description doesnt exist then call helper?
-  //   get id for paricular company, then use sendCBrequest, pass id and permalink into, make call, update in database
-
   })
 })
 
