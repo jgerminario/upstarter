@@ -36,6 +36,7 @@ var organizationEndpoint = (function (){
       if (response.statusCode != 200) { console.log(response.body) }
         if (!error && response.statusCode == 200) {
           var json_body = JSON.parse(body).data;
+          console.log(json_body)
           var name = json_body.properties.name
           var path = 'organization/' + json_body.properties.permalink
           if (json_body.properties.closed_on != null || json_body.properties.is_closed == true){
@@ -59,6 +60,10 @@ var organizationEndpoint = (function (){
             officesArray.forEach(function(office){
               offices.push({street_1: office.street_1, street_2: office.street_2, postal_code: office.postal_code, city: office.city, region: office.region, country: office.country, latitude: office.latitude, longitude: office.longitude})
             })
+          }
+          if (json_body.relationships.headquarters){
+            var headquarter = json_body.relationships.headquarters.items[0]
+            var headquarters = [{street_1: headquarter.street_1, street_2: headquarter.street_2, postal_code: headquarter.postal_code, city: headquarter.city, region: headquarter.region, country: headquarter.country, latitude: headquarter.latitude, longitude: headquarter.longitude}]
           }
           var number_of_employees = json_body.properties.number_of_employees
           if (json_body.relationships.categories){
@@ -99,14 +104,18 @@ var organizationEndpoint = (function (){
             });
           }
 
-          function calculateFundraiseRate(fundraisingRounds, years) {
+        function calculateFundraiseRate(fundraisingRounds, years) {
         // TODO: Check that this works as a hook for new startups created
         var fundraiseArray = [];
         var total = 0;
         var totalRate = 0;
         var d = new Date();
-        d.setYear(d.getYear()-years);
+        console.log(d)
+        d.setYear(d.getFullYear()-years);
         fundraisingRounds.forEach(function(round){
+        console.log(d)
+        console.log(round.date)
+        console.log(round.date >= d)
           if (round.date >= d){
             fundraiseArray.push(round.amount[0]);
           }
@@ -119,7 +128,11 @@ var organizationEndpoint = (function (){
       };
 
       function calculateMomentumScore() {
+        if (number_of_employees == 0){
+          return 0
+        } else {
         return (calculateFundraiseRate(fundraiseRounds, 3) * 0.5 + calculateFundraiseRate(fundraiseRounds, 2) + calculateFundraiseRate(fundraiseRounds, 1) * 2)/number_of_employees
+        }
       }
 
       var attributes = {
@@ -135,6 +148,7 @@ var organizationEndpoint = (function (){
         description: description || "",
         total_funding_usd: total_funding_usd || 0,
         number_of_investments: number_of_investments || 0,
+        headquarters: headquarters || [],
         offices: offices || [],
         founders: founders || [],
         categories: categories || [],
