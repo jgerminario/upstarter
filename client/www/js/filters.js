@@ -13,7 +13,7 @@ angular.module('upstarter.filters', [])
 .filter('employeeRange', function () {
   //need to use items for an array
   return function (items, strNumber) {
-
+    console.log(strNumber);
     var filtered = [];
     var number = parseInt(strNumber);
 //need to loop through our array of objects

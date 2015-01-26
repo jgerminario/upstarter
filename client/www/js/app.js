@@ -44,13 +44,17 @@ angular.module('upstarter', ['ionic', 'upstarter.controllers', 'upstarter.servic
     controller: 'SearchCtrl'
   })
    .state('search.company', {
-    url: "/city",
+    url: "/company/:companyId",
     templateUrl: "templates/company.html"
 
   })
       .state('search.employees', {
     url: "/employees",
     templateUrl: "templates/employees.html"
+  })
+    .state('search.modalFilter', {
+    url: "/filter",
+    templateUrl: "templates/modalFilter.html"
   })
   $urlRouterProvider.otherwise('/');
 });
