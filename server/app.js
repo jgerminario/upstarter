@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose')
 var fs = require('fs')
+var passport = require('passport')
+var LinkedInStrategy = require('passport-linkedin').Strategy;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -43,6 +45,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(allowCrossDomain);
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', routes);
 app.use('/users', users);
@@ -55,6 +59,31 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
+passport.use(new LinkedInStrategy({
+    consumerKey: LINKEDIN_API_KEY,
+    consumerSecret: LINKEDIN_SECRET_KEY,
+    callbackURL: "http://127.0.0.1:3000/auth/linkedin/callback"
+  },
+  function(token, tokenSecret, profile, done) {
+    // asynchronous verification, for effect...
+    process.nextTick(function () {
+      // To keep the example simple, the user's LinkedIn profile is returned to
+      // represent the logged-in user.  In a typical application, you would want
+      // to associate the LinkedIn account with a user record in your database,
+      // and return that user instead.
+      return done(null, profile);
+    });
+  }
+));
 
 mongoose.connect('mongodb://admin:upstarter@ds041157.mongolab.com:41157/upstarter')
 
