@@ -1,25 +1,50 @@
 var express = require('express');
+var app = express();
+
 var path = require('path');
+
 var favicon = require('serve-favicon');
+
 var logger = require('morgan');
+app.use(logger('dev'));
+
 var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 var mongoose = require('mongoose')
+mongoose.connect('mongodb://admin:upstarter@ds041157.mongolab.com:41157/upstarter')
+
 var fs = require('fs')
+
 var dotenv = require('dotenv');
 dotenv.load();
-var passport = require('passport')
-var session = require('express-session')
-var LinkedInStrategy = require('passport-linkedin').Strategy;
-var router = require('express').Router();
 
-var routes = require('./routes/index');
-var sessions = require('./routes/sessions');
+var passport = require('passport')
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+var session = require('express-session')
+app.use(session({
+    secret:'somesecrettokenhere',
+    resave: true,
+    saveUninitialized: true
+}));
+
+// var LinkedInStrategy = require('passport-linkedin').Strategy;
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+var routes = require('./routes/sessions');
+// var sessions = require('./routes/sessions');
 var users = require('./routes/users');
 var startups = require('./routes/startups');
 var test = require('./routes/test');
 
-var app = express();
 
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -39,38 +64,25 @@ var validateCredentials = function(req, res, next){
 };
 
 // view engine setup
-app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-app.use(session({
-    secret:'somesecrettokenhere',
-    resave: true,
-    saveUninitialized: true
-}));
+app.set('views', path.join(__dirname, 'views'));
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(allowCrossDomain);
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(passport.initialize());
+
+// app.use(function(req, res, next) {
+//     var err = new Error('Not Found');
+//     err.status = 404;
+//     next(err);
+// });
 
 app.use('/', routes);
-app.use('/api', sessions);
+// app.use('/sessions', sessions);
 app.use('/users', users);
 app.use('/startups', startups);
 app.use('/test', test);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
-
-
-mongoose.connect('mongodb://admin:upstarter@ds041157.mongolab.com:41157/upstarter')
 
 // error handlers
 

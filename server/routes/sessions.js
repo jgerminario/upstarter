@@ -1,14 +1,23 @@
-var router = require('express').Router();
+var express = require('express');
+var router = express.Router();
 var bodyparser = require('body-parser');
 var urlencode = bodyparser.urlencoded({ extended: false });
 var passport = require('passport');
 var LinkedInStrategy = require('passport-linkedin').Strategy;
 var User = require('../models/users');
 
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
 passport.use(new LinkedInStrategy({
     consumerKey: process.env.API_KEY,
     consumerSecret: process.env.SECRET_KEY,
-    callbackURL: "http://127.0.0.1:3000/auth/linkedin/callback"
+    callbackURL: "http://localhost:3000/auth/linkedin/callback"
   },
   function(token, tokenSecret, profile, done) {
     // asynchronous verification, for effect...
@@ -21,6 +30,19 @@ passport.use(new LinkedInStrategy({
     });
   }
 ));
+
+
+// passport.use(new LinkedInStrategy({
+//     consumerKey: process.env.API_KEY,
+//     consumerSecret: process.env.SECRET_KEY,
+//     callbackURL: "http://localhost:3000/auth/linkedin/callback"
+//   },
+//   function(token, tokenSecret, profile, done) {
+//     User.findOrCreate({ linkedinId: profile.id }, function (err, user) {
+//       return done(err, user);
+//     });
+//   }
+// ));
 
 router.get('/', function(req, res){
   res.render('index', { user: req.user });
@@ -40,7 +62,7 @@ router.get('/login', function(req, res){
 //   redirecting the user to linkedin.com.  After authorization, LinkedIn will
 //   redirect the user back to this application at /auth/linkedin/callback
 router.get('/auth/linkedin',
-  passport.authenticate('linkedin'),
+  passport.authenticate('linkedin', { state: 'SOME STATE'  }),
   function(req, res){
     // The request will be redirected to LinkedIn for authentication, so this
     // function will not be called.
@@ -66,3 +88,5 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/login');
 }
+
+module.exports = router;
