@@ -27,10 +27,10 @@ mongoose.connect('mongodb://admin:upstarter@ds041157.mongolab.com:41157/upstarte
 //  done();
 // });
 
+
 setInterval(function (){
   console.log('processing');
    startupAPI.updateStartup();
-  // APIlookupSingle();
 }, 1000);
 
 module.exports = router;
