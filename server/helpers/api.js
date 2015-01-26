@@ -155,9 +155,10 @@ var organizationEndpoint = (function (){
       });
     },
 
-    fetchStartups: function(pageNum, permalink) {
+    fetchStartups: function(pageNum) {
+      console.log(pageNum)
       var user_key = process.env.CB_KEY;
-      request('https://api.crunchbase.com/v/2/organizations?organization_types=company&user_key='+ user_key + '&page=' + pageNum + '&order=created_at+DESC', function (error, response, body) {
+      request('https://api.crunchbase.com/v/2/organizations?organization_types=company&user_key=' + user_key + '&page=' + pageNum + '&order=created_at+DESC', function (error, response, body) {
         saveStartupPage(error, response, body)
       })
     }

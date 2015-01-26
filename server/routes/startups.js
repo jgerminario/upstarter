@@ -12,6 +12,10 @@ var organizationEndpoint = require('../helpers/api');
 
 // GET list of all company names //
 
+router.get('/test-seed/:pageNum', function(req, res) {
+  organizationEndpoint.fetchStartups(req.params.pageNum)
+})
+
 router.get('/', function(req, res) {
 
   var query = Startup.find({}).select('name slug -_id');
@@ -64,6 +68,7 @@ router.get('/:slug', function(req, res) { // lotus-development-corporation
     }
   })
 })
+
 
 // router.get('/initial-seed', function(req, res) {
 //   request('https://api.crunchbase.com/v/2/organizations?organization_types=company&user_key=2c7e457b872b77f865562e75967f76ef&page=1&order=created_at+DESC', function (error, response, body) {
