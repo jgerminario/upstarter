@@ -38,7 +38,7 @@ router.get('/', function(req, res) {
 
 
 /* GET users listing. */
-router.get('/', function(req, res) {
+router.get('/cb', function(req, res) {
    startupAPI.updateStartup();
 });
 
