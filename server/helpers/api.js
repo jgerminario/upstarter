@@ -148,15 +148,12 @@ var organizationEndpoint = (function (){
   return {
     sendCBRequest: function(id, permalink){
       var user_key = process.env.CB_KEY;
-      console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-      console.log(user_key)
       request('https://api.crunchbase.com/v/2/' + permalink + '?user_key=' + user_key, function(error, response, body){
         parseFields(id, error, response, body);
       });
     },
 
     fetchStartups: function(pageNum) {
-      console.log(pageNum)
       var user_key = process.env.CB_KEY;
       request('https://api.crunchbase.com/v/2/organizations?organization_types=company&user_key=' + user_key + '&page=' + pageNum + '&order=created_at+DESC', function (error, response, body) {
         saveStartupPage(error, response, body)
