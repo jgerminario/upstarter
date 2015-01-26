@@ -22,7 +22,8 @@
     "path": "organization/google",
     "name": "Google",
     "type": "Organization",
-    "city": "San Francisco"
+    "city": "San Francisco",
+    "employees": 800
    },
    {
     "updated_at": 1421997051,
@@ -30,7 +31,8 @@
     "path": "organization/microsoft",
     "name": "Microsoft",
     "type": "Organization",
-    "city": "Seattle"
+    "city": "Seattle",
+    "employees": 250
    },
    {
     "updated_at": 1421998099,
@@ -38,7 +40,8 @@
     "path": "organization/apple",
     "name": "Apple",
     "type": "Organization",
-    "city": "San Francisco"
+    "city": "San Francisco",
+    "employees": 500
    },
    {
     "updated_at": 1421825288,
@@ -46,7 +49,8 @@
     "path": "organization/facebook",
     "name": "Facebook",
     "type": "Organization",
-    "city": "Los Angeles"
+    "city": "Los Angeles",
+    "employees": 160
    },
    {
     "updated_at": 1421986021,
@@ -54,7 +58,8 @@
     "path": "organization/yahoo",
     "name": "Yahoo!",
     "type": "Organization",
-    "city": "Atlanta"
+    "city": "Atlanta",
+    "employees": 10
    },
    {
     "updated_at": 1421919823,

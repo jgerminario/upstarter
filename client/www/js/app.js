@@ -39,7 +39,7 @@ angular.module('upstarter', ['ionic', 'upstarter.controllers', 'upstarter.servic
   })
 
     .state('search', {
-    url: "/search",
+    url: "/",
     templateUrl: "templates/search.html",
     controller: 'SearchCtrl'
   })
