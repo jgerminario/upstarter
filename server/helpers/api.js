@@ -6,6 +6,31 @@ var Startup = require('../models/startups');
 
 var organizationEndpoint = (function (){
 
+
+
+  var saveStartupPage = function(error, response, body) {
+    if (!error && response.statusCode == 200) {
+      var items = JSON.parse(body).data.items
+      var counter = 0
+      for (var i=0; i<items.length; i++) {
+
+        var newEntry = new Startup({
+          slug: items[i].path,
+          name: items[i].name
+        })
+        newEntry.save(function(err) {
+          if (!err) {
+            console.log(counter, 'success')
+            counter += 1
+          } else {
+            // console.log('fail')
+          }
+        });
+      }
+    }
+  }
+
+
   var parseFields = function (id, error, response, body){
     if (error) { console.log(error) }
       if (response.statusCode != 200) { console.log(response.body) }
@@ -128,6 +153,13 @@ var organizationEndpoint = (function (){
       request('https://api.crunchbase.com/v/2/' + permalink + '?user_key=' + user_key, function(error, response, body){
         parseFields(id, error, response, body);
       });
+    },
+
+    fetchStartups: function(pageNum, permalink) {
+      var user_key = process.env.CB_KEY;
+      request('https://api.crunchbase.com/v/2/organizations?organization_types=company&user_key='+ user_key + '&page=' + pageNum + '&order=created_at+DESC', function (error, response, body) {
+        saveStartupPage(error, response, body)
+      })
     }
   };
 
