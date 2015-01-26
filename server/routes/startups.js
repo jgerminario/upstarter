@@ -3,6 +3,7 @@ var router = express.Router();
 var request = require('request');
 var Startup = require('../models/startups');
 var startupAPI = require('../helpers/seeds');
+var organizationEndpoint = require('../helpers/api')
 
 /////////////////////////////////
 /// endpoints for our client ///
@@ -47,7 +48,15 @@ router.get('/:slug', function(req, res){ // lotus-development-corporation
 
   query.exec(function (err, data) {
     if (err) { console.log(err) }
-    res.json(data)
+    if (data[0].description) {
+      res.json(data)
+    }
+    else {
+      res.send("This result has NO description")
+    }
+  // if description doesnt exist then call helper?
+  //   get id for paricular company, then use sendCBrequest, pass id and permalink into, make call, update in database
+
   })
 })
 
