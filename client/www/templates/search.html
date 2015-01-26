@@ -9,7 +9,7 @@
       </label>
     </div>
       <ul class="list-group">
-        <li class="list-group-item" ng-repeat="startup in startups | filter:main.searchInput | limitTo:10 track by $index"><span class="badge" ng-if="main.searchInput">{{startup.name}}</span></li>
+        <li class="list-group-item" ng-repeat="startup in startups | filter:main.searchInput | limitTo:10 track by $index"><option class="badge" ng-if="main.searchInput">{{startup.name}}</span></li>
       </ul>
 
     <h3>Search by : </h3>
