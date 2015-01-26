@@ -6,7 +6,7 @@ var request = require('request')
 /* GET home page. */
 router.get('/', function(req, res) {
 
-	res.send('home')
+	res.send('hey there')
 
 });
 
