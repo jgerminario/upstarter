@@ -6,10 +6,15 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose')
 var fs = require('fs')
+var dotenv = require('dotenv');
+dotenv.load();
 var passport = require('passport')
+var session = require('express-session')
 var LinkedInStrategy = require('passport-linkedin').Strategy;
+var router = require('express').Router();
 
 var routes = require('./routes/index');
+var sessions = require('./routes/sessions');
 var users = require('./routes/users');
 var startups = require('./routes/startups');
 var test = require('./routes/test');
@@ -34,9 +39,13 @@ var validateCredentials = function(req, res, next){
 };
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+app.use(session({
+    secret:'somesecrettokenhere',
+    resave: true,
+    saveUninitialized: true
+}));
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
@@ -46,9 +55,9 @@ app.use(allowCrossDomain);
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
-app.use(passport.session());
 
 app.use('/', routes);
+app.use('/api', sessions);
 app.use('/users', users);
 app.use('/startups', startups);
 app.use('/test', test);
@@ -60,30 +69,6 @@ app.use(function(req, res, next) {
     next(err);
 });
 
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
-});
-
-passport.use(new LinkedInStrategy({
-    consumerKey: LINKEDIN_API_KEY,
-    consumerSecret: LINKEDIN_SECRET_KEY,
-    callbackURL: "http://127.0.0.1:3000/auth/linkedin/callback"
-  },
-  function(token, tokenSecret, profile, done) {
-    // asynchronous verification, for effect...
-    process.nextTick(function () {
-      // To keep the example simple, the user's LinkedIn profile is returned to
-      // represent the logged-in user.  In a typical application, you would want
-      // to associate the LinkedIn account with a user record in your database,
-      // and return that user instead.
-      return done(null, profile);
-    });
-  }
-));
 
 mongoose.connect('mongodb://admin:upstarter@ds041157.mongolab.com:41157/upstarter')
 
