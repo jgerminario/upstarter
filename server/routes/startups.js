@@ -3,6 +3,7 @@ var router = express.Router();
 var request = require('request');
 var Startup = require('../models/startups');
 var startupAPI = require('../helpers/seeds');
+var organizationEndpoint = require('../helpers/api');
 
 /////////////////////////////////
 /// endpoints for our client ///
@@ -11,16 +12,20 @@ var startupAPI = require('../helpers/seeds');
 
 // GET list of all company names //
 
-router.get('/', function(req, res){
+router.get('/test-seed/:pageNum', function(req, res) {
+  organizationEndpoint.fetchStartups(req.params.pageNum)
+})
+
+router.get('/', function(req, res) {
 
   var query = Startup.find({}).select('name slug -_id');
 
-  var jsonResponse = []
+  var jsonResponse = [];
 
   query.exec(function (err, data) {
     if (err) { console.log(err) }
 
-    data.forEach(function(startup){
+    data.forEach(function(startup) {
 
       var startupObject = {}
       startupObject.name = startup.name
@@ -29,6 +34,7 @@ router.get('/', function(req, res){
     })
   res.json(jsonResponse)
   })
+})
 
 
 /* GET users listing. */
@@ -40,16 +46,29 @@ router.get('/', function(req, res) {
 
 // GET individual company listing //
 
-router.get('/:slug', function(req, res){ // lotus-development-corporation
+router.get('/:slug', function(req, res) { // lotus-development-corporation
 
   var orgSlug  = 'organization/' + req.params.slug
   var query = Startup.find( { slug: orgSlug } )
 
   query.exec(function (err, data) {
     if (err) { console.log(err) }
-    res.json(data)
+    if (data[0].description) {
+      console.log("has description")
+      res.json(data)
+    }
+    else {
+      console.log("doesnt have descipriont")
+      organizationEndpoint.sendCBRequest(data[0].id, data[0].slug)
+      var query = Startup.find( { slug: orgSlug } )
+      query.exec(function (err, data) {
+        if (err) { console.log(err) }
+        res.json(data)
+      }) // check
+    }
   })
 })
+
 
 // router.get('/initial-seed', function(req, res) {
 //   request('https://api.crunchbase.com/v/2/organizations?organization_types=company&user_key=2c7e457b872b77f865562e75967f76ef&page=1&order=created_at+DESC', function (error, response, body) {
