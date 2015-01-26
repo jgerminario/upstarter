@@ -30,6 +30,24 @@ angular.module('upstarter.controllers', [])
     console.log(data)
   })
 
+
     // $http.get("http://api.crunchbase.com/v/2/organization/crowdtilt?user_key=2c7e457b872b77f865562e75967f76ef").success(function(data){
     }])
 
+.controller('SliderCtrl', ['$scope', function($scope){
+  $scope.value = "0;10000";
+  $scope.options = {
+    from: 0,
+    to: 10000,
+    step: 1,
+    dimension: "  employees",
+    scale: [0, '|', '|', 5000, '|' , , '|', 10],
+      css: {
+          background: {"background-color": "silver"},
+          before: {"background-color": "purple"},
+          default: {"background-color": "white"},
+          after: {"background-color": "green"},
+          pointer: {"background-color": "red"}
+        }
+  };
+}]);
