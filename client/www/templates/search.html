@@ -20,9 +20,9 @@
       <div class="item item-text-wrap">
         <div class="list">
       Number of Employees : {{employnum}}
-          <div class="item range range-positive">
+          <div class="item range range-positive" ng-controller="SliderCtrl">
             <i class="icon ion-ios7"></i>
-              <input type="range"  min="0" max="1000" ng-model="employnum">
+               <input ng-model="value" type="text" id="mySlider1" slider options="options" />
             <i class="icon ion-ios7"></i>
           </div>
         </div>
@@ -38,7 +38,7 @@
         <li class="list-group-item" ng-repeat="startup in startups | filter:main.searchInput track by $index | filter:main.cityInput" type="item-text-wrap" href="#/companies/{{companies.id}}"><option class="badge">{{startup.name}}</span></li>
       </ul> -->
        <ion-list>
-      <ion-item ng-repeat="startup in startups | filter:main.searchInput | filter:main.cityInput | employeeRange:employnum" type="item-text-wrap" href="#/companies/{{companies.id}}">
+      <ion-item ng-repeat="startup in startups | filter:main.searchInput | filter:main.cityInput | employeeRange:value" type="item-text-wrap" href="#/{{startup.name}}">
         <img ng-src="{{startup.thumb}}">
         <h2 class="startup-name">{{startup.name}}</h2>
         <h2 class="startup-score">{{startup.score}}</h2>
