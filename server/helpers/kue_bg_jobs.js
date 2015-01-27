@@ -1,5 +1,5 @@
-var kue = require('kue'),
-  jobs = kue.createQueue();//need redis credentials?
+// var kue = require('kue'),
+  // jobs = kue.createQueue();//need redis credentials?
 var mongoose = require('mongoose');
 var express = require('express');
 var router = express.Router();
@@ -9,6 +9,13 @@ var organizationEndpoint = require('./api.js');
 var startupAPI = require('./seeds');
 
 mongoose.connect('mongodb://admin:upstarter@ds041157.mongolab.com:41157/upstarter');
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function (callback) {
+  console.log("connection started")
+});
+
 
 
 
@@ -26,11 +33,42 @@ mongoose.connect('mongodb://admin:upstarter@ds041157.mongolab.com:41157/upstarte
 // jobs.process('api_job', function (job, done){
 //  done();
 // });
+var shuffle_array = function(array) {
+  var counter = array.length, 
+  temp, 
+  index;
 
+    // While there are elements in the array
+  while (counter > 0) {
+      // Pick a random index
+      index = Math.floor(Math.random() * counter);
 
-setInterval(function (){
-  console.log('processing');
-   startupAPI.updateStartup();
-}, 1000);
+      counter--;
 
-module.exports = router;
+      temp = array[counter];
+      array[counter] = array[index];
+      array[index] = temp;
+    }
+
+    return array;
+};
+
+console.log("starting 'find' operation (this may take a while)");
+
+Startup.where('description').exists(false).exec(function(err, data){
+  var i = 0,
+    startups = shuffle_array(data);
+  if (err) {console.log(err); }
+
+  console.log("beginning seed");
+
+  setInterval(function (){
+    if (i>startups.length){ throw new Error("All records have been updated")}
+    console.log('processing number ' + i);
+    startupAPI.updateStartup(startups[i]);
+    i++;
+
+  }, 2000);
+});
+
+// module.exports = router;

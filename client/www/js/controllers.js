@@ -9,15 +9,17 @@ angular.module('upstarter.controllers', [])
     $scope.startup = Startup.query();
     $http({
       method: 'GET',
-      url: "http://localhost:3000/startups",
+      // url: "http://upstarter-server.herokuapp.com/startups",
+      url: "http://localhost:3000/startups/chevron",
       contentType: "application/json",
-      beforeSend: function(xhr) {
-      var auth_str = "token " + "<%= ENV['UPSTARTER_KEY'] %>";
-      }
+      // beforeSend: function(xhr) {
+      // var str = "token 0HnLNRufyvmfYCPYvgkiM2jS3";
+      // xhr.setRequestHeader("authorization", str);
+      // }
     })
-      .success(function(data, status, headers, config){
+      .success(function(data,status){
         console.log(data);
-    });
+      });
 
     // $http.get("http://api.crunchbase.com/v/2/organization/crowdtilt?user_key=2c7e457b872b77f865562e75967f76ef").success(function(data){
     // });
@@ -33,14 +35,14 @@ angular.module('upstarter.controllers', [])
     })
 
 
+
     // $http.get("http://api.crunchbase.com/v/2/organization/crowdtilt?user_key=2c7e457b872b77f865562e75967f76ef").success(function(data){
     }])
 
 .controller('SliderCtrl', ['$scope', 'EmployeeRange',function($scope, EmployeeRange){
 
 
-  $scope.value = "0;10000"
-  EmployeeRange.setData($scope.value)
+  $scope.value = EmployeeRange.data;
   $scope.options = {
     from: 0,
     to: 10000,
@@ -55,7 +57,6 @@ angular.module('upstarter.controllers', [])
           pointer: {"background-color": "red"}
         }
   };
-
 }])
 
 .controller('StartupDetailCtrl', ['$scope','Startups', '$stateParams', function($scope, $stateParams, Startups) {

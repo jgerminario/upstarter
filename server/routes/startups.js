@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var url = require('url');
+var querystring = require('querystring');
 var request = require('request');
 var Startup = require('../models/startups');
 var startupAPI = require('../helpers/seeds');
@@ -12,17 +14,25 @@ var organizationEndpoint = require('../helpers/api');
 
 // GET list of all company names - for testing the background job, not for use//
 
-router.get('/all/:pageNum', function(req, res) {
-  console.log(req.params.pageNum)
-  organizationEndpoint.fetchStartups(req.params.pageNum)
-})
+// router.get('/all/:pageNum', function(req, res) {
+//   console.log(req.params.pageNum)
+//   organizationEndpoint.fetchStartups(req.params.pageNum)
+// })
 
 
 
 // GET list of all company names - for client
 router.get('/', function(req, res) {
-
+  var limit = querystring.parse(url.parse(req.url).query).limit || 50;
+  var string = querystring.parse(url.parse(req.url).query).string;
   var query = Startup.find({}).select('name slug -_id');
+  
+  if (string){
+    query = query.where({'name': new RegExp('.*' + string + '.*', "i")});
+  }
+
+  query = query.limit(limit); 
+
 
   var jsonResponse = [];
 
@@ -39,13 +49,13 @@ router.get('/', function(req, res) {
     })
   res.json(jsonResponse)
   })
-})
+});
 
 
 /* GET users listing - for testing the background job, not for use. */
-router.get('/cb', function(req, res) {
-   startupAPI.updateStartup();
-});
+// router.get('/cb', function(req, res) {
+//    startupAPI.updateStartup();
+// });
 
 
 

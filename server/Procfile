@@ -1,5 +1,5 @@
-web: node server/bin/www
-singlelookupworker: node helpers/kue_bg_jobs.js
-getallworker: node helpers/get_all_startups.js
-resetpercentile: node helpers/reset_fundraise_percentile.js
+web: node bin/www
+single_worker: node helpers/kue_bg_jobs.js
+all_worker: node helpers/get_all_startups.js
+percentile_worker: node helpers/reset_fundraise_percentile.js
 
