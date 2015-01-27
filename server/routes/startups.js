@@ -23,15 +23,28 @@ var organizationEndpoint = require('../helpers/api');
 
 // GET list of all company names - for client
 router.get('/', function(req, res) {
-  var limit = querystring.parse(url.parse(req.url).query).limit || 50;
-  var string = querystring.parse(url.parse(req.url).query).string;
-  var query = Startup.find({}).select('name slug -_id');
+  var query, limit, string, full, default_limit;
+  string = querystring.parse(url.parse(req.url).query).string;
+  full = querystring.parse(url.parse(req.url).query).full;
+
+  console.log(full == "true");
+
+  if (full == "true"){
+    query = Startup.find({});
+    default_limit = 10;
+  } else {
+    query = Startup.find({}).select('name slug -_id');
+    default_limit = 50;
+  }
+
+  limit = querystring.parse(url.parse(req.url).query).limit || default_limit;
   
   if (string){
     query = query.where({'name': new RegExp('.*' + string + '.*', "i")});
   }
 
   query = query.limit(limit); 
+  query = query.sort([['momentumScore', 'descending']]);
 
 
   var jsonResponse = [];
@@ -39,17 +52,16 @@ router.get('/', function(req, res) {
   query.exec(function (err, data) {
     if (err) { console.log(err) }
 
-    data.forEach(function(startup) {
+    // data.forEach(function(startup) {
 
-      var startupObject = {}
-      // TODO - include more fields for front end to consume
-      startupObject.name = startup.name
-      startupObject.slug = startup.slug.substring(13)
-      jsonResponse.push(startupObject)
-    })
-  res.json(jsonResponse)
-  })
-});
+    //   var startupObject = {}
+    //   // TODO - include more fields for front end to consume
+    //   startupObject.name = startup.name
+    //   startupObject.slug = startup.slug.substring(13)
+    //   jsonResponse.push(startupObject)
+    res.json(data);
+    });
+  });
 
 
 /* GET users listing - for testing the background job, not for use. */
