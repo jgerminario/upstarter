@@ -67,16 +67,22 @@ router.get('/auth/linkedin/callback',
             })
         }
       })
-      // res.send({token: req.session.accessToken});
-      res.send({user: req.user})
+      res.redirect('/auth/token')
+      // res.send({user: req.user})
   });
+
+router.get('/auth/token', function(req, res){
+  res.send({token: req.session.accessToken})
+})
 
 router.get('/logout', function(req, res){
   User.findOne({ email: req.user._json.emailAddress}, function(err, user){
     user.token = ""
     user.save();
   });
+  req.session.accessToken = null
   req.logout();
+  console.log(req.user)
   res.send('logged out');
 });
 

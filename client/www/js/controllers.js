@@ -23,7 +23,7 @@ angular.module('upstarter.controllers', [])
 
     // $http.get("http://api.crunchbase.com/v/2/organization/crowdtilt?user_key=2c7e457b872b77f865562e75967f76ef").success(function(data){
     // });
-  }])
+}])
 
 .controller('SearchCtrl', ['$scope', 'InitialSeed', 'StartupNames', 'EmployeeRange', function($scope, InitialSeed, StartupNames, EmployeeRange) {
 
@@ -40,7 +40,7 @@ angular.module('upstarter.controllers', [])
 
 
     // $http.get("http://api.crunchbase.com/v/2/organization/crowdtilt?user_key=2c7e457b872b77f865562e75967f76ef").success(function(data){
-    }])
+}])
 
 .controller('SliderCtrl', ['$scope', 'EmployeeRange',function($scope, EmployeeRange){
 
