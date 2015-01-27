@@ -21,8 +21,8 @@
      <div class="card" ng-show="employees">
       <div class="item item-text-wrap">
         <div class="list">
-      Number of Employees : {{employnum}}
-        <!--   <div class="item range range-positive" ng-controller="SliderCtrl"> -->
+          Number of Employees : {{employnum}}
+            <!--   <div class="item range range-positive" ng-controller="SliderCtrl"> -->
             <i class="icon ion-ios7"></i>
               <!--  <input ng-model="value" type="text" id="mySlider1" slider options="options" /> -->
             <i class="icon ion-ios7"></i>{{value}}
@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <div class="hotstartups">
+    <div class="listing-heading">
       Hot Startups {{value}}
     </div>
 
@@ -40,12 +40,21 @@
       <ul class="list-group">
         <li class="list-group-item" ng-repeat="startup in startups | filter:main.searchInput track by $index | filter:main.cityInput" type="item-text-wrap" href="#/companies/{{companies.id}}"><option class="badge">{{startup.name}}</span></li>
       </ul> -->
-    <ion-list>
+    <ion-list class="companies-container">
       <ion-item ng-repeat="startup in startups | filter:main.searchInput | filter:main.cityInput | limitTo:10" type="item-text-wrap" href="#/{{startup.name}}">
-        <img ng-src="{{startup.thumb}}">
-        <h2 class="startup-name">{{startup.name}}</h2>
-        <h2 class="startup-score">{{startup.score}}</h2>
-        <h2 class="startup-score">{{startup.description}}</h2>
+        <div class="company-logo"><img ng-src="https://res.cloudinary.com/crunchbase-production + {{startup.primary_image[0]}}"></div>
+
+        <div class="company-data">
+          <div class="company-name">{{startup.name}}</div>
+
+          <div class="company-info">
+            <div>{{startup.city}}</div>
+            <div>employees:&nbsp;{{startup.employees}}</div>
+            <div>{{startup.address}}</div>
+          </div>
+        </div>
+
+        <div class="company-momentum-score">{{startup.score}}</div>
       </ion-item>
     </ion-list>
 <!--        <ul class="list-group">
