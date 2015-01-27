@@ -18,19 +18,35 @@ angular.module('upstarter.services', ['ngResource'])
   var deferred = $q.defer();
   // console.log($q)
   // console.log(deferred)
-  $http.get('names.json')
-    .success(function(data){
-      company_array = []
-      angular.forEach(data.data.items, function(value, key){
-        company_array.push(value);
-        // console.log(value)
-      })
-      deferred.resolve(company_array);
-      // console.log(deferred)
+
+  $http({
+    method: 'GET',
+    url: "http://upstarter-server.herokuapp.com/startups?full=true",
+    contentType: "application/json",
+  })
+    .success(function(data,status){
+      console.log(data);
+      var company_array = data
+      deferred.resolve(company_array)
     })
+
     .error(function(){
       deferred.reject('There was an error');
     })
+
+  // $http.get('names.json')
+  //   .success(function(data){
+  //     company_array = []
+  //     angular.forEach(data.data.items, function(value, key){
+  //       company_array.push(value);
+  //       // console.log(value)
+  //     })
+  //     deferred.resolve(company_array);
+  //     // console.log(deferred)
+  //   })
+  //   .error(function(){
+  //     deferred.reject('There was an error');
+  //   })
   // console.log("Predeferred")
   // console.log(deferred)
   return deferred.promise;
