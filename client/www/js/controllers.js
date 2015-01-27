@@ -76,3 +76,4 @@ angular.module('upstarter.controllers', [])
 // console.log($scope.startup.startupName)
 
 }])
+
