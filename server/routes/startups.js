@@ -10,12 +10,16 @@ var organizationEndpoint = require('../helpers/api');
 ///////////////////////////////
 
 
-// GET list of all company names //
+// GET list of all company names - for testing the background job, not for use//
 
-router.get('/test-seed/:pageNum', function(req, res) {
+router.get('/all/:pageNum', function(req, res) {
+  console.log(req.params.pageNum)
   organizationEndpoint.fetchStartups(req.params.pageNum)
 })
 
+
+
+// GET list of all company names - for client
 router.get('/', function(req, res) {
 
   var query = Startup.find({}).select('name slug -_id');
@@ -28,6 +32,7 @@ router.get('/', function(req, res) {
     data.forEach(function(startup) {
 
       var startupObject = {}
+      // TODO - include more fields for front end to consume
       startupObject.name = startup.name
       startupObject.slug = startup.slug.substring(13)
       jsonResponse.push(startupObject)
@@ -37,8 +42,8 @@ router.get('/', function(req, res) {
 })
 
 
-/* GET users listing. */
-router.get('/', function(req, res) {
+/* GET users listing - for testing the background job, not for use. */
+router.get('/cb', function(req, res) {
    startupAPI.updateStartup();
 });
 
@@ -52,19 +57,17 @@ router.get('/:slug', function(req, res) { // lotus-development-corporation
   var query = Startup.find( { slug: orgSlug } )
 
   query.exec(function (err, data) {
-    if (err) { console.log(err) }
-    if (data[0].description) {
-      console.log("has description")
-      res.json(data)
+    if (err) { console.log(err); }
+    if (!data[0]){ 
+      res.send("startup not found"); 
+    }
+    else if (data[0].description) {
+      // startup has info
+      res.json(data);
     }
     else {
-      console.log("doesnt have descipriont")
-      organizationEndpoint.sendCBRequest(data[0].id, data[0].slug)
-      var query = Startup.find( { slug: orgSlug } )
-      query.exec(function (err, data) {
-        if (err) { console.log(err) }
-        res.json(data)
-      }) // check
+      // startup not yet have info
+      organizationEndpoint.sendCBRequest(data[0].id, data[0].slug, res);
     }
   })
 })
