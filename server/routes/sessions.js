@@ -14,95 +14,72 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-passport.use(new LinkedInStrategy({
+passport.use(new LinkedinStrategy({
     clientID: process.env.API_KEY,
     clientSecret: process.env.SECRET_KEY,
-    callbackURL:  "http://localhost:3000/auth/linkedin/callback",
-    scope:        [ 'r_fullprofile', 'r_emailaddress', 'r_contactinfo'],
-    passReqToCallback: true,
-    state: true
+    callbackURL: "http://localhost:3000/auth/linkedin/callback",
+    scope: [ 'r_fullprofile', 'r_emailaddress'],
+    passReqToCallback: true
   },
   function(req, accessToken, refreshToken, profile, done) {
-    // asynchronous verification, for effect...
     req.session.accessToken = accessToken;
-    // console.log(profile.id)
-    // console.log("refresh token: " + refreshToken)
-    var following = []
-    profile._json.following.companies.values.forEach(function(company){
-      following.push(company.name)
-    })
     process.nextTick(function () {
-     User.findOne({ email: profile._json.emailAddress}, function(err, user){
-        if (user) {
-          user.linkedin.token = accessToken;
-          user.email = profile._json.emailAddress;
-          user.linkedin.following = following
-          user.save(function(err){
-            if (err) {throw err}
-          })
-          console.log("user: ")
-          console.log(user)
-          return done(null, user);
-        } else {
-            newUser = new User({
-              email: profile._json.emailAddress,
-              name: profile.displayName,
-              linkedin: {
-                id: profile.id,
-                token: accessToken,
-                following: following
-              }
-            })
-            newUser.save(function(err){
-              if (err) {throw err}
-            })
-            console.log("newuser: ")
-            console.log(newUser)
-            return done(null, newUser);
-        }
-      })
-     // console.log(req.user)
+        return done(null, profile);
     });
   }
 ));
 
-
 router.get('/', function(req, res){
-  // console.log(req)
   res.render('index', { user: req.user });
 });
 
-router.get('/account', ensureAuthenticated, function(req, res){
-  // console.log(req.session)
-  res.render('account', { user: req.user });
-});
-
 router.get('/login', function(req, res){
-  // console.log(req.session)
   res.render('login', { user: req.user });
 });
 
-// GET /auth/linkedin
-//   Use passport.authenticate() as route middleware to authenticate the
-//   request.  The first step in LinkedIn authentication will involve
-//   redirecting the user to linkedin.com.  After authorization, LinkedIn will
-//   redirect the user back to this application at /auth/linkedin/callback
-router.get('/auth/linkedin',
-  passport.authenticate('linkedin'),
-  function(req, res){
-    // The request will be redirected to LinkedIn for authentication, so this
-    // function will not be called.
-  });
+router.get('/account', ensureAuthenticated, function(req, res){
+  res.render('account', { user: req.user });
+});
 
-// GET /auth/linkedin/callback
-//   Use passport.authenticate() as route middleware to authenticate the
-//   request.  If authentication fails, the user will be redirected back to the
-//   login page.  Otherwise, the primary route function function will be called,
-//   which, in this example, will redirect the user to the home page.
+router.get('/auth/linkedin',
+  passport.authenticate('linkedin', { state: 'SOME STATE' }),
+  function(req, res){});
+
 router.get('/auth/linkedin/callback',
   passport.authenticate('linkedin', { failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect('/');
+     User.findOne({ email: req.user._json.emailAddress}, function(err, user){
+        if (user) {
+          user.token = req.session.accessToken;
+          var following = []
+          req.user._json.following.companies.values.forEach(function(company){
+            following.push(company.name)
+          })
+          user.linkedin.following = following
+          user.save(function(error){
+            if (error) {throw error}
+          })
+        } else {
+            var following = []
+            req.user._json.following.companies.values.forEach(function(company){
+              following.push(company.name)
+            })
+            user.linkedin.following = following
+            var newUser = new User({
+              email: req.user._json.emailAddress,
+              name: req.user.displayName,
+              token: req.session.accessToken,
+              linkedin: {
+                id: req.user.id,
+                following: following
+              }
+            })
+            newUser.save(function(error){
+              if (error) {throw error}
+            })
+        }
+      })
+      res.redirect('/');
   });
 
 router.get('/logout', function(req, res){

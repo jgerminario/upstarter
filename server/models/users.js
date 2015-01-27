@@ -5,9 +5,9 @@ var bcrypt = require('bcrypt-nodejs');
 var usersSchema = new Schema({
   email: { type: String, unique: true },
   name: String,
+  token: String,
   linkedin: {
     id: String,
-    token: String,
     following: Array
   }
 })
