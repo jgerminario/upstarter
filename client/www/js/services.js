@@ -57,11 +57,9 @@ angular.module('upstarter.services', ['ngResource'])
   var data = null;
   return {
     getData: function(){
-        return data
-    },
-    setData: function(data){
-        data = data
-    }
+    var data = null;
+    return {
+      getData: function(){
   }
 })
 
@@ -93,3 +91,4 @@ angular.module('upstarter.services', ['ngResource'])
 //       if (flower.color === "yellow"){
 //       colorArray.push(flower);
 //         }
+    return {data: ""}
