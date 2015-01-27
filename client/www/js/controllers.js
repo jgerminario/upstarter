@@ -55,7 +55,6 @@ angular.module('upstarter.controllers', [])
           pointer: {"background-color": "red"}
         }
   };
-
 }])
 
 .controller('StartupDetailCtrl', ['$scope','Startups', '$stateParams', function($scope, $stateParams, Startups) {

@@ -15,6 +15,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(cookieParser());
+app.use(allowCrossDomain);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
@@ -39,23 +40,15 @@ var allowCrossDomain = function(req, res, next) {
     next();
 };
 
-var validateCredentials = function(req, res, next){
-    console.log(req.headers);
-    if (req.headers.authorization == 'token ' + process.env.UPSTARTER_KEY){
-        res.contentType('application/json'); //setting response as JSON
-        next();
-    } else {
-        res.status(401).end("Access forbidden");
-    }
-};
-
-// view engine setup
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
-
+// var validateCredentials = function(req, res, next){
+//     console.log(req.headers);
+//     if (req.headers.authorization == 'token ' + process.env.UPSTARTER_KEY){
+//         res.contentType('application/json'); //setting response as JSON
+//         next();
+//     } else {
+//         res.status(401).end("Access forbidden");
+//     }
+// };
 // app.use(function(req, res, next) {
 //     var err = new Error('Not Found');
 //     err.status = 404;
