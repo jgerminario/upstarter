@@ -1,5 +1,5 @@
-var kue = require('kue'),
-  jobs = kue.createQueue();//need redis credentials?
+// var kue = require('kue'),
+  // jobs = kue.createQueue();//need redis credentials?
 var mongoose = require('mongoose');
 var express = require('express');
 var router = express.Router();
@@ -31,6 +31,6 @@ mongoose.connect('mongodb://admin:upstarter@ds041157.mongolab.com:41157/upstarte
 setInterval(function (){
   console.log('processing');
    startupAPI.updateStartup();
-}, 1000);
+}, 2000);
 
 module.exports = router;
