@@ -41,7 +41,7 @@
         <li class="list-group-item" ng-repeat="startup in startups | filter:main.searchInput track by $index | filter:main.cityInput" type="item-text-wrap" href="#/companies/{{companies.id}}"><option class="badge">{{startup.name}}</span></li>
       </ul> -->
     <ion-list>
-      <ion-item ng-repeat="startup in startups | filter:main.searchInput | filter:main.cityInput | limitTo:10" type="item-text-wrap" href="#/{{startup.name}}">
+      <ion-item ng-repeat="startup in startups | filter:main.searchInput | filter:main.cityInput | limitTo:10" type="item-text-wrap" ui-sref="search-startup({ startupName: startup.name })">
         <img ng-src="{{startup.thumb}}">
         <h2 class="startup-name">{{startup.name}}</h2>
         <h2 class="startup-score">{{startup.score}}</h2>
