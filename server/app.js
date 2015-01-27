@@ -58,6 +58,12 @@ app.use(function(req, res, next) {
 
 mongoose.connect('mongodb://admin:upstarter@ds041157.mongolab.com:41157/upstarter')
 
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function (callback) {
+    console.log("connection open");
+});
+
 // error handlers
 
 // development error handler
