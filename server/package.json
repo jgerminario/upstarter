@@ -29,6 +29,7 @@
     "mocha": "*",
     "expect.js": "*",
     "chai": "*",
-    "nock": "*"
+    "nock": "*",
+    "istanbul": "*"
   }
 }

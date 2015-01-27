@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var url = require('url');
+var querystring = require('querystring');
 var request = require('request');
 var Startup = require('../models/startups');
 var startupAPI = require('../helpers/seeds');
@@ -21,8 +23,18 @@ var organizationEndpoint = require('../helpers/api');
 
 // GET list of all company names - for client
 router.get('/', function(req, res) {
-
+  var limit = querystring.parse(url.parse(req.url).query).limit;
+  var string = querystring.parse(url.parse(req.url).query).string;
   var query = Startup.find({}).select('name slug -_id');
+  
+  if (string){
+    query = query.where({'name': new RegExp('.*' + string + '.*', "i")});
+  }
+
+  if (limit){
+    query = query.limit(limit);
+  } 
+
 
   var jsonResponse = [];
 
@@ -39,7 +51,7 @@ router.get('/', function(req, res) {
     })
   res.json(jsonResponse)
   })
-})
+});
 
 
 /* GET users listing - for testing the background job, not for use. */

@@ -1,13 +1,13 @@
 REPORTER = nyan
 MOCHA_OPTS = --ui bdd
 
-test:
+mocha:
 	clear
 	echo Starting test *********************************************************
 	./node_modules/mocha/bin/mocha \
 	--reporter $(REPORTER) \
 	$(MOCHA_OPTS) \
-	tests/*.js
+	test/*.js
 	echo Ending test
 
 console:
