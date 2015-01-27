@@ -1,13 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var request = require('request')
+var bodyparser = require('body-parser');
+var urlencode = bodyparser.urlencoded({ extended: false });
+var passport = require('passport');
+var LinkedInStrategy = require('passport-linkedin').Strategy;
+var User = require('../models/users');
 
-
-/* GET home page. */
-router.get('/', function(req, res) {
-
-	res.send('hey there')
-
-});
+router.get('/', function(req, res){
+  res.send('hi')
+})
 
 module.exports = router;
