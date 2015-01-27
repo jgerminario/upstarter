@@ -14,6 +14,23 @@ var test = require('./routes/test');
 
 var app = express();
 
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization, Token');
+    next();
+};
+
+var validateCredentials = function(req, res, next){
+    console.log(req.headers);
+    if (req.headers.authorization == 'token ' + process.env.UPSTARTER_KEY){
+        res.contentType('application/json'); //setting response as JSON
+        next();
+    } else {
+        res.status(401).end("Access forbidden");
+    }
+};
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -23,6 +40,7 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(allowCrossDomain);
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
