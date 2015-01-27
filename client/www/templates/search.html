@@ -7,6 +7,7 @@
         <i class="icon ion-search placeholder-icon"></i>
           <input type="search" ng-model="main.searchInput.name" placeholder="Search Companies">
       </label>
+
     </div>
     <div class="list list-inset">
       <label class="item item-input">
@@ -14,6 +15,7 @@
         <input type="search" ng-model="main.cityInput.city" placeholder="Search Cities">
       </label>
     </div>
+
     <a ng-click="employees = !employees" class="button button-outline icon-right ion-navicon button-balanced">Filter</a>
   </div>
      <div class="card" ng-show="employees">
@@ -23,16 +25,17 @@
           <div class="item range range-positive" ng-controller="SliderCtrl">
             <i class="icon ion-ios7"></i>
                <input ng-model="value" type="text" id="mySlider1" slider options="options" />
-            <i class="icon ion-ios7"></i>
+            <i class="icon ion-ios7"></i>{{value}}
           </div>
         </div>
       </div>
     </div>
 
-
     <div class="hotstartups">
-      Hot Startups
+      Hot Startups {{value}}
     </div>
+
+
 <!--
       <ul class="list-group">
         <li class="list-group-item" ng-repeat="startup in startups | filter:main.searchInput track by $index | filter:main.cityInput" type="item-text-wrap" href="#/companies/{{companies.id}}"><option class="badge">{{startup.name}}</span></li>

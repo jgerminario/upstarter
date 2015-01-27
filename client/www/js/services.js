@@ -16,23 +16,23 @@ angular.module('upstarter.services', ['ngResource'])
 .factory('StartupNames', ['$http', '$q',
   function($http, $q){
   var deferred = $q.defer();
-  console.log($q)
-  console.log(deferred)
+  // console.log($q)
+  // console.log(deferred)
   $http.get('names.json')
     .success(function(data){
       company_array = []
       angular.forEach(data.data.items, function(value, key){
         company_array.push(value);
-        console.log(value)
+        // console.log(value)
       })
       deferred.resolve(company_array);
-      console.log(deferred)
+      // console.log(deferred)
     })
     .error(function(){
       deferred.reject('There was an error');
     })
-  console.log("Predeferred")
-  console.log(deferred)
+  // console.log("Predeferred")
+  // console.log(deferred)
   return deferred.promise;
   // return {
   //   all: function() {
@@ -52,3 +52,7 @@ angular.module('upstarter.services', ['ngResource'])
 
 
 }])
+
+.factory('EmployeeRange', function(){
+    return {data: ""}
+    })
