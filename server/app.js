@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var passport = require('passport')
+var path = require('path')
 LinkedinStrategy = require('passport-linkedin-oauth2').Strategy;
 
 var User = require('./models/users');
