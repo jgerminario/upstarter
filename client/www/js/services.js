@@ -60,35 +60,32 @@ angular.module('upstarter.services', ['ngResource'])
     var data = null;
     return {
       getData: function(){
-  }
-})
-
-.factory('Startups', function() {
-
-  var startups = [
-    { name: 'Google', id: 1 },
-    { name: 'Yahoo', id: 2 },
-    { name: 'Microsoft', id: 3 }
-    ];
-
-  return {
-      getStartup: function(name) {
-
-       startups.forEach(function(startup){
-        if (startup.name === name ){
-          console.log(startup)
-          return startup
-
-
-        }
-      })
     }
-  }
-
+  };
+}
+};
 });
 
-// flowers.forEach(function(flower){
-//       if (flower.color === "yellow"){
-//       colorArray.push(flower);
+// .factory('Startups', function() {
+
+//   var startups = [
+//     { name: 'Google', id: 1 },
+//     { name: 'Yahoo', id: 2 },
+//     { name: 'Microsoft', id: 3 }
+//     ];
+
+//   return {
+//       getStartup: function(name) {
+
+//        startups.forEach(function(startup){
+//         if (startup.name === name ){
+//           console.log(startup)
+//           return startup
+
+
 //         }
-    return {data: ""}
+//       })
+//     }
+//   }
+
+// });
