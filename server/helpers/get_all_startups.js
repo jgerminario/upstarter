@@ -11,7 +11,7 @@ mongoose.connect('mongodb://admin:upstarter@ds041157.mongolab.com:41157/upstarte
 var count = 1;
 var incrementUpdate = function () {
   console.log("processing " + count);
-  if (count >= 10){
+  if (count >= 300){
     throw new Error("All done with processing");
   }
   count++
