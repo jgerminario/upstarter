@@ -39,7 +39,6 @@ angular.module('upstarter.controllers', [])
 .controller('SliderCtrl', ['$scope', 'EmployeeRange',function($scope, EmployeeRange){
 
   $scope.value = EmployeeRange.data;
-
   $scope.options = {
     from: 0,
     to: 10000,
