@@ -68,6 +68,7 @@ router.get('/auth/linkedin/callback',
       })
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       res.cookie('accessToken', req.session.accessToken, {maxAge:900000, httpOnly: false})
       res.redirect('http://localhost:8100/')
       // res.redirect('/auth/token')
@@ -77,10 +78,15 @@ router.get('/auth/linkedin/callback',
 =======
       res.redirect('http://localhost:8100/')
 >>>>>>> adds broken ajax call to server for access token
+=======
+      // res.redirect('http://localhost:8100/')
+      res.redirect('/auth/token')
+>>>>>>> alters server side auth to save to cookies
       // res.send({user: req.user})
   });
 
 router.get('/auth/token', function(req, res){
+  res.cookie('accessToken', req.session.accessToken, {maxAge:900000, httpOnly: false})
   res.send({token: req.session.accessToken})
 })
 
