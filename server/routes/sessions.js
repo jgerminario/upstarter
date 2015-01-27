@@ -67,12 +67,16 @@ router.get('/auth/linkedin/callback',
         }
       })
 <<<<<<< HEAD
+<<<<<<< HEAD
       res.cookie('accessToken', req.session.accessToken, {maxAge:900000, httpOnly: false})
       res.redirect('http://localhost:8100/')
       // res.redirect('/auth/token')
 =======
       res.redirect('/auth/token')
 >>>>>>> checks rootscope as a viable option for access token storage
+=======
+      res.redirect('http://localhost:8100/')
+>>>>>>> adds broken ajax call to server for access token
       // res.send({user: req.user})
   });
 
