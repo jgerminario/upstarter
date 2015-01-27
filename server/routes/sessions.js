@@ -66,9 +66,13 @@ router.get('/auth/linkedin/callback',
             })
         }
       })
+<<<<<<< HEAD
       res.cookie('accessToken', req.session.accessToken, {maxAge:900000, httpOnly: false})
       res.redirect('http://localhost:8100/')
       // res.redirect('/auth/token')
+=======
+      res.redirect('/auth/token')
+>>>>>>> checks rootscope as a viable option for access token storage
       // res.send({user: req.user})
   });
 
@@ -77,12 +81,20 @@ router.get('/auth/token', function(req, res){
 })
 
 router.get('/logout', function(req, res){
+<<<<<<< HEAD
   // User.findOne({ email: req.user._json.emailAddress}, function(err, user){
   //   user.token = ""
   //   user.save();
   // });
+=======
+  User.findOne({ email: req.user._json.emailAddress}, function(err, user){
+    user.token = ""
+    user.save();
+  });
+>>>>>>> checks rootscope as a viable option for access token storage
   req.session.accessToken = null
   req.logout();
+  console.log(req.user)
   res.send('logged out');
 });
 

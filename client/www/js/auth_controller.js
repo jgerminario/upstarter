@@ -1,5 +1,6 @@
 angular.module('upstarter.auth.controllers', [])
 
+<<<<<<< HEAD
 .controller("LoginCtrl", ["$scope", "$rootScope", '$location', '$window', function($scope, $location, $window, $rootScope) {
 
     $scope.oauth = function(){
@@ -15,3 +16,12 @@ angular.module('upstarter.auth.controllers', [])
     //   return cookie1
     // }
 }])
+=======
+.controller('LoginCtrl', ['$scope', '$rootScope'], function($scope, $rootScope){
+  $scope.test = $rootScope.test
+})
+
+.controller('LogoutCtrl', ['$scope', '$rootScope'], function($scope, $rootScope){
+  $scope.test = $rootScope.test
+})
+>>>>>>> checks rootscope as a viable option for access token storage
