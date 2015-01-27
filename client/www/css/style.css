@@ -1,4 +1,53 @@
 /* Empty. Add your own CSS if you like */
-.startup-score {
+
+div {
+  margin: 0;
+  padding: 0;
+}
+
+.button {
+  margin: 0px 10px;
+}
+
+.listing-heading {
+  margin: 10px 10px;
+  text-align: center;
+}
+
+.item-content {
+  padding-right: 16px !important;
+}
+
+.company-logo {
+  border: 1px red solid;
+  width: 20%;
+  float: left;
+  padding: 5px;
+}
+
+.company-data {
+  border: 1px green solid;
+  width: 60%;
+  max-width: 60%;
+  float: left;
+  padding: 5px;
+}
+
+.company-name {
+  font-size: 150%;
+  padding: 5px 0;
+  border-bottom: 1px gray dashed;
+}
+
+.company-info {
+  font-size: 90%;
+}
+
+.company-momentum-score {
+  border: 1px blue solid;
+  width: 20%;
   float: right;
+  padding: 5px;
+  text-align: center;
+  font-size: 200%;
 }
