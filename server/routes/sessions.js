@@ -67,8 +67,7 @@ router.get('/auth/linkedin/callback',
             })
         }
       })
-      // res.send({token: req.session.accessToken});
-      res.send({user: req.user})
+      res.send({token: req.session.accessToken});
   });
 
 router.get('/logout', function(req, res){
