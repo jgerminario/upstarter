@@ -52,7 +52,6 @@ router.get('/auth/linkedin/callback',
             req.user._json.following.companies.values.forEach(function(company){
               following.push(company.name)
             })
-            user.linkedin.following = following
             var newUser = new User({
               email: req.user._json.emailAddress,
               name: req.user.displayName,
@@ -67,7 +66,7 @@ router.get('/auth/linkedin/callback',
             })
         }
       })
-      res.redirect('/auth/token')
+      res.redirect('http://localhost:8100/')
       // res.send({user: req.user})
   });
 
