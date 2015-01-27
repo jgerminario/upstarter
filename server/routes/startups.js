@@ -23,7 +23,7 @@ var organizationEndpoint = require('../helpers/api');
 
 // GET list of all company names - for client
 router.get('/', function(req, res) {
-  var limit = querystring.parse(url.parse(req.url).query).limit;
+  var limit = querystring.parse(url.parse(req.url).query).limit || 50;
   var string = querystring.parse(url.parse(req.url).query).string;
   var query = Startup.find({}).select('name slug -_id');
   
@@ -31,9 +31,7 @@ router.get('/', function(req, res) {
     query = query.where({'name': new RegExp('.*' + string + '.*', "i")});
   }
 
-  if (limit){
-    query = query.limit(limit);
-  } 
+  query = query.limit(limit); 
 
 
   var jsonResponse = [];

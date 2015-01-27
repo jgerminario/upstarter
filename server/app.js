@@ -6,7 +6,10 @@ LinkedinStrategy = require('passport-linkedin-oauth2').Strategy;
 var User = require('./models/users');
 var logger = require('morgan');
 var dotenv = require('dotenv');
+var path = require('path');
 dotenv.load();
+var fs = require('fs');
+var mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session')
@@ -15,7 +18,6 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(cookieParser());
-app.use(allowCrossDomain);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
@@ -28,10 +30,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(__dirname + '/public'));
 
-var routes = require('./routes/sessions');
-var users = require('./routes/users');
-var startups = require('./routes/startups');
-var test = require('./routes/test');
 
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -39,6 +37,13 @@ var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization, Token');
     next();
 };
+
+app.use(allowCrossDomain);
+
+var routes = require('./routes/sessions');
+var users = require('./routes/users');
+var startups = require('./routes/startups');
+var test = require('./routes/test');
 
 // var validateCredentials = function(req, res, next){
 //     console.log(req.headers);
@@ -64,7 +69,6 @@ app.use(allowCrossDomain);
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 // app.get('/startups/*', validateCredentials);
->>>>>>> unsuccessful in adding auth to cors call, authorization token not included on get call after preflight, iceboxing it
 
 app.use('/', routes);
 app.use('/users', users);
@@ -78,7 +82,7 @@ app.use(function(req, res, next) {
     next(err);
 });
 
-mongoose.connect('mongodb://admin:upstarter@ds041157.mongolab.com:41157/upstarter')
+mongoose.connect('mongodb://admin:upstarter@ds041157.mongolab.com:41157/upstarter');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
