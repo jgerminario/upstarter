@@ -66,11 +66,13 @@ router.get('/auth/linkedin/callback',
             })
         }
       })
-      res.redirect('http://localhost:8100/')
+      // res.redirect('http://localhost:8100/')
+      res.redirect('/auth/token')
       // res.send({user: req.user})
   });
 
 router.get('/auth/token', function(req, res){
+  res.cookie('accessToken', req.session.accessToken, {maxAge:900000, httpOnly: false})
   res.send({token: req.session.accessToken})
 })
 
