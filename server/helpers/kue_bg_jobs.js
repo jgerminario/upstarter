@@ -33,16 +33,40 @@ db.once('open', function (callback) {
 // jobs.process('api_job', function (job, done){
 //  done();
 // });
+var shuffle_array = function(array) {
+  var counter = array.length, 
+  temp, 
+  index;
+
+    // While there are elements in the array
+  while (counter > 0) {
+      // Pick a random index
+      index = Math.floor(Math.random() * counter);
+
+      counter--;
+
+      temp = array[counter];
+      array[counter] = array[index];
+      array[index] = temp;
+    }
+
+    return array;
+};
 
 console.log("starting 'find' operation (this may take a while)");
-Startup.find(function(err,data){
+
+Startup.where('description').exists(false).exec(function(err, data){
+  var i = 0,
+    startups = shuffle_array(data);
   if (err) {console.log(err); }
+
   console.log("beginning seed");
-  var i = 0;
+
   setInterval(function (){
     console.log('processing number ' + i);
-    startupAPI.updateStartup(data);
+    startupAPI.updateStartup(startups[i]);
     i++;
+
   }, 2000);
 });
 
