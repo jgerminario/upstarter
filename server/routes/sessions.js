@@ -29,18 +29,6 @@ passport.use(new LinkedinStrategy({
   }
 ));
 
-router.get('/', function(req, res){
-  res.render('index', { user: req.user });
-});
-
-router.get('/login', function(req, res){
-  res.render('login', { user: req.user });
-});
-
-router.get('/account', ensureAuthenticated, function(req, res){
-  res.render('account', { user: req.user });
-});
-
 router.get('/auth/linkedin',
   passport.authenticate('linkedin', { state: 'SOME STATE' }),
   function(req, res){});
