@@ -21,39 +21,66 @@ div {
 }
 
 .item-content {
+  padding-top: 0px !important;
   padding-right: 16px !important;
+  height: 90px;
 }
 
+
 .company-logo {
-  border: 1px red solid;
+  /*border: 1px red solid;*/
   width: 20%;
   float: left;
   padding: 5px;
 }
 
 .company-data {
-  border: 1px green solid;
+  /*border: 1px green solid;*/
   width: 60%;
   max-width: 60%;
   float: left;
   padding: 5px;
+  font-weight: 200;
 }
 
 .company-name {
-  font-size: 150%;
+  font-size: 130%;
   padding: 5px 0;
-  border-bottom: 1px gray dashed;
+  color: rgb(0,0,0);
+  font-weight: 100;
+  border-bottom: 1px rgb(150, 150, 150) solid;
 }
 
+
 .company-info {
-  font-size: 90%;
+  font-style: italic;
+  font-size: 50%;
+}
+
+.company-info-tidbit {
+  line-height: 14px;
 }
 
 .company-momentum-score {
-  border: 1px blue solid;
+  /*border: 1px blue solid;*/
   width: 20%;
   float: right;
-  padding: 5px;
+  padding:  17px 5px;
   text-align: center;
-  font-size: 200%;
+  font-size: 300%;
+}
+
+.momentum-score-header {
+  position: absolute;
+  right: 3%;
+  font-size: 30%;
+  display: inline-block;
+}
+
+.item-input {
+  height: 30px;
+}
+
+.button {
+  width: 97%;
 }
