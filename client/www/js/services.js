@@ -54,5 +54,13 @@ angular.module('upstarter.services', ['ngResource'])
 }])
 
 .factory('EmployeeRange', function(){
-    return {data: ""}
+    var data = null;
+    return {
+      getData: function(){
+        return data
+      },
+      setData: function(data){
+        data = data
+      }
+    }
     })

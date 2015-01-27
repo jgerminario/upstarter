@@ -26,7 +26,7 @@ angular.module('upstarter.controllers', [])
 .controller('SearchCtrl', ['$scope', 'StartupNames', 'EmployeeRange', function($scope, StartupNames, EmployeeRange) {
 
 
-    $scope.value = EmployeeRange.data;
+    $scope.value = EmployeeRange.getData();
     StartupNames.then(function(data){
       $scope.startups = data;
       console.log(data)
@@ -38,8 +38,9 @@ angular.module('upstarter.controllers', [])
 
 .controller('SliderCtrl', ['$scope', 'EmployeeRange',function($scope, EmployeeRange){
 
-  $scope.value = EmployeeRange.data;
 
+  $scope.value = "0;10000"
+  EmployeeRange.setData($scope.value)
   $scope.options = {
     from: 0,
     to: 10000,
