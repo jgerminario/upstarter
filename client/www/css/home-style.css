@@ -26,12 +26,20 @@ div {
   height: 90px;
 }
 
+.logo-image {
+  vertical-align: middle;
+  width: 100%;
+}
+
 
 .company-logo {
+  display: inline-block;
+  vertical-align: middle;
   /*border: 1px red solid;*/
   width: 20%;
   float: left;
   padding: 5px;
+  padding-top: 15px;
 }
 
 .company-data {
@@ -44,10 +52,10 @@ div {
 }
 
 .company-name {
-  font-size: 130%;
+  font-size: 115%;
   padding: 5px 0;
-  color: rgb(0,0,0);
-  font-weight: 100;
+  color: rgb(60, 60, 60);
+  font-weight: 200;
   border-bottom: 1px rgb(150, 150, 150) solid;
 }
 
@@ -55,6 +63,7 @@ div {
 .company-info {
   font-style: italic;
   font-size: 50%;
+  width: auto;
 }
 
 .company-info-tidbit {
