@@ -14,20 +14,20 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-// passport.use(new LinkedinStrategy({
-//     // clientID: process.env.API_KEY,
-//     // clientSecret: process.env.SECRET_KEY,
-//     callbackURL: "http://localhost:3000/auth/linkedin/callback",
-//     scope: [ 'r_fullprofile', 'r_emailaddress'],
-//     passReqToCallback: true
-//   },
-//   function(req, accessToken, refreshToken, profile, done) {
-//     req.session.accessToken = accessToken;
-//     process.nextTick(function () {
-//         return done(null, profile);
-//     });
-//   }
-// ));
+passport.use(new LinkedinStrategy({
+    clientID: process.env.API_KEY,
+    clientSecret: process.env.SECRET_KEY,
+    callbackURL: "http://localhost:3000/auth/linkedin/callback",
+    scope: [ 'r_fullprofile', 'r_emailaddress', 'r_network'],
+    passReqToCallback: true
+  },
+  function(req, accessToken, refreshToken, profile, done) {
+    req.session.accessToken = accessToken;
+    process.nextTick(function () {
+        return done(null, profile);
+    });
+  }
+));
 
 router.get('/auth/linkedin',
   passport.authenticate('linkedin', { state: 'SOME STATE' }),
@@ -76,7 +76,7 @@ router.get('/logout', function(req, res){
     user.save();
   });
   req.logout();
-  res.redirect('/');
+  res.send('logged out');
 });
 
 function ensureAuthenticated(req, res, next) {
