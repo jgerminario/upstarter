@@ -16,7 +16,7 @@
       </label>
     </div>
 
-    <a ng-click="employees = !employees" class="button button-outline icon-right ion-navicon button-balanced">Filter</a>
+    <a ng-click="employees = !employees" class="button button-outline icon-right ion-navicon button-balanced">Additional Search Options</a>
   </div>
      <div class="card" ng-show="employees">
       <div class="item item-text-wrap">
@@ -32,7 +32,8 @@
     </div>
 
     <div class="listing-heading">
-      Hot Startups {{value}}
+      Hot Startups
+      <div class="momentum-score-header">Momentum Score</div>
     </div>
 
 
@@ -48,13 +49,14 @@
           <div class="company-name">{{startup.name}}</div>
 
           <div class="company-info">
-            <div>{{startup.city}}</div>
-            <div>employees:&nbsp;{{startup.employees}}</div>
-            <div>{{startup.address}}</div>
+            <div class="company-info-tidbit">{{startup.city}}</div>
+            <div class="company-info-tidbit">employees:&nbsp;{{startup.employees}}</div>
+            <div class="company-info-tidbit">{{startup.address}}</div>
           </div>
         </div>
 
-        <div class="company-momentum-score">{{startup.score}}</div>
+        <div class="company-momentum-score">
+          </span>{{startup.score}}</div>
       </ion-item>
     </ion-list>
 <!--        <ul class="list-group">
