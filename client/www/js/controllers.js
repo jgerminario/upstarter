@@ -9,7 +9,7 @@ angular.module('upstarter.controllers', [])
     $scope.startup = Startup.query();
     $http({
       method: 'GET',
-      url: "http://localhost:3000/startups",
+      url: "http://upstarter-server.herokuapp.com/startups",
       contentType: "application/json",
       beforeSend: function(xhr) {
       var auth_str = "token " + "<%= ENV['UPSTARTER_KEY'] %>";

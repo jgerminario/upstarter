@@ -43,9 +43,9 @@ router.get('/', function(req, res) {
 
 
 /* GET users listing - for testing the background job, not for use. */
-router.get('/cb', function(req, res) {
-   startupAPI.updateStartup();
-});
+// router.get('/cb', function(req, res) {
+//    startupAPI.updateStartup();
+// });
 
 
 
