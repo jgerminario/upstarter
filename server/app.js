@@ -35,7 +35,7 @@ var test = require('./routes/test');
 
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
     res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization, Token');
     next();
 };
@@ -49,11 +49,22 @@ var allowCrossDomain = function(req, res, next) {
 //         res.status(401).end("Access forbidden");
 //     }
 // };
-// app.use(function(req, res, next) {
-//     var err = new Error('Not Found');
-//     err.status = 404;
-//     next(err);
-// });
+
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
+// uncomment after placing your favicon in /public
+//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(allowCrossDomain);
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+// app.get('/startups/*', validateCredentials);
+>>>>>>> unsuccessful in adding auth to cors call, authorization token not included on get call after preflight, iceboxing it
 
 app.use('/', routes);
 app.use('/users', users);

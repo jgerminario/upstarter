@@ -12,10 +12,10 @@ var organizationEndpoint = require('../helpers/api');
 
 // GET list of all company names - for testing the background job, not for use//
 
-router.get('/all/:pageNum', function(req, res) {
-  console.log(req.params.pageNum)
-  organizationEndpoint.fetchStartups(req.params.pageNum)
-})
+// router.get('/all/:pageNum', function(req, res) {
+//   console.log(req.params.pageNum)
+//   organizationEndpoint.fetchStartups(req.params.pageNum)
+// })
 
 
 

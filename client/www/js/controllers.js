@@ -9,15 +9,17 @@ angular.module('upstarter.controllers', [])
     $scope.startup = Startup.query();
     $http({
       method: 'GET',
-      url: "http://localhost:3000/startups",
+      // url: "http://upstarter-server.herokuapp.com/startups",
+      url: "http://localhost:3000/startups/chevron",
       contentType: "application/json",
-      beforeSend: function(xhr) {
-      var auth_str = "token " + "<%= ENV['UPSTARTER_KEY'] %>";
-      }
+      // beforeSend: function(xhr) {
+      // var str = "token 0HnLNRufyvmfYCPYvgkiM2jS3";
+      // xhr.setRequestHeader("authorization", str);
+      // }
     })
-      .success(function(data, status, headers, config){
+      .success(function(data,status){
         console.log(data);
-    });
+      });
 
     // $http.get("http://api.crunchbase.com/v/2/organization/crowdtilt?user_key=2c7e457b872b77f865562e75967f76ef").success(function(data){
     // });
