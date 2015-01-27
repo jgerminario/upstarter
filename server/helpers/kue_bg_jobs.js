@@ -63,6 +63,7 @@ Startup.where('description').exists(false).exec(function(err, data){
   console.log("beginning seed");
 
   setInterval(function (){
+    if (i>startups.length){ throw new Error("All records have been updated")}
     console.log('processing number ' + i);
     startupAPI.updateStartup(startups[i]);
     i++;
