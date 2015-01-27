@@ -67,10 +67,14 @@ router.get('/auth/linkedin/callback',
             })
         }
       })
-      res.redirect('/');
+      res.send({token: req.session.accessToken});
   });
 
 router.get('/logout', function(req, res){
+  User.findOne({ email: req.user._json.emailAddress}, function(err, user){
+    user.token = ""
+    user.save();
+  });
   req.logout();
   res.redirect('/');
 });
