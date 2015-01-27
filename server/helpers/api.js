@@ -37,11 +37,11 @@ var organizationEndpoint = (function (){
 
 
   var parseFields = function (id, error, response, body, res){
-    if (error) { console.log(error) }
-      if (response.statusCode != 200) { console.log(response.body) }
-        if (!error && response.statusCode == 200) {
+    if (error) { return console.log(error) }
+      if (response.statusCode != 200) { return console.log(response.body); }
+        if (!error && response.statusCode == 200 && JSON.parse(body).data) {
           var json_body = JSON.parse(body).data;
-          console.log(json_body)
+          // console.log(json_body)
           var name = json_body.properties.name
           var path = 'organization/' + json_body.properties.permalink
           if (json_body.properties.closed_on != null || json_body.properties.is_closed == true){
@@ -168,8 +168,7 @@ var organizationEndpoint = (function (){
         if (res) {
           res.send(startup);
         }
-        console.log(startup);
-        console.log(startup._id);
+        console.log("Saving " + startup.name + " as " + startup._id);
       });
     }
   };

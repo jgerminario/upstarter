@@ -7,8 +7,8 @@ var organizationEndpoint = require('./api.js');
 
 var startupAPI = (function (){
 
-  var findRandomStartup = function (err, startups){
-    console.log("test")
+  var findRandomStartup = function (startups){
+    console.log("test");
     var count = startups.length,
         rand_num = Math.floor(Math.random() * count),
         startup_to_update = startups[rand_num];
@@ -16,6 +16,7 @@ var startupAPI = (function (){
       rand_num = Math.floor(Math.random() * count);
       startup_to_update = startups[rand_num];
     }
+    console.log("Updating " + startup_to_update.name);
     Startup.findById(startup_to_update.id, function(err, data){
       makeAPICall(err, data);
     });
@@ -26,8 +27,8 @@ var startupAPI = (function (){
   };
 
   return {
-    updateStartup: function(){
-      Startup.find(findRandomStartup);
+    updateStartup: function(startups){
+      findRandomStartup(startups);
     }
   };
 

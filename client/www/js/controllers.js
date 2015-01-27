@@ -9,7 +9,7 @@ angular.module('upstarter.controllers', [])
     $scope.startup = Startup.query();
     $http({
       method: 'GET',
-      url: "http://upstarter-server.herokuapp.com/startups",
+      url: "http://localhost:3000/startups",
       contentType: "application/json",
       beforeSend: function(xhr) {
       var auth_str = "token " + "<%= ENV['UPSTARTER_KEY'] %>";
@@ -26,12 +26,12 @@ angular.module('upstarter.controllers', [])
 .controller('SearchCtrl', ['$scope', 'StartupNames', 'EmployeeRange', function($scope, StartupNames, EmployeeRange) {
 
 
-
-    $scope.value = EmployeeRange.data;
+    $scope.value = EmployeeRange.getData();
     StartupNames.then(function(data){
       $scope.startups = data;
       console.log(data)
     })
+
 
 
     // $http.get("http://api.crunchbase.com/v/2/organization/crowdtilt?user_key=2c7e457b872b77f865562e75967f76ef").success(function(data){
@@ -40,7 +40,8 @@ angular.module('upstarter.controllers', [])
 .controller('SliderCtrl', ['$scope', 'EmployeeRange',function($scope, EmployeeRange){
 
 
-  $scope.value = EmployeeRange.data;
+  $scope.value = "0;10000"
+  EmployeeRange.setData($scope.value)
   $scope.options = {
     from: 0,
     to: 10000,

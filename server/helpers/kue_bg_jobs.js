@@ -10,6 +10,13 @@ var startupAPI = require('./seeds');
 
 mongoose.connect('mongodb://admin:upstarter@ds041157.mongolab.com:41157/upstarter');
 
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function (callback) {
+  console.log("connection started")
+});
+
+
 
 
 // function APIlookupSingle (){
@@ -27,10 +34,16 @@ mongoose.connect('mongodb://admin:upstarter@ds041157.mongolab.com:41157/upstarte
 //  done();
 // });
 
+console.log("starting 'find' operation (this may take a while)");
+Startup.find(function(err,data){
+  if (err) {console.log(err); }
+  console.log("beginning seed");
+  var i = 0;
+  setInterval(function (){
+    console.log('processing number ' + i);
+    startupAPI.updateStartup(data);
+    i++;
+  }, 2000);
+});
 
-setInterval(function (){
-  console.log('processing');
-   startupAPI.updateStartup();
-}, 2000);
-
-module.exports = router;
+// module.exports = router;
