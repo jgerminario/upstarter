@@ -1,9 +1,17 @@
 <ion-view view-title="Test">
   <ion-content>
-    <p>{{startup.data.properties.short_description}}</p>
+<!--     <p>{{startup.data.properties.short_description}}</p>
     <p>{{startup.data.properties.name}}</p>
     {{startup.data.properties.homepage_url}}
     {{startup.data.properties.description}}
-    {{startup.data.properties.total_funding_usd}}
+    {{startup.data.properties.total_funding_usd}} -->
+
+    <form id="login" ng-submit="login()">
+    	<input type="submit" value="Login"/>
+    </form>
+    
+    <form id="logout" ng-submit="logout()">
+    	<input type="submit" value="Logout"/>
+    </form>
   </ion-content>
 </ion-view>

@@ -34,7 +34,7 @@ router.get('/auth/linkedin',
   function(req, res){});
 
 router.get('/auth/linkedin/callback',
-  passport.authenticate('linkedin', { failureRedirect: '/login' }),
+  passport.authenticate('linkedin', { failureRedirect: 'http://localhost:8100/' }),
   function(req, res) {
      User.findOne({ email: req.user._json.emailAddress}, function(err, user){
         if (user) {
@@ -52,11 +52,10 @@ router.get('/auth/linkedin/callback',
             req.user._json.following.companies.values.forEach(function(company){
               following.push(company.name)
             })
-            user.linkedin.following = following
             var newUser = new User({
               email: req.user._json.emailAddress,
               name: req.user.displayName,
-              token: req.session.accessToken,
+              // token: req.session.accessToken,
               linkedin: {
                 id: req.user.id,
                 following: following
@@ -67,17 +66,24 @@ router.get('/auth/linkedin/callback',
             })
         }
       })
-      // res.send({token: req.session.accessToken});
-      res.send({user: req.user})
+
+      res.cookie('accessToken', req.session.accessToken, {maxAge:900000, httpOnly: false})
+      res.redirect('http://localhost:8100/')
+      // res.redirect('/auth/token')
+      // res.send({user: req.user})
   });
 
+router.get('/auth/token', function(req, res){
+  res.send({token: req.session.accessToken})
+})
+
 router.get('/logout', function(req, res){
-  User.findOne({ email: req.user._json.emailAddress}, function(err, user){
-    user.token = ""
-    user.save();
-  });
+  // User.findOne({ email: req.user._json.emailAddress}, function(err, user){
+  //   user.token = ""
+  //   user.save();
+  // });
+  req.session.accessToken = null
   req.logout();
-  res.send('logged out');
 });
 
 function ensureAuthenticated(req, res, next) {
