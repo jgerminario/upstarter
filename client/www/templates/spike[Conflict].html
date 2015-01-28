@@ -1,0 +1,48 @@
+<ion-view view-title="Search">
+  <ion-content>
+  <!-- 
+  <input type="text" ng-model="data.message">
+  <h1>{{ data.message }}</h1>
+  ^ note that the dot will end up allowing translation across whole scope, whereas otherwise this will be exclusive to each individual controller. Models can be defined on a come-and-go basis
+
+  <div ng-controller="SearchCtrl">
+    <input type="text" ng-model="data.message">
+    <h1>{{ data.message }}</h1>
+  </div>
+
+  <div ng-controller="SpikeCtrl">
+    <input type="text" ng-model="data.message">
+    <h1>{{ data.message }}</h1>
+  </div> -->
+  <!-- {{spike.message}} -->
+<!--   <input type="text" ng-model="spike.message">
+  {{ reversedMessage() }}
+  {{ excelsor.basketweaver.cat }} -->
+  <!-- non-existant elements will not throw errors -->
+<!--   <input type='text' ng-model="expr" size="80"/>
+  <button ng-click="addExp(expr)">Evaluate</button>
+  <ul>
+   <li ng-repeat="expr in exprs"> --><!-- what does track by $index do, removes elements so they can be deleted? Will not allow this to be saved as a repeater because dup keys are not allowed-->
+<!--      [ <a href="" ng-click="removeExp($index)">X</a> ]
+     <tt>{{$index}}. {{$parent}} - {{expr}}</tt> => <span ng-bind="$parent.$eval(expr)"></span> --><!-- $eval will automatically get the result of the expresssion from within this scope. What does parent do - refers to the scope, which can run $eval - and ng-bind - like 'bind' in Javascript? -->
+<!--     </li>
+  </ul> -->
+
+<!--   Name: <input ng-model="name" type="text"/>
+  <button ng-click="greet()">Greet</button>
+  <button ng-click="window.alert('Should not see me')">Won't greet</button> --> <!-- no window alerts, only bound to $window and the such within the controller -->
+  <!-- Can do ternary operator for control flow, nothing else -->
+  <!-- {{ (true ? startup : spike.message )}} -->
+
+  <!-- click event, below, will pass in an $event, instance of jQuery event object, all similar stuff with the attributes, etc -->
+<!--     <button ng-click="clickMe($event)">Event</button>
+  <p><code>$event</code>: <pre> {{$event | json}}</pre></p> --><!-- $event here is out of scope -->
+<!--   <p><code>clickEvent</code>: <pre>{{clickEvent | json}}</pre></p> -->
+
+  <button ng-click="clickMe($event)">Click Me</button>
+  <p id="one-time-binding-example">One time binding: {{::name}}</p> <!-- will change multiple times -->
+  <p id="normal-binding-example">Normal binding: {{name}}</p> <!-- only changes once -->
+
+
+</ion-content>
+</ion-view> 

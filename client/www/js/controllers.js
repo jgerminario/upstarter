@@ -1,5 +1,11 @@
 angular.module('upstarter.controllers', [])
 
+.controller('TestCtrl2', ['$scope', '$http', 'Startup', function($scope, $http,Startup) {
+    $scope.startup = Startup.query();
+  
+  scope.test = "test";
+}])
+
 .controller('TestCtrl', ['$scope', '$http', 'Startup', function($scope, $http,Startup) {
   $scope.test = "This is a test"
     // Startup.query().$promise.then(function(data){
@@ -59,7 +65,10 @@ angular.module('upstarter.controllers', [])
   };
 }])
 
-.controller('StartupDetailCtrl', ['$scope','Startups', '$stateParams', function($scope, $stateParams, Startups) {
+.controller('StartupDetailCtrl', ['$scope', '$stateParams', 'Startup', function($scope, $stateParams, Startup) {
+  console.log($stateParams.startupName);
+  // Startup.find($stateParams.startupName);
+  $scope.startup = Startup.query();
 //     $scope.startup = Startups.getStartup($stateParams.startupName)
 //     var thing = $stateParams.getStartup($scope.startup.startupName)
 // console.log(thing)

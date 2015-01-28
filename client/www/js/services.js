@@ -6,7 +6,9 @@ angular.module('upstarter.services', ['ngResource'])
       query: {method: "GET", isArray: false}
       // get: {method: "GET"}
     });
-  return Startup;
+
+  return Startup
+  // Startup;
 }])
 .factory('Test', [
   function(){

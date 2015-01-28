@@ -27,10 +27,39 @@ angular.module('upstarter', ['ionic', 'upstarter.controllers', 'upstarter.servic
   $stateProvider
 
   // setup an abstract state for the tabs directive
+
+
     .state('search', {
     url: "/",
     templateUrl: "templates/search.html",
     controller: 'SearchCtrl'
+  })  
+
+    .state('test', {
+      abstract: true,
+      templateUrl: 'templates/topnav.html'
+    })
+
+    .state('test.first', {
+    abstract: true,
+    url: "/test",
+    // templateUrl: "templates/test.html",
+    views: {
+      first: {
+        template: 
+      '<ion-nav-view></ion-nav-view>'
+        // controller: 'TestCtrl'
+      }
+    }
+  })
+    .state('test.second', {
+    url: "",
+    views: {
+      second: {
+        templateUrl: "templates/test2.html",
+          controller: 'TestCtrl2'
+      }
+    }
   })
     .state('search-startup', {
     url: "/startups/:startupName",
@@ -38,5 +67,5 @@ angular.module('upstarter', ['ionic', 'upstarter.controllers', 'upstarter.servic
     controller: 'StartupDetailCtrl'
   })
 
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/test');
 });
