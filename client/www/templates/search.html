@@ -52,7 +52,7 @@
     <ion-list class="companies-container">
       <ion-item ng-repeat="startup in startups | filter:main.searchInput | filter:main.cityInput"
                 type="item-text-wrap"
-                href="#/startups/{{startup.name}}"
+                href="#/startups/{{startup.slug}}"
                 class="item item-thumbnail-left">
 
         <img class="company-logo"
