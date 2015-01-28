@@ -1,11 +1,32 @@
-<ion-view view-title="startup-detail">
-  <ion-content class="has-header">
+<ion-header-bar class="bar bar-header bar-stable">
+  <a href="/#/" class="button icon-left ion-chevron-left button-clear button-dark">Back</a>
+  <h1 class="title">{{startup.name}}</h1>
+</ion-header-bar>
 
-    <div class="row">
-      <div class="col">Hey there</div>
-      <div class="col">Hey there</div>
-      <div class="col">Hey there</div>
-      <div class="col">Hey there</div>
+<ion-view view-title="Startup Detail">
+  <ion-content class="content padding has-header">
+
+    <div class="top row">
+      <div class="momentum col col-50"><img class="company-logo" src="http://www.online-image-editor.com//styles/2014/images/example_image.png"></div>
+      <div class="col col-50"><div class="momentum-score-title">Momentum Score</div><div class="the-number">96</div></div>
+    </div>
+    <div class="main-content row">
+      <div class="col col-50">
+        "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"</div>
+      <div class="stats col col-50">
+        <div class="stats-header">At-A-Glance</div>
+        <table>
+          <tr><td class="stat-type">Offices</td><td>New York, NY; San Francisco, CA</td></tr>
+          <tr><td class="stat-type">Employees</td><td>5305</td></tr>
+          <tr><td class="stat-type">Founded On</td><td>April 5, 2012</td></tr>
+          <tr><td class="stat-type">Closed On</td><td></td></tr>
+          <tr><td class="stat-type">Total Funding</td><td>$15,000,000</td></tr>
+          <tr><td class="stat-type">Investments</td><td>8</td></tr>
+          <tr><td class="stat-type">Founded by</td><td>Thomas Monson & Gordon Hinckley</td></tr>
+          <tr><td class="stat-type">Website</td><td>www.google.com</td></tr>
+        </table>
+      </div>
+
     </div>
 
   <!-- <div class="startup-container"> -->
