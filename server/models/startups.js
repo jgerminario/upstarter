@@ -132,6 +132,7 @@ startupsSchema.statics.calculateFundraisePercentile = function () {
 
 startupsSchema.statics.calculateFundraiseRate = function (fundraisingRounds, years) {
   // TODO: Check that this works as a hook for new startups created
+  console.log("calculaing fundraise rate")
   var fundraiseArray = [];
   var total = 0;
   var totalRate = 0;
@@ -150,15 +151,24 @@ startupsSchema.statics.calculateFundraiseRate = function (fundraisingRounds, yea
 };
 
 startupsSchema.statics.resetFundraiseRates = function () {
+    var self = this;
     this.find().exec(function(err, data){
       data.forEach(function(company){
-        console.log("Before: " + company.name + " 1. " + this.oneYearRate + " 2. " + this.twoYearRate + " 3. " + this.threeYearRate);
-        company.threeYearRate = calculateFundraiseRate(fundraiseRounds, 3),
-         company.twoYearRate = calculateFundraiseRate(fundraiseRounds, 2),
-         company.oneYearRate = calculateFundraiseRate(fundraiseRounds, 1);
+        console.log("Before: " + company.name + " 1. " + company.oneYearRate + " 2. " + company.twoYearRate + " 3. " + company.threeYearRate);
+        console.log(company.funding_rounds);
+        if (company.funding_rounds){
+          company.threeYearRate = self.calculateFundraiseRate(company.funding_rounds, 3),
+           company.twoYearRate = self.calculateFundraiseRate(company.funding_rounds, 2),
+           company.oneYearRate = self.calculateFundraiseRate(company.funding_rounds, 1);
+         }
+         else {
+            company.threeYearRate = 0;
+            company.twoYearRate = 0;
+            company.oneYearRate = 0;
+         }
         company.save(function(err, data){
           if (err) { console.log(err); }
-          console.log("After: " + company.name + " 1. " + this.oneYearRate + " 2. " + this.twoYearRate + " 3. " + this.threeYearRate);
+          console.log("After: " + company.name + " 1. " + company.oneYearRate + " 2. " + company.twoYearRate + " 3. " + company.threeYearRate);
         });
       });
     });

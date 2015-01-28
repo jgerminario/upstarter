@@ -16,3 +16,4 @@ db.once('open', function (callback) {
 
 // Startup.resetFundraisePercentile();
 Startup.calculateFundraisePercentile();
+// Startup.resetFundraiseRates();
