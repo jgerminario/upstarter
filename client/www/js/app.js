@@ -6,7 +6,13 @@
 angular.module('upstarter', ['ionic', 'upstarter.auth.controllers', 'upstarter.controllers', 'upstarter.services', 'upstarter.filters','ngSlider', 'ngCookies'])
 
 .run(function($ionicPlatform, $rootScope) {
-  $rootScope.token = null
+    document.cookie.split("; ").forEach(function(cookie){
+      if (cookie.match(/accessToken=/g)){
+        $rootScope.logged_in = true
+      } else {
+        $rootScope.logged_in = false
+      }
+    })
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)

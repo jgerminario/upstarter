@@ -55,7 +55,7 @@ router.get('/auth/linkedin/callback',
             var newUser = new User({
               email: req.user._json.emailAddress,
               name: req.user.displayName,
-              token: req.session.accessToken,
+              // token: req.session.accessToken,
               linkedin: {
                 id: req.user.id,
                 following: following
@@ -66,24 +66,23 @@ router.get('/auth/linkedin/callback',
             })
         }
       })
-      // res.redirect('http://localhost:8100/')
-      res.redirect('/auth/token')
+      res.cookie('accessToken', req.session.accessToken, {maxAge:900000, httpOnly: false})
+      res.redirect('http://localhost:8100/')
+      // res.redirect('/auth/token')
       // res.send({user: req.user})
   });
 
 router.get('/auth/token', function(req, res){
-  res.cookie('accessToken', req.session.accessToken, {maxAge:900000, httpOnly: false})
   res.send({token: req.session.accessToken})
 })
 
 router.get('/logout', function(req, res){
-  User.findOne({ email: req.user._json.emailAddress}, function(err, user){
-    user.token = ""
-    user.save();
-  });
+  // User.findOne({ email: req.user._json.emailAddress}, function(err, user){
+  //   user.token = ""
+  //   user.save();
+  // });
   req.session.accessToken = null
   req.logout();
-  console.log(req.user)
   res.send('logged out');
 });
 
