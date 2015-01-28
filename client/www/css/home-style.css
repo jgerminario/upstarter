@@ -4,10 +4,6 @@ body {
   font-weight: 100;
 }
 
-.content {
-  overflow: scroll;
-}
-
 .button {
   font-weight: 400;
 }
@@ -27,12 +23,16 @@ body {
 .company-data {
   width: 80%;
   float: left;
-  padding: 0.2em;
+  margin-left: -0.85em;
   font-weight: 200;
 }
 
+.company-logo {
+  padding-right: -5px;
+}
+
 .company-name {
-  font-size: 115%;
+  font-size: 100%;
   padding: 0.3em 0;
   color: rgb(60, 60, 60);
   font-weight: 200;
@@ -41,7 +41,7 @@ body {
 
 .company-info {
   font-style: italic;
-  font-size: 60%;
+  font-size: 53%;
 }
 
 .company-info-tidbit {
@@ -49,6 +49,7 @@ body {
 }
 
 .company-momentum-score {
+  margin-right: 9px;
   width: 20%;
   height: 2em;
   line-height: 2em;
@@ -60,10 +61,16 @@ body {
 .momentum-score-header {
   position: absolute;
   right: 3%;
-  font-size: 30%;
+  font-size: 60%;
   display: inline-block;
 }
 
 .item-input {
   height: 40px;
 }
+
+img {
+  margin-left: -6px !important;
+}
+
+

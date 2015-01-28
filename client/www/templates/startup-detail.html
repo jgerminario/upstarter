@@ -18,17 +18,17 @@
       <div class="stats col col-50">
         <div class="stats-header">At-A-Glance</div>
         <table>
-          <tr><td ng repeat="office in {{startup.offices}}" class="stat-type">Offices in</td><td>{{offices.city}}</td></tr>
+          <tr><td ng repeat="office in {{startup.offices}}" class="stat-type">Offices in</td><td ng-repeat="office in {{startup.offices}}">{{office.city}}</td></tr>
           <tr><td class="stat-type">Employees</td><td>{{startup.number_of_employees}}</td></tr>
           <tr><td class="stat-type">Founded On</td><td>
           {{startup.founded_on | date : format : timezone}}</td></tr>
           <tr><td class="stat-type">Total Funding</td><td>{{startup.total_funding_usd | currency : symbol : 0}}</td></tr>
           <tr><td class="stat-type">Investments</td><td>{{startup.number_of_investments}}</td></tr>
           <tr><td class="stat-type">Founded by</td><td>
-          <tr><td>{{startup.founders}}</td></tr>
+  <!--         <tr><td>{{startup.founders}}</td></tr>
           <tr ng-repeat="founder in startup.founders">
-          <tr><td class="stat-type">{{founder.name}}</td></tr>
-          <tr><td class="stat-type">Website</td><td>www.google.com</td></tr>
+          <tr><td class="stat-type">{{founder.name}}</td></tr> -->
+          <tr><td class="stat-type">Website</td><td>{{startup.websites.pop()}}</td></tr>
         </table>
       </div>
     </div>
