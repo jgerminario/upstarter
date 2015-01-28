@@ -1,33 +1,46 @@
+<ion-header-bar class="bar bar-header bar-stable">
+  <h1 class="title">UpStarter</h1>
+</ion-header-bar>
+
 <ion-view view-title="Search">
-  <ion-content class="has-header">
+  <ion-content class="content padding has-header">
 
-  <div class="filter-wrapper">
-    <div class="list list-inset">
-      <label class="item item-input">
-        <i class="icon ion-search placeholder-icon"></i>
-          <input type="search" ng-model="main.searchInput.name" placeholder="Search Companies">
-      </label>
+    <div class="filter-wrapper">
+      <div class="list list-inset">
+        <label class="item item-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input type="search"
+                 ng-model="main.searchInput.name"
+                 placeholder="Search Companies" />
+        </label>
+      </div>
 
-    </div>
-    <div class="list list-inset">
-      <label class="item item-input">
-        <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" ng-model="main.cityInput.city" placeholder="Search Cities">
-      </label>
-    </div>
+      <div class="list list-inset">
+        <label class="item item-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input type="search"
+                 ng-model="main.cityInput.city"
+                 placeholder="Search Cities" />
+        </label>
+      </div>
 
-    <a ng-click="employees = !employees" class="button button-block ion-navicon button-balanced">Additional Search Options</a>
-  </div>
-     <div class="card" ng-show="employees">
-      <div class="item item-text-wrap">
-        <div class="list">
-          Number of Employees : {{employnum}}
+      <a ng-click="employees = !employees"
+         class="button button-block button-balanced">Additional Search Options</a>
+
+      <div class="card" ng-show="employees">
+        <div class="item item-text-wrap">
+          <div class="list">
+            Number of Employees : {{employnum}}
             <!--   <div class="item range range-positive" ng-controller="SliderCtrl"> -->
             <i class="icon ion-ios7"></i>
-               <input ng-model="value" type="text" id="mySlider1" slider options="options" />
+            <input ng-model="value"
+                   type="text"
+                   id="mySlider1"
+                   slider
+                   options="options" />
             <i class="icon ion-ios7"></i>{{value}}
-          </div>
-        </div>
+           </div>
+         </div>
       </div>
     </div>
 
@@ -36,45 +49,28 @@
       <div class="momentum-score-header">Momentum Score</div>
     </div>
 
-
-<!--
-      <ul class="list-group">
-        <li class="list-group-item" ng-repeat="startup in startups | filter:main.searchInput track by $index | filter:main.cityInput" type="item-text-wrap" href="#/companies/{{companies.id}}"><option class="badge">{{startup.name}}</span></li>
-      </ul> -->
     <ion-list class="companies-container">
-      <ion-item ng-repeat="startup in startups | filter:main.searchInput | filter:main.cityInput | limitTo:10" type="item-text-wrap" href="#/startups/{{startup.name}}">
-        <div class="company-logo"><img class="logo-image" ng-src="https://res.cloudinary.com/crunchbase-production/{{startup.primary_image[0]}}"></div>
+      <ion-item ng-repeat="startup in startups | filter:main.searchInput | filter:main.cityInput"
+                type="item-text-wrap"
+                href="#/startups/{{startup.name}}"
+                class="item item-thumbnail-left">
+
+        <img class="company-logo"
+             ng-src="https://res.cloudinary.com/crunchbase-production/{{startup.primary_image[0]}}" />
 
         <div class="company-data">
           <div class="company-name">{{startup.name}}</div>
 
           <div class="company-info">
             <div class="company-info-tidbit">{{startup.offices[0].city}}, {{startup.offices[0].region}}, {{startup.offices[0].country}}</div>
-            <div class="company-info-tidbit">
-            {{startup.number_of_employees}} Employees</div>
-            <div class="company-info-tidbit item-text-wrap">
-            {{startup.short_description}}</div>
+            <div class="company-info-tidbit">{{startup.number_of_employees}} Employees</div>
+            <div class="company-info-tidbit item-text-wrap">{{startup.short_description}}</div>
           </div>
         </div>
 
-        <div class="company-momentum-score">
-          </span>{{startup.fundraisePercentile}}</div>
+        <div class="company-momentum-score">{{startup.fundraisePercentile}}</div>
       </ion-item>
     </ion-list>
-<!--        <ul class="list-group">
-      <li class="list-group-item" ng-repeat="startup in startups | filter:main.cityInput | limitTo:10 track by $index"><span class="badge" ng-if="main.cityInput"><span class="badge">{{startup.name}} {{startup.city}}</span></li> -->
-    </ul>
-
-    <!--    <ion-item class="item-avatar" ng-repeat="startup in startups" type="item-text-wrap" href="#/{{friend.id}}">
-        <img ng-src="{{startup.}}">
-        <h2>{{friend.name}}</h2>
-      </ion-item>
- -->
-
 
   </ion-content>
 </ion-view>
-
-
-<!-- <p>{{main.searchInput}}</p> -->
-</div>
