@@ -11,6 +11,7 @@
           <i class="icon ion-search placeholder-icon"></i>
           <input type="search"
                  ng-model="main.searchInput.name"
+                 ng-change="setSearch(main.searchInput.name)"
                  placeholder="Search Companies" />
         </label>
       </div>
@@ -19,7 +20,7 @@
         <label class="item item-input">
           <i class="icon ion-search placeholder-icon"></i>
           <input type="search"
-                 ng-model="main.cityInput.city"
+                 ng-model="main.cityInput.city" 
                  placeholder="Search Cities" />
         </label>
       </div>
