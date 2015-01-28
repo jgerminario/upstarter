@@ -3,7 +3,8 @@ angular.module('upstarter.filters', [])
 .filter('cityFilter', function() {
   return function(input) {
     // the filter takes
-      if (input.city === main.cityInput){
+    console.log(input.offices[0].city)
+      if (input.offices[0].city === main.cityInput){
         return input
 
     }
