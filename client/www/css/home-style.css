@@ -73,4 +73,20 @@ img {
   margin-left: -6px !important;
 }
 
+.hot-startup {
+  color: blue;
+}
+
+.lukewarm-startup {
+  color: green;
+}
+
+.not-so-good-startup {
+  color: yellow;
+}
+
+.cold-startup {
+  color: red;
+}
+
 

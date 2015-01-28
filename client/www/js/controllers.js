@@ -75,6 +75,21 @@ angular.module('upstarter.controllers', [])
       $cookieStore.put('userId', $location.search().userId)
     }
     // }
+
+    $scope.colorScore = function(score) {
+      if (parseInt(score) > 80) {
+        return "hot-startup"
+      }
+      else if (parseInt(score) > 60) {
+        return "lukewarm-startup"
+      }
+      else if (parseInt(score) > 40) {
+        return "not-so-good-startup"
+      }
+      else if (parseInt(score) < 40) {
+        return "cold-startup"
+      }
+    }
     // $scope.$watch('main.searchInput.name', function(e) { console.log('something changed'); },true);
 
     // TODO: institute a listener so as the models change on the view, these elements will change
