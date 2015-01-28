@@ -25,14 +25,17 @@ angular.module('upstarter.controllers', [])
     // });
   }])
 
-.controller('SearchCtrl', ['$scope', 'StartupNames', 'EmployeeRange', function($scope, StartupNames, EmployeeRange) {
-
+.controller('SearchCtrl', ['$scope', 'InitialSeed', 'StartupNames', 'EmployeeRange', function($scope, InitialSeed, StartupNames, EmployeeRange) {
 
     $scope.value = EmployeeRange.getData();
-    StartupNames.then(function(data){
+    InitialSeed.then(function(data){
       $scope.startups = data;
       console.log(data)
-    })
+    });
+
+    // $scope.$watch('main.searchInput.name', function(e) { console.log('something changed'); },true);
+
+    // TODO: institute a listener so as the models change on the view, these elements will change
 
 
 
@@ -59,7 +62,14 @@ angular.module('upstarter.controllers', [])
   };
 }])
 
-.controller('StartupDetailCtrl', ['$scope','Startups', '$stateParams', function($scope, $stateParams, Startups) {
+.controller('StartupDetailCtrl', ['$scope','Startup', '$stateParams', function($scope, Startup, $stateParams) {
+  console.log($stateParams.startupName);
+  Startup($stateParams.startupName).then(function(err,data){
+    if (err) {console.log(err); }
+    $scope.startup = data;
+    console.log(data);
+  });
+
 //     $scope.startup = Startups.getStartup($stateParams.startupName)
 //     var thing = $stateParams.getStartup($scope.startup.startupName)
 // console.log(thing)

@@ -1,0 +1,62 @@
+.company-logo {
+  width: 100%;
+}
+
+.momentum {
+  text-align: center;
+}
+
+.momentum-score-title {
+  padding-bottom: 1.5em;
+  text-align: center;
+  font-size: 1;
+}
+
+.the-number {
+  text-align: center;
+  font-size: 4em;
+}
+
+.stats-header {
+  text-align: center;
+}
+
+td {
+  padding: 4%;
+}
+
+.stat-type {
+  font-weight: 400;
+}
+
+
+/*startup-container{
+  padding-top: 50px;
+  overflow: scroll;
+}
+
+.logo {
+  border: 2px solid red;
+  float: left;
+  width: 40%;
+}
+
+.large-logo-image {
+  width: 100%;
+}
+
+.description {
+  display: block;
+  border: 2px solid green;
+}
+
+.momentum-score {
+  text-align: right;
+  padding-top: 20px;
+  height: 60px;
+  width: 150px;
+  position: absolute;
+  right: 0;
+  font-size: 400%;
+  display: block;
+}*/

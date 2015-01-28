@@ -1,70 +1,71 @@
 angular.module('upstarter.services', ['ngResource'])
 
-.factory('Startup', ['$resource',
-  function($resource){
-    var Startup = $resource('test.json', {}, {
-      query: {method: "GET", isArray: false}
-      // get: {method: "GET"}
-    });
-  return Startup;
-}])
-.factory('Test', [
-  function(){
-    return "Hello";
-}])
+.factory('Startup', ['$resource', '$http', '$q',
+  function($resource, $http, $q){
 
-.factory('StartupNames', ['$http', '$q',
-  function($http, $q){
+ return function(startupSlug) {
   var deferred = $q.defer();
-  // console.log($q)
-  // console.log(deferred)
-
-  $http({
+    $http({
     method: 'GET',
-    url: "http://upstarter-server.herokuapp.com/startups?full=true",
+    url: "http://upstarter-server.herokuapp.com/startups/" + startupSlug,
     contentType: "application/json",
   })
     .success(function(data,status){
-      console.log(data);
-      var company_array = data
-      deferred.resolve(company_array)
+      // console.log(data);
+      var company_array = data;
+      deferred.resolve(company_array);
     })
 
     .error(function(){
       deferred.reject('There was an error');
+    });
+  return deferred.promise;
+  };
+}])
+
+.factory('InitialSeed', ['$http', '$q',
+  function($http, $q){
+  var deferred = $q.defer();
+    $http({
+    method: 'GET',
+    url: "http://upstarter-server.herokuapp.com/startups?full=true&limit=20"
+    })
+  .success(function(data,status){
+        // console.log(data);
+        var company_array = data;
+        deferred.resolve(company_array);
+      })
+
+      .error(function(){
+        deferred.reject('There was an error');
+      });
+    return deferred.promise;
+  }])
+
+.factory('StartupNames', ['$http', '$q',
+  function($http, $q){
+  var deferred = $q.defer();
+
+
+  return function(searchParams) {
+    $http({
+    method: 'GET',
+    url: "http://upstarter-server.herokuapp.com/startups?full=" + searchParams.full + "&limit=" +searchParams.limit + "&location=" +searchParams.location + "&string=" + searchParams.string,
+    contentType: "application/json",
+  })
+    .success(function(data,status){
+      // console.log(data);
+      var company_array = data;
+      deferred.resolve(company_array);
     })
 
-  // $http.get('names.json')
-  //   .success(function(data){
-  //     company_array = []
-  //     angular.forEach(data.data.items, function(value, key){
-  //       company_array.push(value);
-  //       // console.log(value)
-  //     })
-  //     deferred.resolve(company_array);
-  //     // console.log(deferred)
-  //   })
-  //   .error(function(){
-  //     deferred.reject('There was an error');
-  //   })
-  // console.log("Predeferred")
-  // console.log(deferred)
+    .error(function(){
+      deferred.reject('There was an error');
+    });
   return deferred.promise;
-  // return {
-  //   all: function() {
-  //     return request;
-  //   }
-  // }
-  // var get_names = function(){
-  //   list = Companies.query()
-  //   console.log(list)
-  //   name_array = []
-  //   angular.forEach(Companies.items, function(value, key){
-  //     name_array << value.name;
-  //     console.log(name_array)
-  //   })
-  //   return name_array
-  // }
+  };
+
+
 
 
 }])
@@ -81,27 +82,3 @@ angular.module('upstarter.services', ['ngResource'])
 }
 };
 });
-
-// .factory('Startups', function() {
-
-//   var startups = [
-//     { name: 'Google', id: 1 },
-//     { name: 'Yahoo', id: 2 },
-//     { name: 'Microsoft', id: 3 }
-//     ];
-
-//   return {
-//       getStartup: function(name) {
-
-//        startups.forEach(function(startup){
-//         if (startup.name === name ){
-//           console.log(startup)
-//           return startup
-
-
-//         }
-//       })
-//     }
-//   }
-
-// });
