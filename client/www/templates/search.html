@@ -1,7 +1,7 @@
 <ion-view view-title="Search">
-  <ion-content>
+  <ion-content class="has-header">
 
-  <div class= filter-wrapper>
+  <div class="filter-wrapper">
     <div class="list list-inset">
       <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
@@ -16,7 +16,7 @@
       </label>
     </div>
 
-    <a ng-click="employees = !employees" class="button button-outline icon-right ion-navicon button-balanced">Additional Search Options</a>
+    <a ng-click="employees = !employees" class="button button-block ion-navicon button-balanced">Additional Search Options</a>
   </div>
      <div class="card" ng-show="employees">
       <div class="item item-text-wrap">
@@ -42,21 +42,23 @@
         <li class="list-group-item" ng-repeat="startup in startups | filter:main.searchInput track by $index | filter:main.cityInput" type="item-text-wrap" href="#/companies/{{companies.id}}"><option class="badge">{{startup.name}}</span></li>
       </ul> -->
     <ion-list class="companies-container">
-      <ion-item ng-repeat="startup in startups | filter:main.searchInput | filter:main.cityInput | limitTo:10" type="item-text-wrap" href="#/{{startup.name}}">
-        <div class="company-logo"><img ng-src="https://res.cloudinary.com/crunchbase-production + {{startup.primary_image[0]}}"></div>
+      <ion-item ng-repeat="startup in startups | filter:main.searchInput | filter:main.cityInput | limitTo:10" type="item-text-wrap" href="#/startups/{{startup.name}}">
+        <div class="company-logo"><img class="logo-image" ng-src="https://res.cloudinary.com/crunchbase-production/{{startup.primary_image[0]}}"></div>
 
         <div class="company-data">
           <div class="company-name">{{startup.name}}</div>
 
           <div class="company-info">
-            <div class="company-info-tidbit">{{startup.city}}</div>
-            <div class="company-info-tidbit">employees:&nbsp;{{startup.employees}}</div>
-            <div class="company-info-tidbit">{{startup.address}}</div>
+            <div class="company-info-tidbit">{{startup.offices[0].city}}, {{startup.offices[0].region}}, {{startup.offices[0].country}}</div>
+            <div class="company-info-tidbit">
+            {{startup.number_of_employees}} Employees</div>
+            <div class="company-info-tidbit item-text-wrap">
+            {{startup.short_description}}</div>
           </div>
         </div>
 
         <div class="company-momentum-score">
-          </span>{{startup.score}}</div>
+          </span>{{startup.fundraisePercentile}}</div>
       </ion-item>
     </ion-list>
 <!--        <ul class="list-group">

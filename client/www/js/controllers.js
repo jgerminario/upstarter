@@ -59,7 +59,8 @@ angular.module('upstarter.controllers', [])
   };
 }])
 
-.controller('StartupDetailCtrl', ['$scope','Startups', '$stateParams', function($scope, $stateParams, Startups) {
+.controller('StartupDetailCtrl', ['$scope','Startup', '$stateParams', function($scope, Startup, $stateParams) {
+  $scope.startup = Startup.query()
 //     $scope.startup = Startups.getStartup($stateParams.startupName)
 //     var thing = $stateParams.getStartup($scope.startup.startupName)
 // console.log(thing)

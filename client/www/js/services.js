@@ -2,11 +2,15 @@ angular.module('upstarter.services', ['ngResource'])
 
 .factory('Startup', ['$resource',
   function($resource){
+
     var Startup = $resource('test.json', {}, {
       query: {method: "GET", isArray: false}
       // get: {method: "GET"}
     });
-  return Startup;
+    console.log(Startup)
+  return {
+
+  }
 }])
 .factory('Test', [
   function(){
