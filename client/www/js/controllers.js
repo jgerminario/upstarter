@@ -27,11 +27,36 @@ angular.module('upstarter.controllers', [])
 
 .controller('SearchCtrl', ['$scope', 'InitialSeed', 'StartupNames', 'EmployeeRange', function($scope, InitialSeed, StartupNames, EmployeeRange) {
 
+    var params = {
+      "full": "true",
+      "limit": 10,
+      // "location": "5," + lon + "," + lat, 
+      "string": "test"
+    };
+
     $scope.value = EmployeeRange.getData();
+
+      console.log(StartupNames(params));
+
+    $scope.setSearch = function(string){
+      params.string = string;
+
+
+      StartupNames(params).then(function(data){
+        console.log(data.data)
+        $scope.startups = data.data;
+        // console.log($scope.startups);
+      });
+    };
+
     InitialSeed.then(function(data){
       $scope.startups = data;
       console.log(data)
     });
+    // // cities - filter radius instead
+
+    // // watch for {name search, distance change, employee count change}, then make a new AJAX call
+
 
     // $scope.$watch('main.searchInput.name', function(e) { console.log('something changed'); },true);
 
@@ -63,11 +88,10 @@ angular.module('upstarter.controllers', [])
 }])
 
 .controller('StartupDetailCtrl', ['$scope','Startup', '$stateParams', function($scope, Startup, $stateParams) {
-  console.log($stateParams.startupName);
-  Startup($stateParams.startupName).then(function(err,data){
-    if (err) {console.log(err); }
-    $scope.startup = data;
-    console.log(data);
+  // console.log($stateParams.startupName);
+  Startup($stateParams.startupName).then(function(data){
+    $scope.startup = data[0];
+    // console.log(data);
   });
 
 //     $scope.startup = Startups.getStartup($stateParams.startupName)
