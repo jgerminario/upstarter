@@ -2,22 +2,20 @@
 body {
   font-family: 'Helvetica Neue', 'Open Sans', sans-serif !important;
   font-weight: 100;
-  font-size: 1em;
 }
 
-div {
-  margin: 0;
-  padding: 0;
+.content {
+  overflow: scroll;
 }
 
 .button {
-  margin-right: 10px;
-  margin-left: 20px;
+  font-weight: 400;
 }
 
 .listing-heading {
   margin: 10px 10px;
   text-align: center;
+  font-size: 120%;
 }
 
 .item-content {
@@ -26,55 +24,35 @@ div {
   height: 90px;
 }
 
-.logo-image {
-  vertical-align: middle;
-  width: 100%;
-}
-
-
-.company-logo {
-  display: inline-block;
-  vertical-align: middle;
-  /*border: 1px red solid;*/
-  width: 20%;
-  float: left;
-  padding: 5px;
-  padding-top: 15px;
-}
-
 .company-data {
-  /*border: 1px green solid;*/
-  width: 60%;
-  max-width: 60%;
+  width: 80%;
   float: left;
-  padding: 5px;
+  padding: 0.2em;
   font-weight: 200;
 }
 
 .company-name {
   font-size: 115%;
-  padding: 5px 0;
+  padding: 0.3em 0;
   color: rgb(60, 60, 60);
   font-weight: 200;
   border-bottom: 1px rgb(150, 150, 150) solid;
 }
 
-
 .company-info {
   font-style: italic;
   font-size: 60%;
-  width: auto;
 }
 
 .company-info-tidbit {
-  line-height: 14px;
+  line-height: 1.5em;
 }
 
 .company-momentum-score {
-  /*border: 1px blue solid;*/
   width: 20%;
+  height: 2em;
+  line-height: 2em;
   float: right;
-  padding:  17px 5px;
   text-align: center;
   font-size: 300%;
 }
@@ -87,11 +65,5 @@ div {
 }
 
 .item-input {
-  height: 30px;
-}
-
-.button {
-  width: 100%;
-  margin-right:;
-  /*margin: 2em;*/
+  height: 40px;
 }
