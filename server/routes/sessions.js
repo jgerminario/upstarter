@@ -84,6 +84,7 @@ router.get('/logout', function(req, res){
   // });
   req.session.accessToken = null
   req.logout();
+  res.send('logged out');
 });
 
 function ensureAuthenticated(req, res, next) {

@@ -6,7 +6,7 @@
 angular.module('upstarter', ['ionic', 'upstarter.auth.controllers', 'upstarter.controllers', 'upstarter.services', 'upstarter.filters','ngSlider', 'ngCookies'])
 
 .run(function($ionicPlatform, $rootScope) {
-  
+
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -41,6 +41,11 @@ angular.module('upstarter', ['ionic', 'upstarter.auth.controllers', 'upstarter.c
     .state('test-login', {
       url: "/test",
       templateUrl: 'templates/test.html',
+      controller: "LoginCtrl"
+    })
+    .state('login', {
+      url: "/login",
+      templateUrl: 'templates/login.html',
       controller: "LoginCtrl"
     })
 

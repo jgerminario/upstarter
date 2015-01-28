@@ -1,0 +1,69 @@
+/* Empty. Add your own CSS if you like */
+body {
+  font-family: 'Helvetica Neue', 'Open Sans', sans-serif !important;
+  font-weight: 100;
+}
+
+.content {
+  overflow: scroll;
+}
+
+.button {
+  font-weight: 400;
+}
+
+.listing-heading {
+  margin: 10px 10px;
+  text-align: center;
+  font-size: 120%;
+}
+
+.item-content {
+  padding-top: 0px !important;
+  padding-right: 16px !important;
+  height: 90px;
+}
+
+.company-data {
+  width: 80%;
+  float: left;
+  padding: 0.2em;
+  font-weight: 200;
+}
+
+.company-name {
+  font-size: 115%;
+  padding: 0.3em 0;
+  color: rgb(60, 60, 60);
+  font-weight: 200;
+  border-bottom: 1px rgb(150, 150, 150) solid;
+}
+
+.company-info {
+  font-style: italic;
+  font-size: 60%;
+}
+
+.company-info-tidbit {
+  line-height: 1.5em;
+}
+
+.company-momentum-score {
+  width: 20%;
+  height: 2em;
+  line-height: 2em;
+  float: right;
+  text-align: center;
+  font-size: 300%;
+}
+
+.momentum-score-header {
+  position: absolute;
+  right: 3%;
+  font-size: 30%;
+  display: inline-block;
+}
+
+.item-input {
+  height: 40px;
+}

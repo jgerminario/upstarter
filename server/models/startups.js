@@ -26,6 +26,7 @@ startupsSchema = new Schema({
   twoYearRate: Number,
   oneYearRate: Number,
   momentumScore: Number,
+  geo: {type: [Number], index: '2d'},
   fundraisePercentile: { type: Number, default: 0 }
 });
 
@@ -48,6 +49,53 @@ startupsSchema = new Schema({
 //       totalRate = total/years
 //       return totalRate;
 // };
+startupsSchema.statics.resetHeadquartersOffice = function () {
+    this.find().where('headquarters').exists(false).exec(function(err, data){
+      data.forEach(function(company){
+        console.log("company " + company.name + " headquarters " + company.headquarters);
+        company.headquarters = [];
+        company.save(function(err, data){
+          if (err) { console.log(err); }
+          console.log(company.name + " saved");
+        });
+      });
+    });
+    this.find().where('offices').exists(false).exec(function(err, data){
+        data.forEach(function(company){
+        console.log("company " + company.name + " headquarters " + company.offices);
+        company.offices = [];
+        company.save(function(err, data){
+          if (err) { console.log(err); }
+          console.log(company.name + " saved");
+        });
+      });
+    });
+  };
+
+
+startupsSchema.statics.resetGeo = function () {
+    this.find().exec(function(err, data){
+      data.forEach(function(company){
+        console.log("Lon, lat for " + company.name + ": " + company.longitude + ", " + company.latitude);
+        if (company.offices[0]){
+          if (company.offices[0].longitude){
+          company.geo = [company.offices[0].longitude, company.offices[0].latitude];
+          }
+        }
+        if (company.headquarters[0]){
+          if (company.headquarters[0].longitude){
+            company.geo = [company.headquarters[0].longitude, company.headquarters[0].latitude];
+          }
+        }
+        company.save(function(err, data){
+          if (err) { console.log(err); }
+          console.log("New for " +company.name + " " + company.geo);
+        });
+      });
+    });
+};
+
+
 startupsSchema.statics.resetFundraisePercentile = function () {
     this.find().exec(function(err, data){
       data.forEach(function(company){
@@ -58,7 +106,7 @@ startupsSchema.statics.resetFundraisePercentile = function () {
         });
       });
     });
-}
+};
 
 startupsSchema.statics.calculateFundraisePercentile = function () {
   // console.log(Startup.find().exec(function(err,docs){
@@ -80,8 +128,11 @@ startupsSchema.statics.calculateFundraisePercentile = function () {
   });
 };
 
+
+
 startupsSchema.statics.calculateFundraiseRate = function (fundraisingRounds, years) {
   // TODO: Check that this works as a hook for new startups created
+  console.log("calculaing fundraise rate")
   var fundraiseArray = [];
   var total = 0;
   var totalRate = 0;
@@ -99,6 +150,30 @@ startupsSchema.statics.calculateFundraiseRate = function (fundraisingRounds, yea
   return totalRate;
 };
 
+startupsSchema.statics.resetFundraiseRates = function () {
+    var self = this;
+    this.find().exec(function(err, data){
+      data.forEach(function(company){
+        console.log("Before: " + company.name + " 1. " + company.oneYearRate + " 2. " + company.twoYearRate + " 3. " + company.threeYearRate);
+        console.log(company.funding_rounds);
+        if (company.funding_rounds){
+          company.threeYearRate = self.calculateFundraiseRate(company.funding_rounds, 3),
+           company.twoYearRate = self.calculateFundraiseRate(company.funding_rounds, 2),
+           company.oneYearRate = self.calculateFundraiseRate(company.funding_rounds, 1);
+         }
+         else {
+            company.threeYearRate = 0;
+            company.twoYearRate = 0;
+            company.oneYearRate = 0;
+         }
+        company.save(function(err, data){
+          if (err) { console.log(err); }
+          console.log("After: " + company.name + " 1. " + company.oneYearRate + " 2. " + company.twoYearRate + " 3. " + company.threeYearRate);
+        });
+      });
+    });
+};
+
 startupsSchema.statics.calculateMomentumScore = function(threeYearRate, twoYearRate, oneYearRate, number_of_employees) {
   if (number_of_employees == 0){
     return 0;
@@ -106,6 +181,10 @@ startupsSchema.statics.calculateMomentumScore = function(threeYearRate, twoYearR
   return (threeYearRate * 0.5 + twoYearRate + oneYearRate * 2)/number_of_employees;
   }
 };
+
+// startupsSchema.methods.findNear = function(distance) {
+//   return this.model('startups').find({geo: { $nearSphere: this.geo, $maxDistance: distance }});
+// };
 
 // StartupsSchema.pre('save', function (next) {
 //   // this.threeYearRate = calculateFundraiseRate(this.funding_rounds, 3);

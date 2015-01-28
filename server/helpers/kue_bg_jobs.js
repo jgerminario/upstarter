@@ -1,3 +1,4 @@
+
 // var kue = require('kue'),
   // jobs = kue.createQueue();//need redis credentials?
 var mongoose = require('mongoose');
@@ -68,7 +69,7 @@ Startup.where('description').exists(false).exec(function(err, data){
     startupAPI.updateStartup(startups[i]);
     i++;
 
-  }, 2000);
+  }, 36000);
 });
 
 // module.exports = router;

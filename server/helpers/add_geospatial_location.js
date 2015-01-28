@@ -11,9 +11,9 @@ mongoose.connect('mongodb://admin:upstarter@ds041157.mongolab.com:41157/upstarte
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
-  console.log("connection started")
+  console.log("connection started");
 });
 
-// Startup.resetFundraisePercentile();
-Startup.calculateFundraisePercentile();
-// Startup.resetFundraiseRates();
+Startup.resetGeo();
+
+// Startup.resetHeadquartersOffice();

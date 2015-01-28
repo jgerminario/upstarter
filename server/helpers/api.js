@@ -40,66 +40,73 @@ var organizationEndpoint = (function (){
     if (error) { return console.log(error) }
       if (response.statusCode != 200) { return console.log(response.body); }
         if (!error && response.statusCode == 200 && JSON.parse(body).data.properties) {
-          var json_body = JSON.parse(body).data;
+          var json_body, name, path, closed, acquired, public, founded_on, homepage_url,short_description, description, total_funding_usd, number_of_investments, number_of_employees, officesArray, offices,headquarters, categories, primary_image, websites, founders, fundraiseRounds, geo;
+          json_body = JSON.parse(body).data;
           // console.log(json_body)
-          var name = json_body.properties.name
-          var path = 'organization/' + json_body.properties.permalink
+          name = json_body.properties.name
+          path = 'organization/' + json_body.properties.permalink
           if (json_body.properties.closed_on != null || json_body.properties.is_closed == true){
-            var closed = true;
+            closed = true;
           }
           if (json_body.relationships.acquired_by != null){
-            var acquired = true;
+            acquired = true;
           }
           if (json_body.properties.stock_symbol != null || json_body.relationships.ipo != null){
-            var public = true;
+            public = true;
           } 
-          var founded_on = json_body.properties.founded_on
-          var homepage_url = json_body.properties.homepage_url
-          var short_description = json_body.properties.short_description
-          var description = json_body.properties.description
-          var total_funding_usd = json_body.properties.total_funding_usd
-          var number_of_investments = json_body.properties.number_of_investments
+          founded_on = json_body.properties.founded_on
+          homepage_url = json_body.properties.homepage_url
+          short_description = json_body.properties.short_description
+          description = json_body.properties.description
+          total_funding_usd = json_body.properties.total_funding_usd
+          number_of_investments = json_body.properties.number_of_investments
           if (json_body.relationships.offices){
             var officesArray = json_body.relationships.offices.items
-            var offices = []
+            offices = []
             officesArray.forEach(function(office){
-              offices.push({street_1: office.street_1, street_2: office.street_2, postal_code: office.postal_code, city: office.city, region: office.region, country: office.country, latitude: office.latitude, longitude: office.longitude})
-            })
+              offices.push({street_1: office.street_1, street_2: office.street_2, postal_code: office.postal_code, city: office.city, region: office.region, country: office.country, latitude: office.latitude, longitude: office.longitude});
+            if (offices[0].longitude){
+              geo = [offices[0].longitude,offices[0].latitude];
+              }
+            });
           }
           if (json_body.relationships.headquarters){
             var headquarter = json_body.relationships.headquarters.items[0]
-            var headquarters = [{street_1: headquarter.street_1, street_2: headquarter.street_2, postal_code: headquarter.postal_code, city: headquarter.city, region: headquarter.region, country: headquarter.country, latitude: headquarter.latitude, longitude: headquarter.longitude}]
+            headquarters = [{street_1: headquarter.street_1, street_2: headquarter.street_2, postal_code: headquarter.postal_code, city: headquarter.city, region: headquarter.region, country: headquarter.country, latitude: headquarter.latitude, longitude: headquarter.longitude}]
+            if (headquarters[0].longitude){
+            geo = [headquarters[0].longitude,headquarters[0].latitude];
+            }
           }
-          var number_of_employees = json_body.properties.number_of_employees
+          number_of_employees = json_body.properties.number_of_employees
           if (json_body.relationships.categories){
             var categoriesArray = json_body.relationships.categories.items
-            var categories = []
+            categories = []
             categoriesArray.forEach(function(category){
               categories.push(category.name)
             })
           }
           if (json_body.relationships.primary_image){
             var primaryImageArray = json_body.relationships.primary_image.items
-            var primary_image = []
+            primary_image = []
             primaryImageArray.forEach(function(image){
               primary_image.push(image.path)
             })
           }
           if (json_body.relationships.websites){
             var websitesArray = json_body.relationships.websites.items
-            var websites = []
+            websites = []
             websitesArray.forEach(function(website){
               websites.push({title: website.title, url: website.url})
             })
           }
           if (json_body.relationships.founders) {
             var foundersArray = json_body.relationships.founders.items
-            var founders = []
+            founders = []
             foundersArray.forEach(function(founder){
               founders.push({name: founder.name, path: founder.path})
             })
           }
-          var fundraiseRounds = []
+          fundraiseRounds = []
           if (json_body.relationships.funding_rounds) {
             var fundraiseArray = json_body.relationships.funding_rounds.items
             fundraiseArray.forEach(function(round){
@@ -108,6 +115,7 @@ var organizationEndpoint = (function (){
               }
             });
           }
+        
 
 
 
@@ -118,9 +126,9 @@ var organizationEndpoint = (function (){
       //   return (calculateFundraiseRate(fundraiseRounds, 3) * 0.5 + calculateFundraiseRate(fundraiseRounds, 2) + calculateFundraiseRate(fundraiseRounds, 1) * 2)/number_of_employees
       //   }
       // }
-      var threeYearRate = calculateFundraiseRate(fundraiseRounds, 3),
-         twoYearRate = calculateFundraiseRate(fundraiseRounds, 3),
-         oneYearRate = calculateFundraiseRate(fundraiseRounds, 3);
+      var threeYearRate = Startup.calculateFundraiseRate(fundraiseRounds, 3),
+         twoYearRate = Startup.calculateFundraiseRate(fundraiseRounds, 3),
+         oneYearRate = Startup.calculateFundraiseRate(fundraiseRounds, 3);
 
       var attributes = {
         name: name,
@@ -145,6 +153,7 @@ var organizationEndpoint = (function (){
         threeYearRate: threeYearRate || 0,
         twoYearRate: twoYearRate || 0,
         oneYearRate: oneYearRate || 0,
+        geo: geo || [],
         momentumScore: Startup.calculateMomentumScore(threeYearRate, twoYearRate, oneYearRate, number_of_employees) || 0
       };
 
@@ -154,7 +163,7 @@ var organizationEndpoint = (function (){
         if (res) {
           res.send(startup);
         }
-        console.log("Saving " + startup.name + " as " + startup._id + " with momentum score " + startup.momentumScore + " employees " + startup.number_of_employees + " public: " + startup.public + " acquired: " + startup.acquired + " closed :" + startup.closed + " three year rate: " + startup.threeYearRate + " num of rounds: " +startup.funding_rounds.length);
+        console.log("Saving " + startup.name + " as " + startup._id + " with momentum score " + startup.momentumScore + " employees " + startup.number_of_employees + " public: " + startup.public + " acquired: " + startup.acquired + " closed :" + startup.closed + " three year rate: " + startup.threeYearRate + " num of rounds: " +startup.funding_rounds.length + " geo " + startup.geo);
       });
     }
   };
