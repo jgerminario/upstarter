@@ -1,5 +1,4 @@
 /* Empty. Add your own CSS if you like */
-
 body {
   font-family: 'Helvetica Neue', 'Open Sans', sans-serif !important;
   font-weight: 100;
@@ -12,7 +11,8 @@ div {
 }
 
 .button {
-  margin: 0px 10px;
+  margin-right: 10px;
+  margin-left: 20px;
 }
 
 .listing-heading {
@@ -62,7 +62,7 @@ div {
 
 .company-info {
   font-style: italic;
-  font-size: 50%;
+  font-size: 60%;
   width: auto;
 }
 
@@ -91,5 +91,7 @@ div {
 }
 
 .button {
-  width: 97%;
+  width: 100%;
+  margin-right:;
+  /*margin: 2em;*/
 }
