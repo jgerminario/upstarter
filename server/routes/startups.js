@@ -23,17 +23,31 @@ var organizationEndpoint = require('../helpers/api');
 
 // GET list of all company names - for client
 router.get('/', function(req, res) {
-  var query, limit, string, full, default_limit;
+  var query, limit, string, full, default_limit, location, miles, radians, lat, lon;
   string = querystring.parse(url.parse(req.url).query).string;
   full = querystring.parse(url.parse(req.url).query).full;
 
+  console.log(location + " " + radians);
+
+
   console.log(full == "true");
 
-  if (full == "true"){
+  if (querystring.parse(url.parse(req.url).query).location){
+    location = querystring.parse(url.parse(req.url).query).location.split(",");
+    miles = location[0];
+    radians = miles/69.0;
+    lat = location[1];
+    lon = location[2];
+
+    query = Startup.find({ geo: { $near: [lon, lat], $maxDistance: radians } });
+  } else {
     query = Startup.find({});
+  }
+
+  if (full == "true"){
     default_limit = 10;
   } else {
-    query = Startup.find({}).select('name slug -_id');
+    query = query.select('name slug -_id');
     default_limit = 50;
   }
 
