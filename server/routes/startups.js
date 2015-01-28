@@ -65,6 +65,9 @@ router.get('/', function(req, res) {
 
   query.exec(function (err, data) {
     if (err) { console.log(err) }
+    data.forEach(function(el){
+      el.slug = el.slug.substring(13);
+    });
 
     // data.forEach(function(startup) {
 
