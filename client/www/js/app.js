@@ -3,9 +3,10 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('upstarter', ['ionic', 'upstarter.controllers', 'upstarter.services', 'upstarter.filters','ngSlider'])
+angular.module('upstarter', ['ionic', 'upstarter.auth.controllers', 'upstarter.controllers', 'upstarter.services', 'upstarter.filters','ngSlider', 'ngCookies'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $rootScope) {
+
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -37,6 +38,16 @@ angular.module('upstarter', ['ionic', 'upstarter.controllers', 'upstarter.servic
     templateUrl: 'templates/startup-detail.html',
     controller: 'StartupDetailCtrl'
   })
+    .state('test-login', {
+      url: "/test",
+      templateUrl: 'templates/test.html',
+      controller: "LoginCtrl"
+    })
+    .state('login', {
+      url: "/login",
+      templateUrl: 'templates/login.html',
+      controller: "LoginCtrl"
+    })
 
   $urlRouterProvider.otherwise('/');
 });

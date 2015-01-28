@@ -23,7 +23,8 @@
     "passport-linkedin-oauth2": "*",
     "express-session": "*",
     "bcrypt-nodejs": "*",
-    "dotenv": "*"
+    "dotenv": "*",
+    "node-localstorage": "*"
   },
   "devDependencies": {
     "mocha": "*",

@@ -70,6 +70,21 @@ angular.module('upstarter.services', ['ngResource'])
 
 }])
 
+.factory('Authenticate', [ function(){
+  var token
+  document.cookie.split("; ").forEach(function(cookie){
+      if (cookie.match(/accessToken=/g)){
+        token = cookie.slice(12, cookie.length)
+      } else {
+        token = null
+      }
+    })
+
+  return {
+    token: token
+  }
+}])
+
 .factory('EmployeeRange', function(){
   var data = null;
   return {
