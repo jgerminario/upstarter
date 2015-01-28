@@ -1,5 +1,36 @@
+.company-logo {
+  width: 100%;
+}
 
-.startup-container{
+.momentum {
+  text-align: center;
+}
+
+.momentum-score-title {
+  padding-bottom: 1.5em;
+  text-align: center;
+  font-size: 1;
+}
+
+.the-number {
+  text-align: center;
+  font-size: 4em;
+}
+
+.stats-header {
+  text-align: center;
+}
+
+td {
+  padding: 4%;
+}
+
+.stat-type {
+  font-weight: 400;
+}
+
+
+/*startup-container{
   padding-top: 50px;
   overflow: scroll;
 }
@@ -28,4 +59,4 @@
   right: 0;
   font-size: 400%;
   display: block;
-}
+}*/
