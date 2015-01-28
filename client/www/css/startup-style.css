@@ -21,6 +21,10 @@
   text-align: center;
 }
 
+.stats {
+font-size: 0.8em;
+}
+
 td {
   padding: 4%;
 }
@@ -28,35 +32,3 @@ td {
 .stat-type {
   font-weight: 400;
 }
-
-
-/*startup-container{
-  padding-top: 50px;
-  overflow: scroll;
-}
-
-.logo {
-  border: 2px solid red;
-  float: left;
-  width: 40%;
-}
-
-.large-logo-image {
-  width: 100%;
-}
-
-.description {
-  display: block;
-  border: 2px solid green;
-}
-
-.momentum-score {
-  text-align: right;
-  padding-top: 20px;
-  height: 60px;
-  width: 150px;
-  position: absolute;
-  right: 0;
-  font-size: 400%;
-  display: block;
-}*/
