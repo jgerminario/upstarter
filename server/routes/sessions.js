@@ -69,6 +69,7 @@ router.get('/auth/linkedin/callback',
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       res.cookie('accessToken', req.session.accessToken, {maxAge:900000, httpOnly: false})
       res.redirect('http://localhost:8100/')
       // res.redirect('/auth/token')
@@ -82,29 +83,38 @@ router.get('/auth/linkedin/callback',
       // res.redirect('http://localhost:8100/')
       res.redirect('/auth/token')
 >>>>>>> alters server side auth to save to cookies
+=======
+      res.cookie('accessToken', req.session.accessToken, {maxAge:900000, httpOnly: false})
+      res.redirect('http://localhost:8100/')
+      // res.redirect('/auth/token')
+>>>>>>> adds working controller to log user in/out by storing access key in cookies
       // res.send({user: req.user})
   });
 
 router.get('/auth/token', function(req, res){
-  res.cookie('accessToken', req.session.accessToken, {maxAge:900000, httpOnly: false})
   res.send({token: req.session.accessToken})
 })
 
 router.get('/logout', function(req, res){
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> adds working controller to log user in/out by storing access key in cookies
   // User.findOne({ email: req.user._json.emailAddress}, function(err, user){
   //   user.token = ""
   //   user.save();
   // });
+<<<<<<< HEAD
 =======
   User.findOne({ email: req.user._json.emailAddress}, function(err, user){
     user.token = ""
     user.save();
   });
 >>>>>>> checks rootscope as a viable option for access token storage
+=======
+>>>>>>> adds working controller to log user in/out by storing access key in cookies
   req.session.accessToken = null
   req.logout();
-  console.log(req.user)
   res.send('logged out');
 });
 
