@@ -1,13 +1,27 @@
 angular.module('upstarter.auth.controllers', [])
 
-.controller("LoginCtrl", ["$scope", "$rootScope", '$location', '$window', function($scope, $location, $window, $rootScope) {
+.controller("LoginCtrl", ["$scope", "$rootScope", '$location', '$window', '$http', 'Authenticate', function($scope, $rootScope, $location, $window, $http, Authenticate) {
 
-    $scope.oauth = function(){
-      window.location.href = 'http://localhost:3000/auth/linkedin'
+    $scope.login = function(){
+      $window.location.href = 'http://localhost:3000/auth/linkedin'
     }
 
-    $scope.delete_cookie = function() {
-      document.cookie = 'accessToken=; Max-Age=0'}
+    $scope.logout = function() {
+      document.cookie = 'accessToken=; Max-Age=0'
+      // $http.get('http://localhost:3000/logout')
+  	  $window.location.reload(true);
+	}
+
+	$scope.token = Authenticate.token
+
+	console.log($scope.token)
+    // $scope.login = function(){
+    // 	Authentication.login()
+    // }
+
+    // $scope.logout = function(){
+    // 	Authentication.logout()
+    // }
     // $cookieStore.get('accessToken')
     // console.log($cookieStore)
     // $scope.cookies = function(){

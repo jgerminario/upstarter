@@ -34,7 +34,7 @@ router.get('/auth/linkedin',
   function(req, res){});
 
 router.get('/auth/linkedin/callback',
-  passport.authenticate('linkedin', { failureRedirect: '/login' }),
+  passport.authenticate('linkedin', { failureRedirect: 'http://localhost:8100/' }),
   function(req, res) {
      User.findOne({ email: req.user._json.emailAddress}, function(err, user){
         if (user) {
@@ -66,28 +66,10 @@ router.get('/auth/linkedin/callback',
             })
         }
       })
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
       res.cookie('accessToken', req.session.accessToken, {maxAge:900000, httpOnly: false})
       res.redirect('http://localhost:8100/')
       // res.redirect('/auth/token')
-=======
-      res.redirect('/auth/token')
->>>>>>> checks rootscope as a viable option for access token storage
-=======
-      res.redirect('http://localhost:8100/')
->>>>>>> adds broken ajax call to server for access token
-=======
-      // res.redirect('http://localhost:8100/')
-      res.redirect('/auth/token')
->>>>>>> alters server side auth to save to cookies
-=======
-      res.cookie('accessToken', req.session.accessToken, {maxAge:900000, httpOnly: false})
-      res.redirect('http://localhost:8100/')
-      // res.redirect('/auth/token')
->>>>>>> adds working controller to log user in/out by storing access key in cookies
       // res.send({user: req.user})
   });
 
@@ -96,23 +78,10 @@ router.get('/auth/token', function(req, res){
 })
 
 router.get('/logout', function(req, res){
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> adds working controller to log user in/out by storing access key in cookies
   // User.findOne({ email: req.user._json.emailAddress}, function(err, user){
   //   user.token = ""
   //   user.save();
   // });
-<<<<<<< HEAD
-=======
-  User.findOne({ email: req.user._json.emailAddress}, function(err, user){
-    user.token = ""
-    user.save();
-  });
->>>>>>> checks rootscope as a viable option for access token storage
-=======
->>>>>>> adds working controller to log user in/out by storing access key in cookies
   req.session.accessToken = null
   req.logout();
   res.send('logged out');

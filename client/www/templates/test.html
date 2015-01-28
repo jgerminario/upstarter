@@ -6,7 +6,12 @@
     {{startup.data.properties.description}}
     {{startup.data.properties.total_funding_usd}} -->
 
-    <button ng-click="oauth()"></button>
-    <button ng-click="delete_cookie()"></button>
+    <form id="login" ng-submit="login()">
+    	<input type="submit" value="Login"/>
+    </form>
+
+    <form id="logout" ng-submit="logout()">
+    	<input type="submit" value="Logout"/>
+    </form>
   </ion-content>
 </ion-view>
