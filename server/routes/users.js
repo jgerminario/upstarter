@@ -13,7 +13,7 @@ router.get('/connections/:userId', function(req, res) {
     if (err) {
       throw err
     } else {
-      request('https://api.linkedin.com/v1/people/~/connections:(first-name,last-name,industry,picture-url,positions)?format=json&oauth2_access_token='+user.token, function (error, response, body) {
+      request('https://api.linkedin.com/v1/people/~/connections:(first-name,last-name,industry,picture-url,positions,public-profile-url)?format=json&oauth2_access_token='+user.token, function (error, response, body) {
         if (!error && response.statusCode == 200) {
           res.send(body)
         }
