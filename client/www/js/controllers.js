@@ -27,15 +27,18 @@ angular.module('upstarter.controllers', [])
 
 
 .controller('SearchCtrl', ['$scope', '$timeout', 'InitialSeed', 'Startup', 'StartupNames', 'colorScore', 'EmployeeRange', 'Geolocation', '$location', '$cookieStore', function($scope, $timeout, InitialSeed, Startup, StartupNames, colorScore, EmployeeRange, Geolocation, $location, $cookieStore) {
+
     var lat = window.localStorage['lat'] || 37.7846359
     var lon = window.localStorage['lon'] || -122.3975407
     var distance = 0
     var params = {
       "full": "true",
       "limit": 10,
-      "location": distance + "," + lat + "," + lon
+      "location": distance + "," + lat + "," + lon,
+      "employees": ""
       // must look like "5,31.722,-123.342"
-      // "string": "test"
+         // "string": "test"
+
     };
 
   navigator.geolocation.getCurrentPosition(function(position){
@@ -44,6 +47,7 @@ angular.module('upstarter.controllers', [])
     window.localStorage['lat'] = position.coords.latitude;
     lat = window.localStorage['lat']
     lon = window.localStorage['lon']
+
     params.location = distance + "," + lat + "," + lon;
   }, Geolocation.onError)
 
@@ -57,7 +61,7 @@ angular.module('upstarter.controllers', [])
         params.location = distance + "," + lat + "," + lon;
         console.log(params.location)
         StartupNames(params).then(function(data){
-          // console.log(data.data)
+          console.log(data.data)
           $scope.startups = data.data;
           // angular.forEach($scope.startups, function(startup){
           //   // console.log(startup)
@@ -72,6 +76,30 @@ angular.module('upstarter.controllers', [])
       }, 400);
 
  }
+
+ $scope.search_employees = function(employees){
+
+       if(timer){
+        $timeout.cancel(timer);
+      }
+      timer= $timeout(function(){
+        params.employees = employees;
+        console.log(params.employees);
+        StartupNames(params).then(function(data){
+          // console.log(data.data)
+          $scope.startups = data.data;
+          // angular.forEach($scope.startups, function(startup){
+          //   // console.log(startup)
+          //   if(!startup.short_description){
+          //     Startup(startup.slug).then(function(data){
+          //       console.log(data);
+          //     });
+          //   }
+          // });
+          // console.log($scope.startups);
+        });
+      }, 400);
+}
 
 
       // console.log(StartupNames(params));
@@ -136,7 +164,9 @@ angular.module('upstarter.controllers', [])
     // $http.get("http://api.crunchbase.com/v/2/organization/crowdtilt?user_key=2c7e457b872b77f865562e75967f76ef").success(function(data){
 
 
+
 }])
+
 
 
 // .controller('SliderCtrl', ['$scope', 'EmployeeRange',function($scope, EmployeeRange){
@@ -160,7 +190,9 @@ angular.module('upstarter.controllers', [])
 // }])
 
 
+
 .controller('StartupDetailCtrl', ['$scope','Startup', '$stateParams', '$http', 'colorScore', 'Authenticate', function($scope, Startup, $stateParams, $http, colorScore, Authenticate) {
+
   // console.log($stateParams.startupName);
 
   Startup($stateParams.startupName).then(function(data){

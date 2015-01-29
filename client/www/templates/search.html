@@ -45,12 +45,30 @@
             Distance from Current Location {{SearchCtrl.distance}} in miles
              <div class="item range range-positive">
                 <i class="icon ion-ios7"></i>
+
                   <input type="range" name="radius" min="1" max="1000" ng-model="SearchCtrl.distance"  ng-change="search_radius(SearchCtrl.distance)">
+
                 <i class="icon ion-ios7"></i>
             </div>
            </div>
          </div>
       </div>
+
+       <div class="card" ng-show="employees">
+        <div class="item item-text-wrap">
+          <div class="list">
+            Number of Employees {{SearchCtrl.employees}}
+             <div class="item range range-royal">
+                <i class="icon ion-ios7"></i>
+
+                  <input type="range" name="radius" min="1" max="1000" ng-model="SearchCtrl.employees"  ng-change="search_employees(SearchCtrl.employees)">
+
+                <i class="icon ion-ios7"></i>
+            </div>
+           </div>
+         </div>
+      </div>
+
     </div>
 
     <div class="listing-heading">
