@@ -99,4 +99,41 @@ angular.module('upstarter.services', ['ngResource'])
   };
 }
 };
-});
+})
+
+.factory('Geolocation', function(){
+
+      // var deferred = $q.defer();
+        var onSuccess =  function(position) {
+          var longitude = position.coords.latitude
+          var latitude = position.coords.longitude
+         console.log(position.coords.latitude)
+         console.log(position.coords.longitude)
+         window.localStorage['lon'] = position.coords.longitude;
+         window.localStorage['lat'] = position.coords.latitude;
+
+         // deferred.resolve(longitude);
+        };
+
+        var onError = function(error) {
+          alert('code: '    + error.code    + '\n' +
+          'message: ' + error.message + '\n');
+        };
+  return {
+        onSuccess:  function(position) {
+          var longitude = position.coords.latitude
+          var latitude = position.coords.longitude
+         console.log(position.coords.latitude)
+         console.log(position.coords.longitude)
+         window.localStorage['lon'] = position.coords.longitude;
+         window.localStorage['lat'] = position.coords.latitude;
+
+         // deferred.resolve(longitude);
+        },
+        onError: function(error) {
+          alert('code: '    + error.code    + '\n' +
+          'message: ' + error.message + '\n');
+        }
+      }
+       // return deferred.promise;
+})

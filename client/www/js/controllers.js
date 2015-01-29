@@ -25,17 +25,30 @@ angular.module('upstarter.controllers', [])
     // });
 }])
 
-.controller('SearchCtrl', ['$scope', '$timeout', 'InitialSeed', 'Startup', 'StartupNames', 'EmployeeRange', function($scope, $timeout, InitialSeed, Startup, StartupNames, EmployeeRange) {
-
+.controller('SearchCtrl', ['$scope', '$timeout', 'InitialSeed', 'Startup', 'StartupNames', 'EmployeeRange', 'Geolocation', function($scope, $timeout, InitialSeed, Startup, StartupNames, EmployeeRange, Geolocation) {
+    var lat = window.localStorage['lat'] || 37.7846359
+    var lon = window.localStorage['lon'] || -122.3975407
+    var distance = 0
     var params = {
       "full": "true",
       "limit": 10,
-      // "location": "5," + lon + "," + lat,
-      // must look like "5,31.722,-123.342" 
+      "location": distance + "," + lat + "," + lon,
+      // must look like "5,31.722,-123.342"
       "string": "test"
     };
 
-    $scope.value = EmployeeRange.getData();
+  navigator.geolocation.getCurrentPosition(function(position){
+    // Geolocation.onSuccess(position);
+    window.localStorage['lon'] = position.coords.longitude;
+    window.localStorage['lat'] = position.coords.latitude;
+    lat = window.localStorage['lat']
+    lon = window.localStorage['lon']
+    params.location = distance + "," + lon + "," + lat;
+  }, Geolocation.onError)
+
+
+
+
 
       // console.log(StartupNames(params));
     var timer = false;
@@ -77,27 +90,29 @@ angular.module('upstarter.controllers', [])
 
 
     // $http.get("http://api.crunchbase.com/v/2/organization/crowdtilt?user_key=2c7e457b872b77f865562e75967f76ef").success(function(data){
+
+
 }])
 
-.controller('SliderCtrl', ['$scope', 'EmployeeRange',function($scope, EmployeeRange){
+// .controller('SliderCtrl', ['$scope', 'EmployeeRange',function($scope, EmployeeRange){
 
 
-  $scope.value = EmployeeRange.data;
-  $scope.options = {
-    from: 0,
-    to: 10000,
-    step: 1,
-    dimension: "  employees",
-    scale: [0, '|', '|', 5000, '|' , , '|', 10],
-      css: {
-          background: {"background-color": "silver"},
-          before: {"background-color": "purple"},
-          default: {"background-color": "white"},
-          after: {"background-color": "green"},
-          pointer: {"background-color": "red"}
-        }
-  };
-}])
+//   $scope.value = EmployeeRange.data;
+//   $scope.options = {
+//     from: 0,
+//     to: 10000,
+//     step: 1,
+//     dimension: "  employees",
+//     scale: [0, '|', '|', 5000, '|' , , '|', 10],
+//       css: {
+//           background: {"background-color": "silver"},
+//           before: {"background-color": "purple"},
+//           default: {"background-color": "white"},
+//           after: {"background-color": "green"},
+//           pointer: {"background-color": "red"}
+//         }
+//   };
+// }])
 
 .controller('StartupDetailCtrl', ['$scope','Startup', '$stateParams', function($scope, Startup, $stateParams) {
   // console.log($stateParams.startupName);
