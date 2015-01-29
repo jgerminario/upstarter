@@ -1,64 +1,36 @@
 <ion-header-bar class="bar bar-header bar-stable">
+  <h1 class="title">Upstarter</h1>
+</ion-header-bar>
+<ion-header-bar class="bar bar-subheader bar-stable">
   <a href="/#/" class="button icon-left ion-chevron-left button-clear button-dark">Back</a>
   <h1 class="title">{{startup.name}}</h1>
 </ion-header-bar>
 
 <ion-view view-title="Startup Detail">
   <ion-content class="content padding has-header">
-
     <div class="top row">
-      <div class="momentum col col-50"><img class="company-logo" src="http://www.online-image-editor.com//styles/2014/images/example_image.png"></div>
-      <div class="col col-50"><div class="momentum-score-title">Momentum Score</div><div class="the-number">96</div></div>
+      <div class="momentum col col-50"><img class="company-logo" ng-src="https://res.cloudinary.com/crunchbase-production/{{startup.primary_image[0]}}"></div>
+      <div class="col col-50"><div class="momentum-score-title">Momentum Score</div><div class="the-number momentum-score-color">{{startup.fundraisePercentile | number : 1}}</div></div>
     </div>
     <div class="main-content row">
       <div class="col col-50">
-        "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"</div>
+        {{startup.description}}</div>
       <div class="stats col col-50">
         <div class="stats-header">At-A-Glance</div>
         <table>
-          <tr><td class="stat-type">Offices</td><td>New York, NY; San Francisco, CA</td></tr>
-          <tr><td class="stat-type">Employees</td><td>5305</td></tr>
-          <tr><td class="stat-type">Founded On</td><td>April 5, 2012</td></tr>
-          <tr><td class="stat-type">Closed On</td><td></td></tr>
-          <tr><td class="stat-type">Total Funding</td><td>$15,000,000</td></tr>
-          <tr><td class="stat-type">Investments</td><td>8</td></tr>
-          <tr><td class="stat-type">Founded by</td><td>Thomas Monson & Gordon Hinckley</td></tr>
-          <tr><td class="stat-type">Website</td><td>www.google.com</td></tr>
+          <tr><td ng repeat="office in {{startup.offices}}" class="stat-type">Offices in</td><td ng-repeat="office in {{startup.offices}}">{{office.city}}</td></tr>
+          <tr><td class="stat-type">Employees</td><td>{{startup.number_of_employees}}</td></tr>
+          <tr><td class="stat-type">Founded On</td><td>
+          {{startup.founded_on | date : format : timezone}}</td></tr>
+          <tr><td class="stat-type">Total Funding</td><td>{{startup.total_funding_usd | currency : symbol : 0}}</td></tr>
+          <tr><td class="stat-type">Investments</td><td>{{startup.number_of_investments}}</td></tr>
+          <tr><td class="stat-type">Founded by</td><td>
+  <!--         <tr><td>{{startup.founders}}</td></tr>
+          <tr ng-repeat="founder in startup.founders">
+          <tr><td class="stat-type">{{founder.name}}</td></tr> -->
+          <tr><td class="stat-type">Website</td><td>{{startup.websites.pop()}}</td></tr>
         </table>
       </div>
-
     </div>
-
-  <!-- <div class="startup-container"> -->
-
-
-
-<!--
-
-
-      <div class="logo">
-        <img class="large-logo-image" src="https://res.cloudinary.com/crunchbase-production/image/upload/v1397180236/0747b6567687f8341cde674c9fe957e5.png">
-      </div>
-
-      <div class="momentum-score"> 96
-
-      </div>
-
-      <div class="description">
-        "As their third major undertaking, Skype and Kazaa founders Janus Friis and Niklas Zennstrom are attempting to perfect IPTV with Joost. Joost is a p2p on demand video player that offers professional (legal) programming much like on your television, but whenever you want. The service is free, however, there are video advertisements interspersed between and during programs as well as small type or image ads on the sides of your screen. With very heavy backing from media giants CBS and Viacom, Joost looks good to take on competitors Bablegum and Microsoft LiveStation. Currently Joost has content deals with CNN, the NHL and Sony as well as their financiers CBS and Viacom (MTV, Comedy Central etc). They have also recently developed a new Widget API open to third parties to make their own Joost widgets. Unlike many online video platforms, joost does require a download and cannot play video directly from users&#39; browsers. joost offers a desktop client that allows the user to watch on-demand TV over the internet. In addition, Joost enhances the TV experience by offering interactive tools. For example, users will be able to chat with friends while watching a show. The channels will also have interactive displays where users can discover behind-the-scene content. Joost&#39;s peer-to-peer technology also lowers the cost of channel owners by reducing the amount of data the servers must stream out. joost only serves some selected users, while the rest of the data is distributed from user to user. Rumor has it that Joost is in talks with hardware manufacturers to embed its platform into TV set-top boxes. If the move were successful it could change the TV industry substantially. Joost is now fully public and open to all. UPDATE: Joost has recently deactivated it&#39;s software client and now streams it&#39;s entire catalog via Adobe&#39;s Flash Player which is available for Windows, Mac OS X, and Linux. "
-      </div>
-      <div class="at-a-glance">
-
-      </div>
-      <div class="momentum-stats">
-
-      </div>
-      <div class="linkedin-connections">
-
-      </div>
-    </div>
- -->
-
-
   </ion-content>
 </ion-view>

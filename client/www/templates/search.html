@@ -16,15 +16,6 @@
         </label>
       </div>
 
-      <div class="list list-inset">
-        <label class="item item-input">
-          <i class="icon ion-search placeholder-icon"></i>
-          <input type="search"
-                 ng-model="main.cityInput.city" 
-                 placeholder="Search Cities" />
-        </label>
-      </div>
-
       <a ng-click="employees = !employees"
          class="button button-block button-balanced">Additional Search Options</a>
 
@@ -62,14 +53,14 @@
         <div class="company-data">
           <div class="company-name">{{startup.name}}</div>
 
-          <div class="company-info">
-            <div class="company-info-tidbit">{{startup.offices[0].city}}, {{startup.offices[0].region}}, {{startup.offices[0].country}}</div>
+          <div class="company-info item-text-wrap">
+            <div class="company-info-tidbit">{{startup.headquarters[0].city}}, {{startup.headquarters[0].country}}</div>
             <div class="company-info-tidbit">{{startup.number_of_employees}} Employees</div>
-            <div class="company-info-tidbit item-text-wrap">{{startup.short_description}}</div>
+            <div class="company-info-tidbit item-text-wrap">{{startup.short_description.substring(0,90)}}...</div>
           </div>
         </div>
 
-        <div class="company-momentum-score">{{startup.fundraisePercentile}}</div>
+        <div class="company-momentum-score" ng-class="colorScore({{startup.fundraisePercentile | number : 0}})">{{startup.fundraisePercentile | number : 0}}</div>
       </ion-item>
     </ion-list>
 
