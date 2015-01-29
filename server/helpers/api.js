@@ -130,6 +130,11 @@ var organizationEndpoint = (function (){
          threeYearRate = Startup.calculateFundraiseRate(fundraiseRounds, 3),
          oneYearRate = Startup.calculateFundraiseRate(fundraiseRounds, 1);
 
+      var momentum_score = 0
+      if (!acquired && !closed && !public && number_of_employees){
+        momentum_score = Startup.calculateMomentumScore(fiveYearRate, threeYearRate, oneYearRate, number_of_employees);
+      }
+
       var attributes = {
         name: name,
         funding_rounds: fundraiseRounds || [],
@@ -155,13 +160,13 @@ var organizationEndpoint = (function (){
         // twoYearRate: twoYearRate || 0,
         oneYearRate: oneYearRate || 0,
         geo: geo || [],
-        momentumScore: Startup.calculateMomentumScore(fiveYearRate, threeYearRate, oneYearRate, number_of_employees) || 0
+        momentumScore: momentum_score || 0
       };
 
 
       Startup.findByIdAndUpdate(id, attributes, function(err, startup){
         if (err) { console.log(err); }
-        if (startup.momentumScore > 0){
+        if (startup.momentumScore > 0 && startup.acquired != true && startup.public != true && startup.closed != true && startup.number_of_employees > 0){
           Startup.individualFundraisePercentile(startup.id, function(startup){
             if (res){
               res.send(startup);
@@ -170,6 +175,7 @@ var organizationEndpoint = (function (){
           });
         }
         else { 
+          console.log("fundraisePercentile not applicable to " + startup.name);
           if (res) {
             startup.slug = startup.slug.substring(13);
             res.send(startup);
