@@ -170,10 +170,10 @@ var organizationEndpoint = (function (){
   };
 
   return {
-    sendCBRequest: function(id, permalink){
+    sendCBRequest: function(id, permalink, res){
       var user_key = process.env.CB_KEY;
       request('https://api.crunchbase.com/v/2/' + permalink + '?user_key=' + user_key, function(error, response, body){
-        parseFields(id, error, response, body);
+        parseFields(id, error, response, body, res);
       });
     },
 

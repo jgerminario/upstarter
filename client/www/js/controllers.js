@@ -113,15 +113,15 @@ angular.module('upstarter.controllers', [])
           // console.log(data.data)
           $scope.startups = data.data;
           console.log(data);
-          // angular.forEach($scope.startups, function(startup){
-          //   // console.log(startup)
-          //   if(!startup.short_description){
-          //     Startup(startup.slug).then(function(data){
-          //       console.log(data);
-          //     });
-          //   }
-          // });
-          // console.log($scope.startups);
+          angular.forEach($scope.startups, function(startup){
+            // console.log(startup)
+            if(!startup.short_description){
+              Startup(startup.slug).then(function(data){
+                console.log(data);
+              });
+            }
+          });
+          console.log($scope.startups);
         });
       }, 400);
     };
