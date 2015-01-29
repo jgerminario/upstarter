@@ -16,6 +16,16 @@ db.once('open', function (callback) {
 
 // Startup.resetFundraisePercentile();
 console.log("starting 'find' operation (this may take a while)");
+Startup.find().or([{ acquired: true}, {public: true}, {closed: true }]).exec(function(err, data){
+  if (err) {console.log(err); }
+  data.forEach(function(startup){
+    startup.momentumScore = 0;
+    startup.save(function(err, startup){
+      if(err) {console.log(err); }
+      console.log(startup.name + " has been processed");
+    });
+  });
+});
 Startup.where({funding_rounds: {$not: {$size: 0}}}).find(function(err, startups){
   if (err) {console.log(err);}
   startups.forEach(function(startup){

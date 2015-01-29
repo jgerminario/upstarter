@@ -119,6 +119,11 @@ angular.module('upstarter.controllers', [])
               Startup(startup.slug).then(function(data){
                 console.log(data);
                 $scope.startups[index] = data;
+                // if(startup.momentumScore > 0 && startup.fundraisePercentile == 0){
+                //   StartupScore(startup.slug).then(function(percentile){
+                //     $scope.startups[index].fundraisePercentile = percentile;
+                //   });
+                // }
               });
             }
           });

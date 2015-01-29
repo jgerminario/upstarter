@@ -161,10 +161,20 @@ var organizationEndpoint = (function (){
 
       Startup.findByIdAndUpdate(id, attributes, function(err, startup){
         if (err) { console.log(err); }
-        if (res) {
-          res.send(startup);
+        if (startup.momentumScore > 0){
+          Startup.individualFundraisePercentile(startup.id, function(startup){
+            if (res){
+              res.send(startup);
+            } 
+            console.log("Saving " + startup.name + " as " + startup._id + " with momentum score " + startup.momentumScore + " employees " + startup.number_of_employees + " public: " + startup.public + " acquired: " + startup.acquired + " closed :" + startup.closed + " three year rate: " + startup.threeYearRate + " num of rounds: " +startup.funding_rounds.length + " geo " + startup.geo + " fundraise percentile " + startup.fundraisePercentile);
+          });
         }
-        console.log("Saving " + startup.name + " as " + startup._id + " with momentum score " + startup.momentumScore + " employees " + startup.number_of_employees + " public: " + startup.public + " acquired: " + startup.acquired + " closed :" + startup.closed + " three year rate: " + startup.threeYearRate + " num of rounds: " +startup.funding_rounds.length + " geo " + startup.geo);
+        else { 
+          if (res) {
+            res.send(startup);
+          }
+          console.log("Saving " + startup.name + " as " + startup._id + " with momentum score " + startup.momentumScore + " employees " + startup.number_of_employees + " public: " + startup.public + " acquired: " + startup.acquired + " closed :" + startup.closed + " three year rate: " + startup.threeYearRate + " num of rounds: " +startup.funding_rounds.length + " geo " + startup.geo);
+        }
       });
     }
   };

@@ -60,6 +60,33 @@ angular.module('upstarter.services', ['ngResource'])
   };
 }])
 
+// .factory('StartupScore', ['$http', '$q',
+//   function($http, $q){
+//   // var deferred = $q.defer();
+
+//   return function(slug) {
+//     return $http({
+//     method: 'GET',
+//     // url: "http://localhost:3000/startups/score/" + startupSlug
+//     // url: "http://upstarter-server.herokuapp.com/startups?full=" + searchParams.full + "&limit=" +searchParams.limit + string_str + distance_str,
+//     contentType: "application/json",
+//   })
+//     .success(function(data,status){
+//       console.log(data);
+//       // var company_array = data;
+//       // console.log(data)
+//       return data;
+//       // deferred.resolve(company_array);
+//     })
+
+//     .error(function(){
+//       // deferred.reject('There was an error');
+//       return "There was an error";
+//     });
+//   // return deferred.promise;
+//   };
+// }])
+
 // individual page
 .factory('Startup', ['$http', '$q',
   function($http, $q){
