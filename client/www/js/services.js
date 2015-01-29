@@ -58,14 +58,16 @@ angular.module('upstarter.services', ['ngResource'])
     url: "http://upstarter-server.herokuapp.com/startups/" + startupSlug,
     contentType: "application/json",
   })
-    .success(function(data,status){
+    .success(function(data, status){
       var momentumScore = document.getElementsByClassName('the-number');
-      // if data.fundraisePercentile
-      console.log(data["fundraisePercentile"])
-      // momentumScore[0]
-      console.log("this is momentum score", momentumScore[0].innerHTML)
-        momentumScore[0].innerHTML = data.fundraisePercentile
-      if (!momentumScore[0].innerHTML) { console.log("no innerHTML yet!")}
+      var momentumScoreNumber = data[0].fundraisePercentile
+      momentumScore[0].innerHTML = momentumScoreNumber
+
+      if (momentumScoreNumber > 80) { momentumScore[0].classList.add('hot-startup') }
+      else if (momentumScoreNumber > 60) { momentumScore[0].classList.add('lukewarm-startup') }
+      else if (momentumScoreNumber > 40) { momentumScore[0].classList.add('not-so-good-startup') }
+      else if (momentumScoreNumber < 40) { momentumScore[0].classList.add('cold-startup') }
+
       var company_array = data;
       deferred.resolve(company_array);
     })
