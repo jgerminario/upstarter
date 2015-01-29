@@ -16,21 +16,38 @@
         </label>
       </div>
 
+
+      <div class="list list-inset">
+        <label class="item item-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input type="search"
+                 ng-model="main.cityInput.city"
+                 placeholder="Search Cities" />
+        </label>
+      </div>
+
+
       <a ng-click="employees = !employees"
          class="button button-block button-balanced">Additional Search Options</a>
 
       <div class="card" ng-show="employees">
         <div class="item item-text-wrap">
           <div class="list">
-            Number of Employees : {{employnum}}
+          <!--   Number of Employees : {{employnum}}
             <!--   <div class="item range range-positive" ng-controller="SliderCtrl"> -->
-            <i class="icon ion-ios7"></i>
+        <!--     <i class="icon ion-ios7"></i>
             <input ng-model="value"
                    type="text"
                    id="mySlider1"
                    slider
                    options="options" />
-            <i class="icon ion-ios7"></i>{{value}}
+            <i class="icon ion-ios7"></i>{{value}} -->
+            Distance from Current Location {{SearchCtrl.distance}} in miles
+             <div class="item range range-positive">
+                <i class="icon ion-ios7"></i>
+                  <input type="range" name="radius" min="0" max="1000" ng-model="SearchCtrl.distance">
+                <i class="icon ion-ios7"></i>
+            </div>
            </div>
          </div>
       </div>
