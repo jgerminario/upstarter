@@ -102,17 +102,22 @@ router.get('/:slug', function(req, res) { // lotus-development-corporation
 
   query.exec(function (err, data) {
     if (err) { console.log(err); }
-    if (!data[0]){ 
-      res.send("startup not found"); 
+    if (data){
+      if (!data[0]){ 
+        res.send("startup not found"); 
+      }
+      else if (data[0].description) {
+        // startup has info
+        res.json(data);
+      }
+      else {
+        // startup not yet have info
+        organizationEndpoint.sendCBRequest(data[0].id, data[0].slug, res);
+      }
+    } else {
+      res.send("startup not found");
     }
-    else if (data[0].description) {
-      // startup has info
-      res.json(data);
-    }
-    else {
-      // startup not yet have info
-      organizationEndpoint.sendCBRequest(data[0].id, data[0].slug, res);
-    }
+
   })
 })
 

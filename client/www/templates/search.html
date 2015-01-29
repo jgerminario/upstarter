@@ -16,7 +16,7 @@
         </label>
       </div>
 
-
+<!-- 
       <div class="list list-inset">
         <label class="item item-input">
           <i class="icon ion-search placeholder-icon"></i>
@@ -25,7 +25,7 @@
                  placeholder="Search Cities" />
         </label>
       </div>
-
+ -->
 
       <a ng-click="employees = !employees"
          class="button button-block button-balanced">Additional Search Options</a>
@@ -46,7 +46,7 @@
              <div class="item range range-positive">
                 <i class="icon ion-ios7"></i>
 
-                  <input type="range" name="radius" min="1" max="1000" ng-model="SearchCtrl.distance"  ng-change="search_radius(SearchCtrl.distance)">
+                  <input type="range" name="radius" min="1" max="100" ng-model="SearchCtrl.distance"  ng-change="search_radius(SearchCtrl.distance)">
 
                 <i class="icon ion-ios7"></i>
             </div>
