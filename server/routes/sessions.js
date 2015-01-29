@@ -20,7 +20,6 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
-
 passport.use(new LinkedinStrategy({
     clientID: process.env.API_KEY,
     clientSecret: process.env.SECRET_KEY,

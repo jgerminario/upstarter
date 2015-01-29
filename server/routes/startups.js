@@ -23,14 +23,12 @@ var organizationEndpoint = require('../helpers/api');
 
 // GET list of all company names - for client
 router.get('/', function(req, res) {
-  var query, limit, string, full, default_limit, location, miles, radians, lat, lon;
+  var query, limit, string, full, default_limit, location, miles, radians, lat, lon, employees;
   string = querystring.parse(url.parse(req.url).query).string;
   full = querystring.parse(url.parse(req.url).query).full;
+  employees = querystring.parse(url.parse(req.url).query).employees;
 
-  console.log(location + " " + radians);
-
-
-  console.log(full == "true");
+  // console.log(location + " " + radians);
 
   if (querystring.parse(url.parse(req.url).query).location){
     location = querystring.parse(url.parse(req.url).query).location.split(",");
@@ -44,6 +42,16 @@ router.get('/', function(req, res) {
     query = Startup.find({});
   }
 
+
+  if (employees && employees > 0 && employees < 1000){
+    query = query.where('number_of_employees').gt(0).lte(employees);
+  }
+
+  
+  if (string){
+    query = query.where({'name': new RegExp('.*' + string + '.*', "i")});
+  }
+
   if (full == "true"){
     default_limit = 10;
   } else {
@@ -52,22 +60,19 @@ router.get('/', function(req, res) {
   }
 
   limit = querystring.parse(url.parse(req.url).query).limit || default_limit;
-  
-  if (string){
-    query = query.where({'name': new RegExp('.*' + string + '.*', "i")});
-  }
 
   query = query.limit(limit); 
-  query = query.sort([['momentumScore', 'descending']]);
-
+  query = query.sort([['fundraisePercentile', 'descending']]);
 
   var jsonResponse = [];
 
   query.exec(function (err, data) {
     if (err) { console.log(err) }
-    data.forEach(function(el){
-      el.slug = el.slug.substring(13);
-    });
+      if (data){
+        data.forEach(function(el){
+          el.slug = el.slug.substring(13);
+        });
+      }
 
     // data.forEach(function(startup) {
 

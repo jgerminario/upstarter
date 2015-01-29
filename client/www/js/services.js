@@ -40,6 +40,7 @@ angular.module('upstarter.services', ['ngResource'])
     }
     return $http({
     method: 'GET',
+    // url: "http://localhost:3000/startups?full=" + searchParams.full + "&limit=" +searchParams.limit + string_str + distance_str,
     url: "http://upstarter-server.herokuapp.com/startups?full=" + searchParams.full + "&limit=" +searchParams.limit + string_str + distance_str,
     contentType: "application/json",
   })
@@ -59,6 +60,33 @@ angular.module('upstarter.services', ['ngResource'])
   };
 }])
 
+// .factory('StartupScore', ['$http', '$q',
+//   function($http, $q){
+//   // var deferred = $q.defer();
+
+//   return function(slug) {
+//     return $http({
+//     method: 'GET',
+//     // url: "http://localhost:3000/startups/score/" + startupSlug
+//     // url: "http://upstarter-server.herokuapp.com/startups?full=" + searchParams.full + "&limit=" +searchParams.limit + string_str + distance_str,
+//     contentType: "application/json",
+//   })
+//     .success(function(data,status){
+//       console.log(data);
+//       // var company_array = data;
+//       // console.log(data)
+//       return data;
+//       // deferred.resolve(company_array);
+//     })
+
+//     .error(function(){
+//       // deferred.reject('There was an error');
+//       return "There was an error";
+//     });
+//   // return deferred.promise;
+//   };
+// }])
+
 // individual page
 .factory('Startup', ['$http', '$q',
   function($http, $q){
@@ -67,18 +95,24 @@ angular.module('upstarter.services', ['ngResource'])
   var deferred = $q.defer();
     $http({
     method: 'GET',
-    url: "http://upstarter-server.herokuapp.com/startups/" + startupSlug,
+    url: "http://localhost:3000/startups/" + startupSlug,
+    // url: "http://upstarter-server.herokuapp.com/startups/" + startupSlug,
     contentType: "application/json",
   })
     .success(function(data, status){
+      console.log(data);
       var momentumScore = document.getElementsByClassName('the-number');
-      var momentumScoreNumber = data[0].fundraisePercentile
-      momentumScore[0].innerHTML = momentumScoreNumber
+      var momentumScoreNumber = data.fundraisePercentile // Highly possible I break something by removing data[0] - please let me know if some error gets thrown here  JG
+      // console.log(momentumScoreNumber)
+      // console.log(momentumScore)
+      if (momentumScore[0]){
+        momentumScore[0].innerHTML = momentumScoreNumber
 
       if (momentumScoreNumber > 80) { momentumScore[0].classList.add('hot-startup') }
       else if (momentumScoreNumber > 60) { momentumScore[0].classList.add('lukewarm-startup') }
       else if (momentumScoreNumber > 40) { momentumScore[0].classList.add('not-so-good-startup') }
       else if (momentumScoreNumber < 40) { momentumScore[0].classList.add('cold-startup') }
+      }
 
       var company_array = data;
       deferred.resolve(company_array);

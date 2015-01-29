@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 // var uniqueValidator = require('mongoose-unique-validator')
 var Schema = mongoose.Schema;
 
+
 startupsSchema = new Schema({
   name: { type: String, required: true},
   slug: { type: String, required: true, unique: true },
@@ -22,6 +23,7 @@ startupsSchema = new Schema({
   websites: Array,
   funding_rounds: Array,
   number_of_employees: Number,
+  fiveYearRate: Number,
   threeYearRate: Number,
   twoYearRate: Number,
   oneYearRate: Number,
@@ -49,6 +51,9 @@ startupsSchema = new Schema({
 //       totalRate = total/years
 //       return totalRate;
 // };
+
+
+
 startupsSchema.statics.resetHeadquartersOffice = function () {
     this.find().where('headquarters').exists(false).exec(function(err, data){
       data.forEach(function(company){
@@ -108,6 +113,28 @@ startupsSchema.statics.resetFundraisePercentile = function () {
     });
 };
 
+startupsSchema.statics.individualFundraisePercentile = function(id, callback){
+  var self = this;
+  this.findById(id).exec(function(error, startup){
+    if(error) {console.log(error); }
+    self.find().where({ 'acquired': false, 'public': false, 'closed': false, momentumScore: {$gt: 0} }).count(function(e, count){
+      if (e) {console.log(e);}
+      console.log(count);
+      self.find({momentumScore: {$gt: startup.momentumScore}}).count(function(err, index){
+        console.log(index);
+        if (err) {console.log(err);}
+        // console.log(Math.round((count-index) / (count+1) * 100 ));
+        startup.fundraisePercentile = Math.round( (count-index) / (count+1) * 100 );
+        startup.save(function(error, startup){
+          console.log(startup.momentumScore, startup.fundraisePercentile);
+          if (error) {console.log(error);}
+          callback(startup);
+        })
+      }); // This is the number of documents with a higher user_count
+    });
+  });
+};
+
 startupsSchema.statics.calculateFundraisePercentile = function () {
   // console.log(Startup.find().exec(function(err,docs){
   //   console.log(docs);
@@ -119,7 +146,7 @@ startupsSchema.statics.calculateFundraisePercentile = function () {
     this.find().where({ 'acquired': false, 'public': false, 'closed': false, momentumScore: {$gt: 0} }).sort([['momentumScore', 'ascending']]).exec(function(err, docs){
       var count = docs.length;
       docs.forEach(function(company, index){
-          company.fundraisePercentile = (index+1)/(count+1) * 100;
+          company.fundraisePercentile = Math.round((index+1)/(count+1) * 100);
         company.save(function(err, data){
           if (err) { return console.log(err); }
           console.log(index + " " + company.name + " " + company.momentumScore + " " + company.fundraisePercentile);
@@ -132,7 +159,6 @@ startupsSchema.statics.calculateFundraisePercentile = function () {
 
 startupsSchema.statics.calculateFundraiseRate = function (fundraisingRounds, years) {
   // TODO: Check that this works as a hook for new startups created
-  console.log("calculaing fundraise rate")
   var fundraiseArray = [];
   var total = 0;
   var totalRate = 0;
@@ -146,39 +172,41 @@ startupsSchema.statics.calculateFundraiseRate = function (fundraisingRounds, yea
   fundraiseArray.forEach(function(amount){
     total += parseInt(amount);
   });
-  totalRate = total/years;
+  totalRate = total;
   return totalRate;
 };
 
 startupsSchema.statics.resetFundraiseRates = function () {
     var self = this;
-    this.find().exec(function(err, data){
+    this.find().where({funding_rounds: {$not: {$size: 0}}}).exec(function(err, data){
       data.forEach(function(company){
         console.log("Before: " + company.name + " 1. " + company.oneYearRate + " 2. " + company.twoYearRate + " 3. " + company.threeYearRate);
-        console.log(company.funding_rounds);
+        // console.log(company.funding_rounds);
         if (company.funding_rounds){
-          company.threeYearRate = self.calculateFundraiseRate(company.funding_rounds, 3),
-           company.twoYearRate = self.calculateFundraiseRate(company.funding_rounds, 2),
+          company.threeYearRate = self.calculateFundraiseRate(company.funding_rounds, 3);
+           company.fiveYearRate = self.calculateFundraiseRate(company.funding_rounds, 5);
            company.oneYearRate = self.calculateFundraiseRate(company.funding_rounds, 1);
+           company.twoYearRate = undefined;
          }
          else {
+            company.fiveYearRate = 0;
             company.threeYearRate = 0;
-            company.twoYearRate = 0;
+            company.twoYearRate = undefined;
             company.oneYearRate = 0;
          }
         company.save(function(err, data){
           if (err) { console.log(err); }
-          console.log("After: " + company.name + " 1. " + company.oneYearRate + " 2. " + company.twoYearRate + " 3. " + company.threeYearRate);
+          console.log("After: " + company.name + " 1. " + company.oneYearRate + " 2. " + company.twoYearRate + " 3. " + company.threeYearRate + " 5. " + company.fiveYearRate);
         });
       });
     });
 };
 
-startupsSchema.statics.calculateMomentumScore = function(threeYearRate, twoYearRate, oneYearRate, number_of_employees) {
+startupsSchema.statics.calculateMomentumScore = function(fiveYearRate, threeYearRate, oneYearRate, number_of_employees) {
   if (number_of_employees == 0){
     return 0;
   } else {
-  return (threeYearRate * 0.5 + twoYearRate + oneYearRate * 2)/number_of_employees;
+  return Math.round((((fiveYearRate-threeYearRate)*0.5 + (threeYearRate-oneYearRate) + oneYearRate * 2))/5/number_of_employees/1000*10)/10; //weighted 5 year average of funding, two decimal points. one year counts for two years, weighted, 2nd and 3rd year for one year each, previous two for half a year each
   }
 };
 

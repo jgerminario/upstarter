@@ -126,9 +126,9 @@ var organizationEndpoint = (function (){
       //   return (calculateFundraiseRate(fundraiseRounds, 3) * 0.5 + calculateFundraiseRate(fundraiseRounds, 2) + calculateFundraiseRate(fundraiseRounds, 1) * 2)/number_of_employees
       //   }
       // }
-      var threeYearRate = Startup.calculateFundraiseRate(fundraiseRounds, 3),
-         twoYearRate = Startup.calculateFundraiseRate(fundraiseRounds, 3),
-         oneYearRate = Startup.calculateFundraiseRate(fundraiseRounds, 3);
+      var fiveYearRate = Startup.calculateFundraiseRate(fundraiseRounds, 5),
+         threeYearRate = Startup.calculateFundraiseRate(fundraiseRounds, 3),
+         oneYearRate = Startup.calculateFundraiseRate(fundraiseRounds, 1);
 
       var attributes = {
         name: name,
@@ -150,29 +150,40 @@ var organizationEndpoint = (function (){
         primary_image: primary_image || [],
         websites: websites || [],
         number_of_employees: number_of_employees || 0,
+        fiveYearRate: fiveYearRate || 0,
         threeYearRate: threeYearRate || 0,
-        twoYearRate: twoYearRate || 0,
+        // twoYearRate: twoYearRate || 0,
         oneYearRate: oneYearRate || 0,
         geo: geo || [],
-        momentumScore: Startup.calculateMomentumScore(threeYearRate, twoYearRate, oneYearRate, number_of_employees) || 0
+        momentumScore: Startup.calculateMomentumScore(fiveYearRate, threeYearRate, oneYearRate, number_of_employees) || 0
       };
 
 
       Startup.findByIdAndUpdate(id, attributes, function(err, startup){
         if (err) { console.log(err); }
-        if (res) {
-          res.send(startup);
+        if (startup.momentumScore > 0){
+          Startup.individualFundraisePercentile(startup.id, function(startup){
+            if (res){
+              res.send(startup);
+            } 
+            console.log("Saving " + startup.name + " as " + startup._id + " with momentum score " + startup.momentumScore + " employees " + startup.number_of_employees + " public: " + startup.public + " acquired: " + startup.acquired + " closed :" + startup.closed + " three year rate: " + startup.threeYearRate + " num of rounds: " +startup.funding_rounds.length + " geo " + startup.geo + " fundraise percentile " + startup.fundraisePercentile);
+          });
         }
-        console.log("Saving " + startup.name + " as " + startup._id + " with momentum score " + startup.momentumScore + " employees " + startup.number_of_employees + " public: " + startup.public + " acquired: " + startup.acquired + " closed :" + startup.closed + " three year rate: " + startup.threeYearRate + " num of rounds: " +startup.funding_rounds.length + " geo " + startup.geo);
+        else { 
+          if (res) {
+            res.send(startup);
+          }
+          console.log("Saving " + startup.name + " as " + startup._id + " with momentum score " + startup.momentumScore + " employees " + startup.number_of_employees + " public: " + startup.public + " acquired: " + startup.acquired + " closed :" + startup.closed + " three year rate: " + startup.threeYearRate + " num of rounds: " +startup.funding_rounds.length + " geo " + startup.geo);
+        }
       });
     }
   };
 
   return {
-    sendCBRequest: function(id, permalink){
+    sendCBRequest: function(id, permalink, res){
       var user_key = process.env.CB_KEY;
       request('https://api.crunchbase.com/v/2/' + permalink + '?user_key=' + user_key, function(error, response, body){
-        parseFields(id, error, response, body);
+        parseFields(id, error, response, body, res);
       });
     },
 

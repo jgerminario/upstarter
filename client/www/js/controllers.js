@@ -38,7 +38,6 @@ angular.module('upstarter.controllers', [])
       "employees": ""
       // must look like "5,31.722,-123.342"
          // "string": "test"
-
     };
 
   navigator.geolocation.getCurrentPosition(function(position){
@@ -113,15 +112,22 @@ angular.module('upstarter.controllers', [])
         StartupNames(params).then(function(data){
           // console.log(data.data)
           $scope.startups = data.data;
-          // angular.forEach($scope.startups, function(startup){
-          //   // console.log(startup)
-          //   if(!startup.short_description){
-          //     Startup(startup.slug).then(function(data){
-          //       console.log(data);
-          //     });
-          //   }
-          // });
-          // console.log($scope.startups);
+          console.log(data);
+          angular.forEach($scope.startups, function(startup,index){
+            // console.log(startup)
+            if(!startup.short_description){
+              Startup(startup.slug).then(function(data){
+                console.log(data);
+                $scope.startups[index] = data;
+                // if(startup.momentumScore > 0 && startup.fundraisePercentile == 0){
+                //   StartupScore(startup.slug).then(function(percentile){
+                //     $scope.startups[index].fundraisePercentile = percentile;
+                //   });
+                // }
+              });
+            }
+          });
+          console.log($scope.startups);
         });
       }, 400);
     };

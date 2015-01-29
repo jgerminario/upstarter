@@ -58,7 +58,8 @@ console.log("starting 'find' operation (this may take a while)");
 
 Startup.where('description').exists(false).exec(function(err, data){
   var i = 0,
-    startups = shuffle_array(data);
+    startups = data;
+    // startups = shuffle_array(data);
   if (err) {console.log(err); }
 
   console.log("beginning seed");
