@@ -42,6 +42,16 @@ router.get('/', function(req, res) {
     query = Startup.find({});
   }
 
+
+  if (employees && employees > 0 && employees < 1000){
+    query = query.where('number_of_employees').gt(0).lte(employees);
+  }
+
+  
+  if (string){
+    query = query.where({'name': new RegExp('.*' + string + '.*', "i")});
+  }
+
   if (full == "true"){
     default_limit = 10;
   } else {
@@ -49,19 +59,10 @@ router.get('/', function(req, res) {
     default_limit = 50;
   }
 
-  if (employees || employees != 0 || employees != 1000){
-    query = query.where('number_of_employees').gt(0).lte(employees);
-  }
-
   limit = querystring.parse(url.parse(req.url).query).limit || default_limit;
-  
-  if (string){
-    query = query.where({'name': new RegExp('.*' + string + '.*', "i")});
-  }
 
   query = query.limit(limit); 
   query = query.sort([['fundraisePercentile', 'descending']]);
-
 
   var jsonResponse = [];
 
