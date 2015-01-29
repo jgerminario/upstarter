@@ -3,8 +3,15 @@ var router = express.Router();
 var bodyparser = require('body-parser');
 var urlencode = bodyparser.urlencoded({ extended: false });
 var passport = require('passport');
+var request = require('request');
 var LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 var User = require('../models/users');
+
+// CrossStorageHub.init([
+//   {origin: /192.168.1.228:8100$/, allow: ['get', 'set', 'del', 'getKeys', 'clear']}
+// ]);
+
+
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -55,7 +62,7 @@ router.get('/auth/linkedin/callback',
             var newUser = new User({
               email: req.user._json.emailAddress,
               name: req.user.displayName,
-              // token: req.session.accessToken,
+              token: req.session.accessToken,
               linkedin: {
                 id: req.user.id,
                 following: following
@@ -67,8 +74,24 @@ router.get('/auth/linkedin/callback',
         }
       })
 
-      res.cookie('accessToken', req.session.accessToken, {maxAge:900000, httpOnly: false})
-      res.redirect('http://localhost:8100/')
+      // res.setHeader("Set-Cookie", "accessCheese=" + req.session.accessToken);
+      // res.cookie('accessToken', req.session.accessToken, {maxAge:900000, httpOnly: false})
+      // res.setHeader('Content-Type', 'application/json')
+      // res.write({"token": req.session.accessToken})
+
+      // request({
+      //   headers: {
+      //     'accessToken': req.session.accessToken
+      //   },
+      //   uri: 'http://192.168.1.228:8100/',
+      //   body: req.session.accessToken,
+      //   method: 'POST'
+      // }, function(err, res, body){
+      // });
+      // res.writeHead(200)
+      // res.write(req.session.accessToken)
+      res.redirect('http://localhost:8100/#/?userId='+req.user.id)
+      // res.redirect('http://www.yahoo.com')
       // res.redirect('/auth/token')
       // res.send({user: req.user})
   });

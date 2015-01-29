@@ -71,21 +71,14 @@ angular.module('upstarter.services', ['ngResource'])
   };
 }])
 
+.factory('Authenticate', ['$cookieStore', function($cookieStore){
 
-
-.factory('Authenticate', [ function(){
-  var token
-  document.cookie.split("; ").forEach(function(cookie){
-      if (cookie.match(/accessToken=/g)){
-        token = cookie.slice(12, cookie.length)
-      } else {
-        token = null
-      }
-    })
+  var userId = $cookieStore.get('userId')
 
   return {
-    token: token
+    userId: userId
   }
+
 }])
 
 .factory('EmployeeRange', function(){
