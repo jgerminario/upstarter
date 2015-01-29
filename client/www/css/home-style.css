@@ -4,6 +4,15 @@ body {
   font-weight: 100;
 }
 
+.upstarter-logo {
+  height: 100%;
+  top: 0%;
+  left: 37%;
+  position: absolute;
+  width: 30%;
+  text-align: center;
+}
+
 .button {
   font-weight: 400;
 }
