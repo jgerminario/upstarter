@@ -44,8 +44,8 @@ angular.module('upstarter.services', ['ngResource'])
     }
     return $http({
     method: 'GET',
-    // url: "http://localhost:3000/startups?full=" + searchParams.full + "&limit=" +searchParams.limit + string_str + distance_str,
-    url: "http://upstarter-server.herokuapp.com/startups?full=" + searchParams.full + "&limit=" +searchParams.limit + string_str + distance_str + employees_str,
+    url: "http://localhost:3000/startups?full=" + searchParams.full + "&limit=" +searchParams.limit + string_str + distance_str + employees_str,
+    // url: "http://upstarter-server.herokuapp.com/startups?full=" + searchParams.full + "&limit=" +searchParams.limit + string_str + distance_str + employees_str,
     contentType: "application/json",
   })
     .success(function(data,status){
