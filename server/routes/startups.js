@@ -65,6 +65,7 @@ router.get('/', function(req, res) {
   query = query.limit(limit); 
   query = query.sort([['fundraisePercentile', 'descending']]);
 
+
   var jsonResponse = [];
 
   query.exec(function (err, data) {
