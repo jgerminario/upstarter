@@ -49,8 +49,8 @@ router.get('/', function(req, res) {
     default_limit = 50;
   }
 
-  if (employees || employees != 0){
-    query = query.where('number_of_employees').gte(employees);
+  if (employees || employees != 0 || employees != 1000){
+    query = query.where('number_of_employees').gt(0).lte(employees);
   }
 
   limit = querystring.parse(url.parse(req.url).query).limit || default_limit;
