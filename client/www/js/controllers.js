@@ -25,7 +25,7 @@ angular.module('upstarter.controllers', [])
     // });
 }])
 
-.controller('SearchCtrl', ['$scope', '$timeout', 'InitialSeed', 'Startup', 'StartupNames', 'colorScore' 'EmployeeRange', '$location', '$cookieStore', function($scope, $timeout, InitialSeed, Startup, StartupNames, colorScore, EmployeeRange, $location, $cookieStore) {
+.controller('SearchCtrl', ['$scope', '$timeout', 'InitialSeed', 'Startup', 'StartupNames', 'colorScore', 'EmployeeRange', '$location', '$cookieStore', function($scope, $timeout, InitialSeed, Startup, StartupNames, colorScore, EmployeeRange, $location, $cookieStore) {
 
     var params = {
       "full": "true",
