@@ -126,9 +126,9 @@ var organizationEndpoint = (function (){
       //   return (calculateFundraiseRate(fundraiseRounds, 3) * 0.5 + calculateFundraiseRate(fundraiseRounds, 2) + calculateFundraiseRate(fundraiseRounds, 1) * 2)/number_of_employees
       //   }
       // }
-      var threeYearRate = Startup.calculateFundraiseRate(fundraiseRounds, 3),
-         twoYearRate = Startup.calculateFundraiseRate(fundraiseRounds, 3),
-         oneYearRate = Startup.calculateFundraiseRate(fundraiseRounds, 3);
+      var fiveYearRate = Startup.calculateFundraiseRate(fundraiseRounds, 5),
+         threeYearRate = Startup.calculateFundraiseRate(fundraiseRounds, 3),
+         oneYearRate = Startup.calculateFundraiseRate(fundraiseRounds, 1);
 
       var attributes = {
         name: name,
@@ -150,11 +150,12 @@ var organizationEndpoint = (function (){
         primary_image: primary_image || [],
         websites: websites || [],
         number_of_employees: number_of_employees || 0,
+        fiveYearRate: fiveYearRate || 0,
         threeYearRate: threeYearRate || 0,
-        twoYearRate: twoYearRate || 0,
+        // twoYearRate: twoYearRate || 0,
         oneYearRate: oneYearRate || 0,
         geo: geo || [],
-        momentumScore: Startup.calculateMomentumScore(threeYearRate, twoYearRate, oneYearRate, number_of_employees) || 0
+        momentumScore: Startup.calculateMomentumScore(fiveYearRate, threeYearRate, oneYearRate, number_of_employees) || 0
       };
 
 

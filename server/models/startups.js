@@ -22,6 +22,7 @@ startupsSchema = new Schema({
   websites: Array,
   funding_rounds: Array,
   number_of_employees: Number,
+  fiveYearRate: Number,
   threeYearRate: Number,
   twoYearRate: Number,
   oneYearRate: Number,
@@ -49,6 +50,9 @@ startupsSchema = new Schema({
 //       totalRate = total/years
 //       return totalRate;
 // };
+
+
+
 startupsSchema.statics.resetHeadquartersOffice = function () {
     this.find().where('headquarters').exists(false).exec(function(err, data){
       data.forEach(function(company){

@@ -27,10 +27,7 @@ router.get('/', function(req, res) {
   string = querystring.parse(url.parse(req.url).query).string;
   full = querystring.parse(url.parse(req.url).query).full;
 
-  console.log(location + " " + radians);
-
-
-  console.log(full == "true");
+  // console.log(location + " " + radians);
 
   if (querystring.parse(url.parse(req.url).query).location){
     location = querystring.parse(url.parse(req.url).query).location.split(",");
@@ -58,16 +55,18 @@ router.get('/', function(req, res) {
   }
 
   query = query.limit(limit); 
-  query = query.sort([['momentumScore', 'descending']]);
+  query = query.sort([['fundraisePercentile', 'descending']]);
 
 
   var jsonResponse = [];
 
   query.exec(function (err, data) {
     if (err) { console.log(err) }
-    data.forEach(function(el){
-      el.slug = el.slug.substring(13);
-    });
+      if (data){
+        data.forEach(function(el){
+          el.slug = el.slug.substring(13);
+        });
+      }
 
     // data.forEach(function(startup) {
 

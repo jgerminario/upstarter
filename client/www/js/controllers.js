@@ -38,7 +38,6 @@ angular.module('upstarter.controllers', [])
       "employees": ""
       // must look like "5,31.722,-123.342"
          // "string": "test"
-
     };
 
   navigator.geolocation.getCurrentPosition(function(position){
@@ -113,6 +112,7 @@ angular.module('upstarter.controllers', [])
         StartupNames(params).then(function(data){
           // console.log(data.data)
           $scope.startups = data.data;
+          console.log(data);
           // angular.forEach($scope.startups, function(startup){
           //   // console.log(startup)
           //   if(!startup.short_description){
