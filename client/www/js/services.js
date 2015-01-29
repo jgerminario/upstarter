@@ -59,7 +59,13 @@ angular.module('upstarter.services', ['ngResource'])
     contentType: "application/json",
   })
     .success(function(data,status){
-      // console.log(data);
+      var momentumScore = document.getElementsByClassName('the-number');
+      // if data.fundraisePercentile
+      console.log(data["fundraisePercentile"])
+      // momentumScore[0]
+      console.log("this is momentum score", momentumScore[0].innerHTML)
+        momentumScore[0].innerHTML = data.fundraisePercentile
+      if (!momentumScore[0].innerHTML) { console.log("no innerHTML yet!")}
       var company_array = data;
       deferred.resolve(company_array);
     })
@@ -71,6 +77,7 @@ angular.module('upstarter.services', ['ngResource'])
   };
 }])
 
+
 .factory('Authenticate', ['$cookieStore', function($cookieStore){
 
   var userId = $cookieStore.get('userId')
@@ -80,6 +87,27 @@ angular.module('upstarter.services', ['ngResource'])
   }
 
 }])
+
+.factory('colorScore', function() {
+  return {
+    colorScore: function(score) {
+      console.log(score)
+      if (parseInt(score) > 80) {
+        return "hot-startup"
+      }
+      else if (parseInt(score) > 60) {
+        return "lukewarm-startup"
+      }
+      else if (parseInt(score) > 40) {
+        return "not-so-good-startup"
+      }
+      else if (parseInt(score) < 40) {
+        return "cold-startup"
+    } else {
+        return "cold-startup"
+    }
+  }}
+})
 
 .factory('EmployeeRange', function(){
   var data = null;

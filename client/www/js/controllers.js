@@ -25,7 +25,7 @@ angular.module('upstarter.controllers', [])
     // });
 }])
 
-.controller('SearchCtrl', ['$scope', '$timeout', 'InitialSeed', 'Startup', 'StartupNames', 'EmployeeRange', '$location', '$cookieStore', function($scope, $timeout, InitialSeed, Startup, StartupNames, EmployeeRange, $location, $cookieStore) {
+.controller('SearchCtrl', ['$scope', '$timeout', 'InitialSeed', 'Startup', 'StartupNames', 'colorScore' 'EmployeeRange', '$location', '$cookieStore', function($scope, $timeout, InitialSeed, Startup, StartupNames, colorScore, EmployeeRange, $location, $cookieStore) {
 
     var params = {
       "full": "true",
@@ -67,6 +67,8 @@ angular.module('upstarter.controllers', [])
     });
     // // cities - filter radius instead
 
+    // $scope.colorScore = colorScore.colorScore
+
     // // watch for {name search, distance change, employee count change}, then make a new AJAX call
 
     // if (!$cookieStore.get('userId')) {
@@ -77,7 +79,7 @@ angular.module('upstarter.controllers', [])
     // }
 
     $scope.colorScore = function(score) {
-      if (parseInt(score) > 80) {
+      if (score > 80) {
         return "hot-startup"
       }
       else if (parseInt(score) > 60) {
@@ -117,12 +119,14 @@ angular.module('upstarter.controllers', [])
   };
 }])
 
-.controller('StartupDetailCtrl', ['$scope','Startup', '$stateParams', '$http', 'Authenticate', function($scope, Startup, $stateParams, $http, Authenticate) {
-  // console.log($stateParams.startupName);
+.controller('StartupDetailCtrl', ['$scope','Startup', '$stateParams', '$http', 'colorScore', 'Authenticate', function($scope, Startup, $stateParams, $http, colorScore, Authenticate) {
+
+
   Startup($stateParams.startupName).then(function(data){
     $scope.startup = data[0];
     // console.log(data);
   });
+
 
   if (Authenticate.userId) {
     $http.get('http://localhost:3000/users/connections/'+Authenticate.userId).success(function(data){
@@ -135,6 +139,24 @@ angular.module('upstarter.controllers', [])
         })
     })
   }
+  // $scope.colorScore = colorScore.colorScore
+
+  // $scope.colorScore() = colorScore.colorScore()
+    $scope.colorScore = function(score) {
+      console.log("the score is " + score)
+      if (parseInt(score) > 80) {
+        return "hot-startup"
+      }
+      else if (parseInt(score) > 60) {
+        return "lukewarm-startup"
+      }
+      else if (parseInt(score) > 40) {
+        return "not-so-good-startup"
+      }
+      else if (parseInt(score) < 40) {
+        return "cold-startup"
+      }
+    }
 
 //     $scope.startup = Startups.getStartup($stateParams.startupName)
 //     var thing = $stateParams.getStartup($scope.startup.startupName)

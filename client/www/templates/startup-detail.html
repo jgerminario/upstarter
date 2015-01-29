@@ -10,7 +10,7 @@
   <ion-content class="content padding has-header">
     <div class="top row">
       <div class="momentum col col-50"><img class="company-logo" ng-src="https://res.cloudinary.com/crunchbase-production/{{startup.primary_image[0]}}"></div>
-      <div class="col col-50"><div class="momentum-score-title">Momentum Score</div><div class="the-number momentum-score-color">{{startup.fundraisePercentile | number : 1}}</div></div>
+      <div class="col col-50"><div class="momentum-score-title">Momentum Score</div><div class="the-number momentum-score-color" ng-class="colorScore({{startup.fundraisePercentile}})" >{{startup.fundraisePercentile | number : 1}}</div></div>
     </div>
     <div class="main-content row">
       <div class="col col-50">
@@ -18,7 +18,7 @@
       <div class="stats col col-50">
         <div class="stats-header">At-A-Glance</div>
         <table>
-          <tr><td ng repeat="office in {{startup.offices}}" class="stat-type">Offices in</td><td ng-repeat="office in {{startup.offices}}">{{office.city}}</td></tr>
+          <tr><td ng repeat="office in {{startup.offices}}" class="stat-type">Headquarters</td><td ng-repeat="office in {{startup.offices}}">{{office.city}}</td></tr>
           <tr><td class="stat-type">Employees</td><td>{{startup.number_of_employees}}</td></tr>
           <tr><td class="stat-type">Founded On</td><td>
           {{startup.founded_on | date : format : timezone}}</td></tr>
@@ -28,9 +28,12 @@
   <!--         <tr><td>{{startup.founders}}</td></tr>
           <tr ng-repeat="founder in startup.founders">
           <tr><td class="stat-type">{{founder.name}}</td></tr> -->
-          <tr><td class="stat-type">Website</td><td>{{startup.websites.pop()}}</td></tr>
+          <!-- <tr><td class="stat-type">Website</td><td>{{startup.websites.pop()}}</td></tr> -->
         </table>
       </div>
+    </div>
+    <div class="row">
+      <div class="col"> FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB</div>
     </div>
   </ion-content>
 </ion-view>
