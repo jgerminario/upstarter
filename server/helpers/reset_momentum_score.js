@@ -16,11 +16,15 @@ db.once('open', function (callback) {
 
 // Startup.resetFundraisePercentile();
 console.log("starting 'find' operation (this may take a while)");
-Startup.find(function(err, startups){
+Startup.where({funding_rounds: {$not: {$size: 0}}}).find(function(err, startups){
   if (err) {console.log(err);}
   startups.forEach(function(startup){
     console.log(startup.name + "'s old momentum score was " + startup.momentumScore);
-    startup.momentumScore = Startup.calculateMomentumScore(startup.threeYearRate, startup.twoYearRate, startup.oneYearRate, startup.number_of_employees);
+    startup.momentumScore = Startup.calculateMomentumScore(startup.fiveYearRate, startup.threeYearRate, startup.oneYearRate, startup.number_of_employees);
     console.log(startup.name + "'s new momentum score is " + startup.momentumScore);
+    startup.save(function(err,data){
+      if(err){console.log(err);}
+      // console.log("Saved " + data.name)
+    });
   });
 });
