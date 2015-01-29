@@ -18,10 +18,12 @@
       <a ng-click="employees = !employees"
          class="button button-block button-balanced">Additional Search Options</a>
 
-      <div class="card" ng-show="employees">
+      <div class="card" id="slider-employees" ng-show="employees">
         <div class="item item-text-wrap">
           <div class="list">
-            Distance from Current Location {{SearchCtrl.distance}} in miles
+
+            <span class="slider-text">Distance from Current Location {{SearchCtrl.distance}} in miles</span>
+
              <div class="item range range-positive">
                 <i class="icon ion-ios7"></i>
 
@@ -29,22 +31,29 @@
 
                 <i class="icon ion-ios7"></i>
             </div>
+              <ion span class="range-scale"> | 0</ion span>
+             <ion span class="range-scale-2"> | 50</ion span>
+             <ion span class="range-scale-4"> | 100+</ion span>
            </div>
          </div>
       </div>
 
-       <div class="card" ng-show="employees">
+       <div class="card" id="slider-employees" ng-show="employees">
         <div class="item item-text-wrap">
-          <div class="list">
-            Number of Employees {{SearchCtrl.employees}}
-             <div class="item range range-royal">
-                <i class="icon ion-ios7"></i>
 
+             <span class="slider-text"> Number of Employees {{SearchCtrl.employees}}</span>
+             <div class="item range range-royal">
+
+                <i class="icon ion-ios7"></i>
                   <input type="range" name="radius" min="1" max="1000" ng-model="SearchCtrl.employees"  ng-change="search_employees(SearchCtrl.employees)">
 
                 <i class="icon ion-ios7"></i>
             </div>
-           </div>
+             <span class="range-scale"> | 0</span>
+             <span class="range-scale-2"> | 500</span>
+             <span class="range-scale-3"> | 1000+</span>
+
+
          </div>
       </div>
 
