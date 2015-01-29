@@ -17,7 +17,7 @@
         {{startup.description}}</div>
       <div class="stats col col-50">
         <div class="stats-header">At-A-Glance</div>
-        <table>
+        <table class="at-a-glance">
           <tr>
             <td class="stat-type">Offices in</td>
             <td>
@@ -54,8 +54,16 @@
         </table>
       </div>
     </div>
-    <div class="row">
-      <div class="col"> FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB FLEB</div>
+    <div class="linkedin">
+      <div ng-repeat="connection in startupConnections track by $index">
+        <table>
+          <tr>
+            <td><img class="linkedin-pic" src="{{connection.pictureUrl}}"/></td>
+            <td>
+              {{connection.positions.values[0].title}} at {{connection.positions.values[0].company.name}}
+            </td>
+          </tr>
+        </table>
     </div>
   </ion-content>
 </ion-view>

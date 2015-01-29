@@ -22,13 +22,30 @@
 }
 
 .stats {
-font-size: 0.8em;
+  font-size: 0.8em;
 }
 
 td {
+  padding-top: 0%;
+}
+
+.at-a-glance td {
   padding: 4%;
+}
+
+.linkedin-individual td {
+  text-align: center;
 }
 
 .stat-type {
   font-weight: 400;
 }
+
+td.ng-binding {
+  vertical-align: top;
+}
+
+.linkedin-pic {
+  border-radius: 10%;
+}
+
