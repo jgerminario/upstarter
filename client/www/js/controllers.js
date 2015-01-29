@@ -26,7 +26,7 @@ angular.module('upstarter.controllers', [])
 }])
 
 
-.controller('SearchCtrl', ['$scope', '$timeout', 'InitialSeed', 'Startup', 'StartupNames', 'colorScore', 'EmployeeRange', 'Geolocation' '$location', '$cookieStore', function($scope, $timeout, InitialSeed, Startup, StartupNames, colorScore, EmployeeRange, Geolocation, $location, $cookieStore) {
+.controller('SearchCtrl', ['$scope', '$timeout', 'InitialSeed', 'Startup', 'StartupNames', 'colorScore', 'EmployeeRange', 'Geolocation', '$location', '$cookieStore', function($scope, $timeout, InitialSeed, Startup, StartupNames, colorScore, EmployeeRange, Geolocation, $location, $cookieStore) {
     var lat = window.localStorage['lat'] || 37.7846359
     var lon = window.localStorage['lon'] || -122.3975407
     var distance = 0
@@ -138,11 +138,7 @@ angular.module('upstarter.controllers', [])
 
 }])
 
-<<<<<<< HEAD
-.controller('StartupDetailCtrl', ['$scope','Startup', '$stateParams', '$http', 'colorScore', 'Authenticate', function($scope, Startup, $stateParams, $http, colorScore, Authenticate) {
 
-
-=======
 // .controller('SliderCtrl', ['$scope', 'EmployeeRange',function($scope, EmployeeRange){
 
 
@@ -163,9 +159,10 @@ angular.module('upstarter.controllers', [])
 //   };
 // }])
 
-.controller('StartupDetailCtrl', ['$scope','Startup', '$stateParams', function($scope, Startup, $stateParams) {
+
+.controller('StartupDetailCtrl', ['$scope','Startup', '$stateParams', '$http', 'colorScore', 'Authenticate', function($scope, Startup, $stateParams, $http, colorScore, Authenticate) {
   // console.log($stateParams.startupName);
->>>>>>> adds geolocation and saves to local storage
+
   Startup($stateParams.startupName).then(function(data){
     $scope.startup = data[0];
     // console.log(data);
