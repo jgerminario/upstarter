@@ -200,15 +200,19 @@ angular.module('upstarter.controllers', [])
     // console.log(data);
   });
 
-
+  var startupConnections = []
   if (Authenticate.userId) {
     $http.get('http://localhost:3000/users/connections/'+Authenticate.userId).success(function(data){
         data.values.forEach(function(connection){
-          connection.positions.values.forEach(function(position){
-            if (position.company.name == 'PriceFish'){
-              console.log(position.company.name)
-            }
-          })
+          if (connection.positions.values) {
+            connection.positions.values.forEach(function(position){
+              if (position.company.name.match($scope.startup.name)){
+                startupConnections.push(connection)
+                $scope.startupConnections = startupConnections
+                console.log($scope.startupConnections)
+              }
+            })
+          }
         })
     })
   }
