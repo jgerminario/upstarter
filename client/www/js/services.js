@@ -28,20 +28,24 @@ angular.module('upstarter.services', ['ngResource'])
 
   return function(searchParams) {
     console.log(searchParams)
-    var distance_str = ""
-    var string_str = ""
+    var distance_str = "";
+    var string_str = "";
+    var employees_str = "";
 
     distance = searchParams.location.split(',')[0]
     if (distance > 0){
       distance_str = "&location=" + searchParams.location
     }
-   if (searchParams.string){
+    if (searchParams.string){
       string_str = "&string=" + searchParams.string
+    }
+    if (searchParams.employees){
+      employees_str = "&employees=" + searchParams.employees
     }
     return $http({
     method: 'GET',
     // url: "http://localhost:3000/startups?full=" + searchParams.full + "&limit=" +searchParams.limit + string_str + distance_str,
-    url: "http://upstarter-server.herokuapp.com/startups?full=" + searchParams.full + "&limit=" +searchParams.limit + string_str + distance_str,
+    url: "http://upstarter-server.herokuapp.com/startups?full=" + searchParams.full + "&limit=" +searchParams.limit + string_str + distance_str + employees_str,
     contentType: "application/json",
   })
     .success(function(data,status){
@@ -95,8 +99,8 @@ angular.module('upstarter.services', ['ngResource'])
   var deferred = $q.defer();
     $http({
     method: 'GET',
-    url: "http://localhost:3000/startups/" + startupSlug,
-    // url: "http://upstarter-server.herokuapp.com/startups/" + startupSlug,
+    // url: "http://localhost:3000/startups/" + startupSlug,
+    url: "http://upstarter-server.herokuapp.com/startups/" + startupSlug,
     contentType: "application/json",
   })
     .success(function(data, status){

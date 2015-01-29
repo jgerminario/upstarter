@@ -171,13 +171,14 @@ var organizationEndpoint = (function (){
         }
         else { 
           if (res) {
+            startup.slug = startup.slug.substring(13);
             res.send(startup);
-          }
+            }
           console.log("Saving " + startup.name + " as " + startup._id + " with momentum score " + startup.momentumScore + " employees " + startup.number_of_employees + " public: " + startup.public + " acquired: " + startup.acquired + " closed :" + startup.closed + " three year rate: " + startup.threeYearRate + " num of rounds: " +startup.funding_rounds.length + " geo " + startup.geo);
-        }
-      });
-    }
-  };
+          }
+        });
+      }
+    };
 
   return {
     sendCBRequest: function(id, permalink, res){
