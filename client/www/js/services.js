@@ -27,9 +27,13 @@ angular.module('upstarter.services', ['ngResource'])
   // var deferred = $q.defer();
 
   return function(searchParams) {
+    var distance_str = ""
+    if (searchParams.distance > 0){
+      distance_str = "&location=" + searchParams.location
+    }
     return $http({
     method: 'GET',
-    url: "http://upstarter-server.herokuapp.com/startups?full=" + searchParams.full + "&limit=" +searchParams.limit + "&string=" + searchParams.string,
+    url: "http://upstarter-server.herokuapp.com/startups?full=" + searchParams.full + "&limit=" +searchParams.limit + "&string=" + searchParams.string + distance_str,
     contentType: "application/json",
   })
     .success(function(data,status){

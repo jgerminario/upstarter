@@ -33,9 +33,9 @@ angular.module('upstarter.controllers', [])
     var params = {
       "full": "true",
       "limit": 10,
-      "location": distance + "," + lat + "," + lon,
+      "location": distance + "," + lat + "," + lon
       // must look like "5,31.722,-123.342"
-      "string": "test"
+      // "string": "test"
     };
 
   navigator.geolocation.getCurrentPosition(function(position){
@@ -44,11 +44,34 @@ angular.module('upstarter.controllers', [])
     window.localStorage['lat'] = position.coords.latitude;
     lat = window.localStorage['lat']
     lon = window.localStorage['lon']
-    params.location = distance + "," + lon + "," + lat;
+    params.location = distance + "," + lat + "," + lon;
   }, Geolocation.onError)
 
 
+ $scope.search_radius = function(radius){
+      distance = radius
+       if(timer){
+        $timeout.cancel(timer);
+      }
+      timer= $timeout(function(){
+        params.location = distance + "," + lat + "," + lon;
+        console.log(params.location)
+        StartupNames(params).then(function(data){
+          // console.log(data.data)
+          $scope.startups = data.data;
+          // angular.forEach($scope.startups, function(startup){
+          //   // console.log(startup)
+          //   if(!startup.short_description){
+          //     Startup(startup.slug).then(function(data){
+          //       console.log(data);
+          //     });
+          //   }
+          // });
+          // console.log($scope.startups);
+        });
+      }, 400);
 
+ }
 
 
       // console.log(StartupNames(params));
