@@ -31,7 +31,7 @@ angular.module('upstarter.controllers', [])
       "full": "true",
       "limit": 10,
       // "location": "5," + lon + "," + lat,
-      // must look like "5,31.722,-123.342" 
+      // must look like "5,31.722,-123.342"
       "string": "test"
     };
 
@@ -70,11 +70,12 @@ angular.module('upstarter.controllers', [])
     // // watch for {name search, distance change, employee count change}, then make a new AJAX call
 
 
+    if ($location.search()) {
+      $cookieStore.put('userId', $location.search().userId)
+    }
     // $scope.$watch('main.searchInput.name', function(e) { console.log('something changed'); },true);
 
     // TODO: institute a listener so as the models change on the view, these elements will change
-
-
 
     // $http.get("http://api.crunchbase.com/v/2/organization/crowdtilt?user_key=2c7e457b872b77f865562e75967f76ef").success(function(data){
 }])
