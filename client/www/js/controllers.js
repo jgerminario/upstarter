@@ -25,7 +25,7 @@ angular.module('upstarter.controllers', [])
     // });
 }])
 
-.controller('SearchCtrl', ['$scope', '$timeout', 'InitialSeed', 'Startup', 'StartupNames', 'EmployeeRange', function($scope, $timeout, InitialSeed, Startup, StartupNames, EmployeeRange) {
+.controller('SearchCtrl', ['$scope', '$timeout', 'InitialSeed', 'Startup', 'StartupNames', 'EmployeeRange', '$location', '$cookieStore', function($scope, $timeout, InitialSeed, Startup, StartupNames, EmployeeRange, $location, $cookieStore) {
 
     var params = {
       "full": "true",
@@ -69,10 +69,12 @@ angular.module('upstarter.controllers', [])
 
     // // watch for {name search, distance change, employee count change}, then make a new AJAX call
 
-
-    if ($location.search()) {
+    // if (!$cookieStore.get('userId')) {
+    if ($location.search().userId) {
+      // console.log($location.search().userId)
       $cookieStore.put('userId', $location.search().userId)
     }
+    // }
     // $scope.$watch('main.searchInput.name', function(e) { console.log('something changed'); },true);
 
     // TODO: institute a listener so as the models change on the view, these elements will change
@@ -100,12 +102,24 @@ angular.module('upstarter.controllers', [])
   };
 }])
 
-.controller('StartupDetailCtrl', ['$scope','Startup', '$stateParams', function($scope, Startup, $stateParams) {
+.controller('StartupDetailCtrl', ['$scope','Startup', '$stateParams', '$http', 'Authenticate', function($scope, Startup, $stateParams, $http, Authenticate) {
   // console.log($stateParams.startupName);
   Startup($stateParams.startupName).then(function(data){
     $scope.startup = data[0];
     // console.log(data);
   });
+
+  if (Authenticate.userId) {
+    $http.get('http://localhost:3000/users/connections/'+Authenticate.userId).success(function(data){
+        data.values.forEach(function(connection){
+          connection.positions.values.forEach(function(position){
+            if (position.company.name == 'PriceFish'){
+              console.log(position.company.name)
+            }
+          })
+        })
+    })
+  }
 
 //     $scope.startup = Startups.getStartup($stateParams.startupName)
 //     var thing = $stateParams.getStartup($scope.startup.startupName)
