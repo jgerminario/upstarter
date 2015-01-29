@@ -23,9 +23,10 @@ var organizationEndpoint = require('../helpers/api');
 
 // GET list of all company names - for client
 router.get('/', function(req, res) {
-  var query, limit, string, full, default_limit, location, miles, radians, lat, lon;
+  var query, limit, string, full, default_limit, location, miles, radians, lat, lon, employees;
   string = querystring.parse(url.parse(req.url).query).string;
   full = querystring.parse(url.parse(req.url).query).full;
+  employees = querystring.parse(url.parse(req.url).query).employees;
 
   // console.log(location + " " + radians);
 
@@ -46,6 +47,10 @@ router.get('/', function(req, res) {
   } else {
     query = query.select('name slug -_id');
     default_limit = 50;
+  }
+
+  if (employees || employees != 0){
+    query = query.where('number_of_employees').gte(employees);
   }
 
   limit = querystring.parse(url.parse(req.url).query).limit || default_limit;
