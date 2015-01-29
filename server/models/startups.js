@@ -184,7 +184,7 @@ startupsSchema.statics.calculateMomentumScore = function(fiveYearRate, threeYear
   if (number_of_employees == 0){
     return 0;
   } else {
-  return Math.round((((fiveYearRate-threeYearRate)*0.2 + (threeYearRate-oneYearRate)*0.3 + oneYearRate * 0.5))/5/number_of_employees/1000*100)/100; //weighted 5 year average of funding, two decimal points
+  return Math.round((((fiveYearRate-threeYearRate)*0.5 + (threeYearRate-oneYearRate) + oneYearRate * 2))/5/number_of_employees/1000*10)/10; //weighted 5 year average of funding, two decimal points. one year counts for two years, weighted, 2nd and 3rd year for one year each, previous two for half a year each
   }
 };
 
