@@ -25,17 +25,82 @@ angular.module('upstarter.controllers', [])
     // });
 }])
 
-.controller('SearchCtrl', ['$scope', '$timeout', 'InitialSeed', 'Startup', 'StartupNames', 'colorScore', 'EmployeeRange', '$location', '$cookieStore', function($scope, $timeout, InitialSeed, Startup, StartupNames, colorScore, EmployeeRange, $location, $cookieStore) {
 
+.controller('SearchCtrl', ['$scope', '$timeout', 'InitialSeed', 'Startup', 'StartupNames', 'colorScore', 'EmployeeRange', 'Geolocation', '$location', '$cookieStore', function($scope, $timeout, InitialSeed, Startup, StartupNames, colorScore, EmployeeRange, Geolocation, $location, $cookieStore) {
+
+    var lat = window.localStorage['lat'] || 37.7846359
+    var lon = window.localStorage['lon'] || -122.3975407
+    var distance = 0
     var params = {
       "full": "true",
       "limit": 10,
-      // "location": "5," + lon + "," + lat,
+      "location": distance + "," + lat + "," + lon,
+      "employees": ""
       // must look like "5,31.722,-123.342"
-      "string": "test"
+         // "string": "test"
+
     };
 
-    $scope.value = EmployeeRange.getData();
+  navigator.geolocation.getCurrentPosition(function(position){
+    // Geolocation.onSuccess(position);
+    window.localStorage['lon'] = position.coords.longitude;
+    window.localStorage['lat'] = position.coords.latitude;
+    lat = window.localStorage['lat']
+    lon = window.localStorage['lon']
+
+    params.location = distance + "," + lat + "," + lon;
+  }, Geolocation.onError)
+
+
+ $scope.search_radius = function(radius){
+      distance = radius
+       if(timer){
+        $timeout.cancel(timer);
+      }
+      timer= $timeout(function(){
+        params.location = distance + "," + lat + "," + lon;
+        console.log(params.location)
+        StartupNames(params).then(function(data){
+          console.log(data.data)
+          $scope.startups = data.data;
+          // angular.forEach($scope.startups, function(startup){
+          //   // console.log(startup)
+          //   if(!startup.short_description){
+          //     Startup(startup.slug).then(function(data){
+          //       console.log(data);
+          //     });
+          //   }
+          // });
+          // console.log($scope.startups);
+        });
+      }, 400);
+
+ }
+
+ $scope.search_employees = function(employees){
+
+       if(timer){
+        $timeout.cancel(timer);
+      }
+      timer= $timeout(function(){
+        params.employees = employees;
+        console.log(params.employees);
+        StartupNames(params).then(function(data){
+          // console.log(data.data)
+          $scope.startups = data.data;
+          // angular.forEach($scope.startups, function(startup){
+          //   // console.log(startup)
+          //   if(!startup.short_description){
+          //     Startup(startup.slug).then(function(data){
+          //       console.log(data);
+          //     });
+          //   }
+          // });
+          // console.log($scope.startups);
+        });
+      }, 400);
+}
+
 
       // console.log(StartupNames(params));
     var timer = false;
@@ -97,30 +162,38 @@ angular.module('upstarter.controllers', [])
     // TODO: institute a listener so as the models change on the view, these elements will change
 
     // $http.get("http://api.crunchbase.com/v/2/organization/crowdtilt?user_key=2c7e457b872b77f865562e75967f76ef").success(function(data){
+
+
+
 }])
 
-.controller('SliderCtrl', ['$scope', 'EmployeeRange',function($scope, EmployeeRange){
 
 
-  $scope.value = EmployeeRange.data;
-  $scope.options = {
-    from: 0,
-    to: 10000,
-    step: 1,
-    dimension: "  employees",
-    scale: [0, '|', '|', 5000, '|' , , '|', 10],
-      css: {
-          background: {"background-color": "silver"},
-          before: {"background-color": "purple"},
-          default: {"background-color": "white"},
-          after: {"background-color": "green"},
-          pointer: {"background-color": "red"}
-        }
-  };
-}])
+// .controller('SliderCtrl', ['$scope', 'EmployeeRange',function($scope, EmployeeRange){
+
+
+//   $scope.value = EmployeeRange.data;
+//   $scope.options = {
+//     from: 0,
+//     to: 10000,
+//     step: 1,
+//     dimension: "  employees",
+//     scale: [0, '|', '|', 5000, '|' , , '|', 10],
+//       css: {
+//           background: {"background-color": "silver"},
+//           before: {"background-color": "purple"},
+//           default: {"background-color": "white"},
+//           after: {"background-color": "green"},
+//           pointer: {"background-color": "red"}
+//         }
+//   };
+// }])
+
+
 
 .controller('StartupDetailCtrl', ['$scope','Startup', '$stateParams', '$http', 'colorScore', 'Authenticate', function($scope, Startup, $stateParams, $http, colorScore, Authenticate) {
 
+  // console.log($stateParams.startupName);
 
   Startup($stateParams.startupName).then(function(data){
     $scope.startup = data[0];

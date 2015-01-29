@@ -27,14 +27,26 @@ angular.module('upstarter.services', ['ngResource'])
   // var deferred = $q.defer();
 
   return function(searchParams) {
+    console.log(searchParams)
+    var distance_str = ""
+    var string_str = ""
+
+    distance = searchParams.location.split(',')[0]
+    if (distance > 0){
+      distance_str = "&location=" + searchParams.location
+    }
+   if (searchParams.string){
+      string_str = "&string=" + searchParams.string
+    }
     return $http({
     method: 'GET',
-    url: "http://upstarter-server.herokuapp.com/startups?full=" + searchParams.full + "&limit=" +searchParams.limit + "&string=" + searchParams.string,
+    url: "http://upstarter-server.herokuapp.com/startups?full=" + searchParams.full + "&limit=" +searchParams.limit + string_str + distance_str,
     contentType: "application/json",
   })
     .success(function(data,status){
-      // console.log(data);
+      console.log(data);
       // var company_array = data;
+      // console.log(data)
       return data;
       // deferred.resolve(company_array);
     })
@@ -115,11 +127,34 @@ angular.module('upstarter.services', ['ngResource'])
   var data = null;
   return {
     getData: function(){
-    var data = null;
-    return {
-      getData: function(){
+
     }
-  };
-}
-};
-});
+  }
+})
+
+
+.factory('Geolocation', function(){
+
+      // var deferred = $q.defer();
+        return {
+          onSuccess:  function(position) {
+          var latitude = position.coords.latitude
+          var longitude  = position.coords.longitude
+
+         console.log(position.coords.latitude)
+         console.log(position.coords.longitude)
+         window.localStorage['lon'] = position.coords.longitude;
+         window.localStorage['lat'] = position.coords.latitude;
+
+         // deferred.resolve(longitude);
+
+        },
+
+        onError: function(error) {
+          alert('code: '    + error.code    + '\n' +
+          'message: ' + error.message + '\n');
+        }
+      }
+
+})
+
