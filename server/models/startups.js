@@ -113,6 +113,28 @@ startupsSchema.statics.resetFundraisePercentile = function () {
     });
 };
 
+startupsSchema.statics.individualFundraisePercentile = function(id, callback){
+  var self = this;
+  this.findById(id).exec(function(error, startup){
+    if(error) {console.log(error); }
+    self.find().where({ 'acquired': false, 'public': false, 'closed': false, momentumScore: {$gt: 0} }).count(function(e, count){
+      if (e) {console.log(e);}
+      console.log(count);
+      self.find({momentumScore: {$gt: startup.momentumScore}}).count(function(err, index){
+        console.log(index);
+        if (err) {console.log(err);}
+        // console.log(Math.round((count-index) / (count+1) * 100 ));
+        startup.fundraisePercentile = Math.round( (count-index) / (count+1) * 100 );
+        startup.save(function(error, startup){
+          console.log(startup.momentumScore, startup.fundraisePercentile);
+          if (error) {console.log(error);}
+          callback(startup);
+        })
+      }); // This is the number of documents with a higher user_count
+    });
+  });
+};
+
 startupsSchema.statics.calculateFundraisePercentile = function () {
   // console.log(Startup.find().exec(function(err,docs){
   //   console.log(docs);
