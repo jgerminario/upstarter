@@ -113,11 +113,12 @@ angular.module('upstarter.controllers', [])
           // console.log(data.data)
           $scope.startups = data.data;
           console.log(data);
-          angular.forEach($scope.startups, function(startup){
+          angular.forEach($scope.startups, function(startup,index){
             // console.log(startup)
             if(!startup.short_description){
               Startup(startup.slug).then(function(data){
                 console.log(data);
+                $scope.startups[index] = data;
               });
             }
           });
