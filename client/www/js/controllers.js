@@ -209,15 +209,25 @@ angular.module('upstarter.controllers', [])
   var startupConnections = []
   if (Authenticate.userId) {
     $http.get('http://localhost:3000/users/connections/'+Authenticate.userId).success(function(data){
-        data.values.forEach(function(connection){
-          if (connection.positions.values) {
-            connection.positions.values.forEach(function(position){
-              if (position.company.name.match($scope.startup.name)){
-                startupConnections.push(connection)
-                $scope.startupConnections = startupConnections
-                console.log($scope.startupConnections)
-              }
-            })
+      console.log(data)
+      console.log(data.values)
+      console.log(data.values[0])
+      angular.forEach(data.values, function(connection,key){
+        // data.values.forEach(function(connection){
+          if (connection.positions){
+            if (connection.positions.values) {
+              connection.positions.values.forEach(function(position){
+                if (position.company){
+                  if (position.company.name){
+                    if (position.company.name.match($scope.startup.name)){
+                      startupConnections.push(connection)
+                      $scope.startupConnections = startupConnections
+                      console.log($scope.startupConnections)
+                    }
+                  }
+                }
+              })
+            }
           }
         })
     })
