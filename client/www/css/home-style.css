@@ -19,6 +19,10 @@ body {
   text-align: center;
 }
 
+.bar-subheader {
+  top:55px;
+}
+
 .fl-right {
   float: right;
   width: 75%;
@@ -111,6 +115,7 @@ body {
   height: 2em;
   line-height: 2em;
   float: right;
+  margin: 0 auto;
   text-align: center;
   font-size: 300%;
 }
@@ -128,10 +133,9 @@ body {
 }
 
 .no-score {
-  padding
   font-size: 20px;
   text-align: center;
-  vertical-align: middle !important;
+  margin: 0 auto;
 }
 
 .no-score-detail {

@@ -17,7 +17,7 @@
         <div ng-if="startup.fundraisePercentile == 0 && !startup.public && !startup.closed && !startup.acquired" class="no-score-detail">N/A</div>
         <div ng-if="startup.public && !startup.closed && !startup.acquired" class="no-score-detail">Public</div>
         <div ng-if="startup.fundraisePercentile > 0" class="momentum-score-title">Momentum Score</div>
-          <div ng-if="startup.fundraisePercentile > 0" class="the-number momentum-score-color">{{startup.fundraisePercentile | number : 0}}
+          <div ng-if="startup.fundraisePercentile > 0" class="the-number momentum-score-color">{{startup.fundraisePercentile == 100 ? 99 : startup.fundraisePercentile | number : 0}}
           </div>
         </div>
     </div>
