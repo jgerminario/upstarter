@@ -57,7 +57,8 @@
           <tr>
             <td class="stat-type">Company Websites</td>
             <td>
-              <div ng-repeat="website in startup.websites"><a href="{{website.url}}">{{website.title}}</a></div>
+              <div ng-repeat="website in startup.websites"><a href="{{website.url}}"><i class="fa fa-{{website.title}}-square"></i></a> {{website.title}}</div>
+
             </td>
           </tr>
         </table>
