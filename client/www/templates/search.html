@@ -1,12 +1,12 @@
-<ion-header-bar class="bar bar-header bar-stable">
+<ion-header-bar class="bar bar-header bar-stable more-height">
   <img class="upstarter-logo" src="img/Upstarter.png">
 </ion-header-bar>
 
 <ion-view view-title="Search" class="homepage">
-  <ion-content class="content padding has-header">
+  <ion-content class="content padding no-top-padding has-header">
 
     <div class="filter-wrapper">
-      <div class="list list-inset">
+      <div class="list list-inset fl-right">
         <label class="item item-input">
           <i class="icon ion-search placeholder-icon"></i>
           <input type="search"
@@ -16,18 +16,18 @@
         </label>
       </div>
       <a ng-click="employees = !employees"
-         class="button button-block button-balanced">Additional Search Options</a>
-
+         class="button button-balanced fl-left">Filter</a>
+      <div class="clearfix">
       <div class="card" id="slider-employees" ng-show="employees">
         <div class="item item-text-wrap">
           <div class="list">
 
-            <span class="slider-text"><strong>Distance from Current Location in Miles:</strong> <span class="strong-number"> {{SearchCtrl.distance}} </span></span>
+            <span class="slider-text"><strong>Distance:</strong> <span class="strong-number"> {{distance == 100 ? '100+' : distance}} miles</span></span>
 
              <div class="item range range-positive">
                 <i class="icon ion-ios7"></i>
 
-                  <input type="range" name="radius" min="1" max="100" ng-model="SearchCtrl.distance"  ng-change="search_radius(SearchCtrl.distance)">
+                  <input type="range" name="radius" min="1" max="100" ng-model="distance"  ng-change="search_radius(distance)">
 
                 <i class="icon ion-ios7"></i>
             </div>
@@ -41,11 +41,11 @@
        <div class="card" id="slider-employees" ng-show="employees">
         <div class="item item-text-wrap">
 
-             <span class="slider-text"><strong>Number of Employees: </strong><span class="strong-number"> {{SearchCtrl.employees}}</span></span>
+             <span class="slider-text"><strong>Employee count: </strong><span class="strong-number"> {{employees == 1000 ? '1000+' : employees}}</span></span>
              <div class="item range range-royal">
 
                 <i class="icon ion-ios7"></i>
-                  <input type="range" name="radius" min="1" max="1000" ng-model="SearchCtrl.employees"  ng-change="search_employees(SearchCtrl.employees)">
+                  <input type="range" name="radius" min="1" max="1000" ng-model="employees"  ng-change="search_employees(employees)">
 
                 <i class="icon ion-ios7"></i>
             </div>

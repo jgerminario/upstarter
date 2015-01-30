@@ -19,6 +19,32 @@ body {
   text-align: center;
 }
 
+.fl-right {
+  float: right;
+  width: 75%;
+}
+
+.fl-left {
+  float: left;
+  width: 20%;
+  margin-top: 20px;
+  min-height: 38px;
+  line-height: 35px;
+}
+
+.clearfix {
+  clear:both;
+}
+
+.more-height {
+  height: 60px;
+}
+
+/* to avoid big header space on homepage */
+.no-top-padding {
+  padding-top: 5px;
+}
+
 .image-homepage {
   padding-top: 100px;
   margin-bottom: 50px !important;
@@ -30,9 +56,8 @@ body {
 }
 .upstarter-logo {
   height: 100%;
-  top: 0%;
-  left: 38%;
-  position: absolute;
+  margin: 0 auto !important;
+  /*width: ;*/
   text-align: center;
 }
 

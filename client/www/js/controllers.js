@@ -27,6 +27,8 @@ angular.module('upstarter.controllers', [])
 
 
 .controller('SearchCtrl', ['$scope', '$timeout', 'InitialSeed', 'Startup', 'StartupNames', 'colorScore', 'EmployeeRange', 'Geolocation', '$location', '$cookieStore', function($scope, $timeout, InitialSeed, Startup, StartupNames, colorScore, EmployeeRange, Geolocation, $location, $cookieStore) {
+    $scope.distance = 100;
+    $scope.employees = 1000;
 
     var lat = window.localStorage['lat'] || 37.7846359
     var lon = window.localStorage['lon'] || -122.3975407
