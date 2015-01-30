@@ -23,7 +23,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new LinkedinStrategy({
     clientID: process.env.API_KEY,
     clientSecret: process.env.SECRET_KEY,
-    callbackURL: "auth/linkedin/callback",
+    callbackURL: "http://localhost:3000/auth/linkedin/callback",
     scope: [ 'r_fullprofile', 'r_emailaddress', 'r_network'],
     passReqToCallback: true
   },
@@ -39,7 +39,7 @@ router.get('/auth/linkedin',
   passport.authenticate('linkedin', { state: 'SOME STATE' }),
   function(req, res){});
 
-router.get('/auth/auth/linkedin/callback',
+router.get('/auth/linkedin/callback',
   passport.authenticate('linkedin', { failureRedirect: 'http://localhost:8100/' }),
   function(req, res) {
      User.findOne({ email: req.user._json.emailAddress}, function(err, user){
