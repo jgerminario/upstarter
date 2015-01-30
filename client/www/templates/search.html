@@ -15,33 +15,12 @@
                  placeholder="Search Companies" />
         </label>
       </div>
-
-<!--
-      <div class="list list-inset">
-        <label class="item item-input">
-          <i class="icon ion-search placeholder-icon"></i>
-          <input type="search"
-                 ng-model="main.cityInput.city"
-                 placeholder="Search Cities" />
-        </label>
-      </div>
- -->
-
       <a ng-click="employees = !employees"
          class="button button-block button-balanced">Additional Search Options</a>
 
       <div class="card" ng-show="employees">
         <div class="item item-text-wrap">
           <div class="list">
-          <!--   Number of Employees : {{employnum}}
-            <!--   <div class="item range range-positive" ng-controller="SliderCtrl"> -->
-        <!--     <i class="icon ion-ios7"></i>
-            <input ng-model="value"
-                   type="text"
-                   id="mySlider1"
-                   slider
-                   options="options" />
-            <i class="icon ion-ios7"></i>{{value}} -->
             Distance from Current Location {{SearchCtrl.distance}} in miles
              <div class="item range range-positive">
                 <i class="icon ion-ios7"></i>
@@ -100,7 +79,8 @@
         <div ng-if="startup.closed" class="no-score">Closed</div>
         <div ng-if="startup.acquired && !startup.closed" class="no-score">Acquired</div>
         <div ng-if="startup.public && !startup.closed && !startup.acquired" class="no-score">Public</div>
-        <div ng-if="startup.fundraisePercentile > 0" class="company-momentum-score" ng-class="colorScore({{startup.fundraisePercentile | number : 0}})">{{startup.fundraisePercentile | number : 0}}</div>
+        <div ng-if="startup.fundraisePercentile > 0 && startup.fundraisePercentile < 100" class="company-momentum-score" ng-class="colorScore({{startup.fundraisePercentile | number : 0}})">{{startup.fundraisePercentile | number : 0}}</div>
+        <div ng-if="startup.fundraisePercentile == 100" class="company-momentum-score-small" ng-class="colorScore({{startup.fundraisePercentile | number : 0}})">{{startup.fundraisePercentile | number : 0}}</div>
         <div ng-if="startup.fundraisePercentile == 0 && !startup.public && !startup.closed && !startup.acquired" class="no-score">N/A</div>
       </ion-item>
     </ion-list>
