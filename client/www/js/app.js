@@ -49,5 +49,5 @@ angular.module('upstarter', ['ionic', 'upstarter.auth.controllers', 'upstarter.c
       controller: "LoginCtrl"
     })
 
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/login');
 });
