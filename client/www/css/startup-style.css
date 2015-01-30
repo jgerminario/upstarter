@@ -22,13 +22,55 @@
 }
 
 .stats {
-font-size: 0.8em;
+  font-size: 0.8em;
 }
 
 td {
+  padding-top: 0%;
+}
+
+.at-a-glance td {
   padding: 4%;
+}
+
+.linkedin-individual td {
+  text-align: center;
 }
 
 .stat-type {
   font-weight: 400;
+}
+
+/*.linkedin td {
+  margin-left: 3%;
+  padding-left: 3% !important;
+}*/
+
+
+
+td.ng-binding {
+  padding-left: 2%;
+  vertical-align: top;
+}
+
+.linkedin-info {
+  text-decoration: none;
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+.linkedin-pic {
+  border-radius: 10%;
+}
+
+.linkedin-name {
+  font-size: 0.9em;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.linkedin-header {
+  text-align: center;
+  font-weight: 200;
+  padding-bottom: 2%;
 }

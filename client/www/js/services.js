@@ -106,10 +106,13 @@ angular.module('upstarter.services', ['ngResource'])
     .success(function(data, status){
       console.log(data);
       var momentumScore = document.getElementsByClassName('the-number');
-      var momentumScoreNumber = data.fundraisePercentile // Highly possible I break something by removing data[0] - please let me know if some error gets thrown here  JG
-      // console.log(momentumScoreNumber)
-      // console.log(momentumScore)
-      if (momentumScore[0]){
+      var momentumScoreNumber
+      if (data[0]) {
+        momentumScoreNumber = data[0].fundraisePercentile
+      } else {
+        momentumScoreNumber = data.fundraisePercentile
+      }
+      if (momentumScore[0]) {
         momentumScore[0].innerHTML = momentumScoreNumber
 
       if (momentumScoreNumber > 80) { momentumScore[0].classList.add('hot-startup') }
