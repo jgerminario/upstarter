@@ -3,7 +3,7 @@ angular.module('upstarter.auth.controllers', [])
 .controller("LoginCtrl", ["$scope", "$rootScope", '$location', '$window', '$http', 'Authenticate', '$cookieStore', function($scope, $rootScope, $location, $window, $http, Authenticate, $cookieStore) {
 
     $scope.login = function(){
-      $window.location.href = 'http://localhost:3000/auth/linkedin'
+      $window.location.href = 'http://upstarter-server.herokuapp.com/auth/linkedin';
     }
 
     $scope.logout = function() {
