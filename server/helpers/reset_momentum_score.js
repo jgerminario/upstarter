@@ -20,6 +20,7 @@ Startup.find().or([{ acquired: true}, {public: true}, {closed: true }]).exec(fun
   if (err) {console.log(err); }
   data.forEach(function(startup){
     startup.momentumScore = 0;
+    startup.fundraisePercentile = 0;
     startup.save(function(err, startup){
       if(err) {console.log(err); }
       console.log(startup.name + " has been processed");

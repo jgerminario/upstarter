@@ -4,12 +4,36 @@ body {
   font-weight: 100;
 }
 
+.image-center {
+  padding-top: 50px !important;
+  margin: 0 auto !important;
+  width: 100%;
+  padding-bottom: 50px !important;
+}
+
+.center {
+  margin: 0 auto !important;
+  display: block;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+  text-align: center;
+}
+
+.image-homepage {
+  padding-top: 100px;
+  margin-bottom: 50px !important;
+  width: 60%;
+  height: auto;
+  text-align: center;
+  margin: 0 auto !important;
+  display: block;
+}
 .upstarter-logo {
   height: 100%;
   top: 0%;
-  left: 37%;
+  left: 38%;
   position: absolute;
-  width: 30%;
+  /*width: ;*/
   text-align: center;
 }
 
@@ -98,3 +122,6 @@ img {
   color: red;
 }
 
+.bar-stable {
+  background-color: #FFF !important;
+}

@@ -33,11 +33,12 @@ router.get('/', function(req, res) {
   if (querystring.parse(url.parse(req.url).query).location){
     location = querystring.parse(url.parse(req.url).query).location.split(",");
     miles = location[0];
-    radians = miles/69.0;
+    radians = miles*0.00098;
     lat = location[1];
     lon = location[2];
 
-    query = Startup.find({ geo: { $near: [lon, lat], $maxDistance: radians } });
+    // query = Startup.find({ geo: { $near: [lon, lat], $maxDistance: radians } });
+    query = Startup.where('geo').within({ center: [ lon, lat], radius: radians, unique: true, spherical: true });
   } else {
     query = Startup.find({});
   }
