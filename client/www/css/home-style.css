@@ -92,13 +92,15 @@ body {
 }
 
 .company-momentum-score-small {
+  margin-left: 0 auto;
+  padding-left: 0;
   margin-right: 9px;
   width: 20%;
   height: 2em;
   line-height: 2em;
   float: right;
   text-align: center;
-  font-size: 250%;
+  font-size: 205%;
 }
 
 .no-score {
