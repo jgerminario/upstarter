@@ -16,7 +16,7 @@
         </label>
       </div>
 
-<!-- 
+<!--
       <div class="list list-inset">
         <label class="item item-input">
           <i class="icon ion-search placeholder-icon"></i>
@@ -97,11 +97,11 @@
 
           </div>
         </div>
-        <div ng-if="startup.closed" class="company-momentum-score">Closed</div>
-        <div ng-if="startup.acquired && !startup.closed" class="company-momentum-score">Acquired</div>
-        <div ng-if="startup.public && !startup.closed && !startup.acquired" class="company-momentum-score">Public</div>
+        <div ng-if="startup.closed" class="no-score">Closed</div>
+        <div ng-if="startup.acquired && !startup.closed" class="no-score">Acquired</div>
+        <div ng-if="startup.public && !startup.closed && !startup.acquired" class="no-score">Public</div>
         <div ng-if="startup.fundraisePercentile > 0" class="company-momentum-score" ng-class="colorScore({{startup.fundraisePercentile | number : 0}})">{{startup.fundraisePercentile | number : 0}}</div>
-        <div ng-if="startup.fundraisePercentile == 0 && !startup.public && !startup.closed && !startup.acquired" class="company-momentum-score">N/A</div>
+        <div ng-if="startup.fundraisePercentile == 0 && !startup.public && !startup.closed && !startup.acquired" class="no-score">N/A</div>
       </ion-item>
     </ion-list>
 

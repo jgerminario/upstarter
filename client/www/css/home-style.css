@@ -91,6 +91,20 @@ body {
   font-size: 300%;
 }
 
+.no-score {
+  padding
+  font-size: 20px;
+  text-align: center;
+  vertical-align: middle !important;
+}
+
+.no-score-detail {
+  padding-top: 30%;
+  font-size: 300%;
+  vertical-align: middle !important;
+  text-align: center;
+}
+
 .momentum-score-header {
   position: absolute;
   right: 3%;
