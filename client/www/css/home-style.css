@@ -196,3 +196,8 @@ img {
 .strong-number{
   font-size: 150%;
 }
+
+.stats-header {
+  font-size: 120%;
+  font-weight: 200;
+}

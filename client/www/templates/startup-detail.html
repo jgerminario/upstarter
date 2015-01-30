@@ -28,9 +28,9 @@
         <div class="stats-header">At-A-Glance</div>
         <table class="at-a-glance">
           <tr>
-            <td class="stat-type">Offices in</td>
+            <td ng-if="startup.offices.length > 0" class="stat-type">Offices in</td>
             <td>
-              <p ng-repeat="office in startup.offices">{{office.city}}</p>
+              <p ng-if="startup.offices || startup.offices.length > 0" ng-repeat="office in startup.offices">{{office.city}}</p>
             </td>
           </tr>
           <tr>
