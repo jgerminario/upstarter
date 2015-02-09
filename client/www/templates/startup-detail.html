@@ -13,7 +13,7 @@
         <img class="company-logo" ng-src="https://res.cloudinary.com/crunchbase-production/{{startup.primary_image[0]}}"></div>
       <div class="col col-50">
         <div ng-if="startup.closed" class="no-score-detail">Closed</div>
-        <div ng-if="startup.acquired && !startup.closed" class="no-score-detail">Acquired</div>
+        <div ng-if="startup.acquired && !startup.closed" class="no-score-detail-acquired">Acquired</div>
         <div ng-if="startup.fundraisePercentile == 0 && !startup.public && !startup.closed && !startup.acquired" class="no-score-detail">N/A</div>
         <div ng-if="startup.public && !startup.closed && !startup.acquired" class="no-score-detail">Public</div>
         <div ng-if="startup.fundraisePercentile > 0" class="momentum-score-title">Momentum Score</div>
@@ -28,36 +28,37 @@
         <div class="stats-header">At-A-Glance</div>
         <table class="at-a-glance">
           <tr>
-            <td class="stat-type">Offices in</td>
+            <td ng-if="startup.offices.length > 0" class="stat-type">Offices in</td>
             <td>
-              <p ng-repeat="office in startup.offices">{{office.city}}</p>
+              <p ng-if="startup.offices || startup.offices.length > 0" ng-repeat="office in startup.offices">{{office.city}}</p>
             </td>
           </tr>
           <tr>
-            <td class="stat-type">Employees</td>
-            <td>{{startup.number_of_employees}}</td>
+            <td ng-if="startup.number_of_employees > 0" class="stat-type">Employees</td>
+            <td ng-if="startup.number_of_employees > 0">{{startup.number_of_employees}}</td>
           </tr>
           <tr>
-            <td class="stat-type">Founded On</td>
-            <td>{{startup.founded_on | date : format : timezone}}</td>
+            <td ng-if="startup.founded_on" class="stat-type">Founded On</td>
+            <td ng-if="startup.founded_on">{{startup.founded_on | date : format : timezone}}</td>
           </tr>
           <tr>
-            <td class="stat-type">Total Funding</td>
-            <td>{{startup.total_funding_usd | currency : symbol : 0}}</td>
+            <td ng-if="startup.total_funding" class="stat-type">Total Funding</td>
+            <td ng-if="startup.total_funding">{{startup.total_funding_usd | currency : symbol : 0}}</td>
           </tr>
           <tr>
-            <td class="stat-type">Investments</td>
-            <td>{{startup.number_of_investments}}</td>
+            <td ng-if="startup.number_of_investments" class="stat-type">Investments</td>
+            <td ng-if="startup.number_of_investments">{{startup.number_of_investments}}</td>
           </tr>
           <tr>
-            <td class="stat-type">Founded by</td>
+            <td ng-if="startup.founders" class="stat-type">Founded by</td>
             <td>
-              <p ng-repeat="founder in startup.founders">{{founder.name}}</p>
+              <p ng-if="startup.founders" ng-repeat="founder in startup.founders">{{founder.name}}</p>
             </td>
           <tr>
-            <td class="stat-type">Company Websites</td>
+            <td ng-if="startup.websites" class="stat-type">Company Websites</td>
             <td>
-              <div ng-repeat="website in startup.websites"><a href="{{website.url}}">{{website.title}}</a></div>
+              <div ng-if="startup.websites" ng-repeat="website in startup.websites"><a href="{{website.url}}"><i class="fa fa-{{website.title}}-square"></i></a> {{website.title}}</div>
+
             </td>
           </tr>
         </table>
@@ -73,5 +74,6 @@
       <div class="linkedin-name">{{connection.firstName}}&nbsp;{{connection.lastName}}</div>
 
       <div class="linkedin-info">{{connection.positions.values[0].title}} at {{connection.positions.values[0].company.name}}</div>
+    </ion-item>
   </ion-content>
 </ion-view>

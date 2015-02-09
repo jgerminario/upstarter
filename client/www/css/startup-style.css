@@ -75,4 +75,15 @@ td.ng-binding {
   padding-bottom: 2%;
 }
 
-.no-score-detail
+.no-score-detail {
+
+}
+
+.no-score-detail-acquired {
+  text-align: center;
+  font-size: 200%;
+}
+
+ .the-number {
+  padding-bottom: 20%;
+ }

@@ -33,7 +33,6 @@ body {
   top: 0%;
   left: 38%;
   position: absolute;
-  /*width: ;*/
   text-align: center;
 }
 
@@ -91,6 +90,18 @@ body {
   font-size: 300%;
 }
 
+.company-momentum-score-small {
+  margin-left: 0 auto;
+  padding-left: 0;
+  margin-right: 9px;
+  width: 20%;
+  height: 2em;
+  line-height: 2em;
+  float: right;
+  text-align: center;
+  font-size: 205%;
+}
+
 .no-score {
   padding
   font-size: 20px;
@@ -138,4 +149,55 @@ img {
 
 .bar-stable {
   background-color: #FFF !important;
+}
+
+.item-content {
+
+}
+
+.range-scale {
+  padding-left: 13%;
+  padding-top: 0;
+  padding-bottom: 0;
+
+}
+
+.range-scale-2 {
+  padding-left: 31%;
+  padding-top: 0;
+  padding-bottom: 0;
+
+}
+
+.range-scale-3 {
+  padding-left: 23%;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.range-scale-4 {
+  padding-left: 25%;
+  padding-top: 0;
+   padding-bottom: 0;
+}
+
+.slider-text {
+  padding: 0;
+  margin: 0;
+  font-size: 15px;
+}
+
+#slider-employees{
+  padding: 0;
+  margin: 0;
+  height: 115px;
+}
+
+.strong-number{
+  font-size: 150%;
+}
+
+.stats-header {
+  font-size: 120%;
+  font-weight: 200;
 }
