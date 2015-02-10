@@ -6,11 +6,11 @@ var passport = require('passport');
 var request = require('request');
 var LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 var User = require('../models/users');
+var jwt = require('jwt-simple');
 
 // CrossStorageHub.init([
 //   {origin: /192.168.1.228:8100$/, allow: ['get', 'set', 'del', 'getKeys', 'clear']}
 // ]);
-
 
 
 passport.serializeUser(function(user, done) {
@@ -44,7 +44,8 @@ router.get('/auth/linkedin/callback',
   function(req, res) {
      User.findOne({ email: req.user._json.emailAddress}, function(err, user){
         if (user) {
-          user.token = req.session.accessToken;
+          var token = jwt.encode({token: req.session.accessToken}, user.linkedin.id);
+          user.token = token
           var following = []
           req.user._json.following.companies.values.forEach(function(company){
             following.push(company.name)
@@ -53,15 +54,17 @@ router.get('/auth/linkedin/callback',
           user.save(function(error){
             if (error) {throw error}
           })
+          res.redirect('http://localhost:8100/#/?token='+user.token)
         } else {
             var following = []
             req.user._json.following.companies.values.forEach(function(company){
               following.push(company.name)
             })
+            var token = jwt.encode({token: req.session.accessToken}, req.user.id);
             var newUser = new User({
               email: req.user._json.emailAddress,
               name: req.user.displayName,
-              token: req.session.accessToken,
+              token: token,
               linkedin: {
                 id: req.user.id,
                 following: following
@@ -70,6 +73,7 @@ router.get('/auth/linkedin/callback',
             newUser.save(function(error){
               if (error) {throw error}
             })
+            res.redirect('http://localhost:8100/#/?token='+newUser.token)
         }
       })
 
@@ -89,7 +93,7 @@ router.get('/auth/linkedin/callback',
       // });
       // res.writeHead(200)
       // res.write(req.session.accessToken)
-      res.redirect('http://localhost:8100/#/?userId='+req.user.id)
+
       // res.redirect('http://www.yahoo.com')
       // res.redirect('/auth/token')
       // res.send({user: req.user})

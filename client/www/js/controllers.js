@@ -143,9 +143,9 @@ angular.module('upstarter.controllers', [])
     // // watch for {name search, distance change, employee count change}, then make a new AJAX call
 
     // if (!$cookieStore.get('userId')) {
-    if ($location.search().userId) {
+    if ($location.search().token) {
       // console.log($location.search().userId)
-      $cookieStore.put('userId', $location.search().userId)
+      $cookieStore.put('token', $location.search().token)
     }
     // }
 
@@ -207,8 +207,8 @@ angular.module('upstarter.controllers', [])
   });
 
   var startupConnections = []
-  if (Authenticate.userId) {
-    $http.get('http://localhost:3000/users/connections/'+Authenticate.userId).success(function(data){
+  if (Authenticate.token) {
+    $http.get('http://localhost:3000/users/connections/'+Authenticate.token).success(function(data){
       console.log(data)
       console.log(data.values)
       console.log(data.values[0])
