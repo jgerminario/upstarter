@@ -7,12 +7,12 @@ angular.module('upstarter.auth.controllers', [])
     }
 
     $scope.logout = function() {
-      document.cookie = 'accessToken=; Max-Age=0'
+      document.cookie = 'token=; Max-Age=0'
       // $http.get('http://localhost:3000/logout')
   	  $window.location.reload(true);
 	  }
 
-	  $scope.userId = Authenticate.userId
+	  $scope.token = Authenticate.token
 
     // $scope.login = function(){
     // 	Authentication.login()

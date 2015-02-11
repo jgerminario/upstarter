@@ -135,10 +135,10 @@ angular.module('upstarter.services', ['ngResource'])
 
 .factory('Authenticate', ['$cookieStore', function($cookieStore){
 
-  var userId = $cookieStore.get('userId')
+  var token = $cookieStore.get('token')
 
   return {
-    userId: userId
+    token: token
   }
 
 }])

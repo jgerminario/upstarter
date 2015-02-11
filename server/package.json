@@ -22,7 +22,8 @@
     "passport": "*",
     "passport-linkedin-oauth2": "*",
     "express-session": "*",
-    "dotenv": "*"
+    "dotenv": "*",
+    "jwt-simple": "*"
   },
   "devDependencies": {
     "mocha": "*",
