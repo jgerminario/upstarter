@@ -29,7 +29,8 @@ router.get('/', function(req, res) {
   employees = querystring.parse(url.parse(req.url).query).employees;
 
   // console.log(location + " " + radians);
-
+  
+  // e.g. ?location=100,37.123,-122.321
   if (querystring.parse(url.parse(req.url).query).location){
     location = querystring.parse(url.parse(req.url).query).location.split(",");
     miles = location[0];
@@ -43,16 +44,17 @@ router.get('/', function(req, res) {
     query = Startup.find({});
   }
 
-
+  // e.g. ?employees=150
   if (employees && employees > 0 && employees < 1000){
     query = query.where('number_of_employees').gt(0).lte(employees);
   }
 
-  
+  // e.g. ?string=goog
   if (string){
     query = query.where({'name': new RegExp('.*' + string + '.*', "i")});
   }
 
+  // e.g. ?full=true
   if (full == "true"){
     default_limit = 10;
   } else {
@@ -60,10 +62,12 @@ router.get('/', function(req, res) {
     default_limit = 50;
   }
 
+  // e.g. ?limit=500
   limit = querystring.parse(url.parse(req.url).query).limit || default_limit;
 
   query = query.limit(limit); 
   query = query.sort([['fundraisePercentile', 'descending']]);
+
 
   var jsonResponse = [];
 

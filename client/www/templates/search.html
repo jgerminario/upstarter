@@ -1,12 +1,12 @@
-<ion-header-bar class="bar bar-header bar-stable">
-  <img class="upstarter-logo" src="/img/Upstarter.png">
+<ion-header-bar class="bar bar-header bar-stable more-height">
+  <img class="upstarter-logo" src="img/Upstarter.png">
 </ion-header-bar>
 
 <ion-view view-title="Search" class="homepage">
-  <ion-content class="content padding has-header">
+  <ion-content class="content padding no-top-padding has-header">
 
     <div class="filter-wrapper">
-      <div class="list list-inset">
+      <div class="list list-inset fl-right">
         <label class="item item-input">
           <i class="icon ion-search placeholder-icon"></i>
           <input type="search"
@@ -15,19 +15,19 @@
                  placeholder="Search Companies" />
         </label>
       </div>
-      <a ng-click="employees = !employees"
-         class="button button-block button-balanced">Additional Search Options</a>
-
-      <div class="card" id="slider-employees" ng-show="employees">
+      <a ng-click="filters = !filters"
+         class="button button-balanced fl-left">Filter</a>
+      <div class="clearfix">
+      <div class="card" id="slider-employees" ng-show="filters">
         <div class="item item-text-wrap">
           <div class="list">
 
-            <span class="slider-text"><strong>Distance from Current Location in Miles:</strong> <span class="strong-number"> {{SearchCtrl.distance}} </span></span>
+            <span class="slider-text"><strong>Distance:</strong> <span class="strong-number"> {{distance == 100 ? '100+' : distance}} miles</span></span>
 
              <div class="item range range-positive">
                 <i class="icon ion-ios7"></i>
 
-                  <input type="range" name="radius" min="1" max="100" ng-model="SearchCtrl.distance"  ng-change="search_radius(SearchCtrl.distance)">
+                  <input type="range" name="radius" min="1" max="100" ng-model="distance"  ng-change="search_radius(distance)">
 
                 <i class="icon ion-ios7"></i>
             </div>
@@ -38,14 +38,14 @@
          </div>
       </div>
 
-       <div class="card" id="slider-employees" ng-show="employees">
+       <div class="card" id="slider-employees" ng-show="filters">
         <div class="item item-text-wrap">
 
-             <span class="slider-text"><strong>Number of Employees: </strong><span class="strong-number"> {{SearchCtrl.employees}}</span></span>
+             <span class="slider-text"><strong>Employee count: </strong><span class="strong-number"> {{employees == 1000 ? '1000+' : employees}}</span></span>
              <div class="item range range-royal">
 
                 <i class="icon ion-ios7"></i>
-                  <input type="range" name="radius" min="1" max="1000" ng-model="SearchCtrl.employees"  ng-change="search_employees(SearchCtrl.employees)">
+                  <input type="range" name="radius" min="1" max="1000" ng-model="employees"  ng-change="search_employees(employees)">
 
                 <i class="icon ion-ios7"></i>
             </div>
@@ -70,7 +70,7 @@
                 href="#/startups/{{startup.slug}}"
                 class="item item-thumbnail-left">
 
-        <img class="company-logo"
+        <img class="company-logo vertical-align"
              ng-src="https://res.cloudinary.com/crunchbase-production/{{startup.primary_image[0]}}" />
 
         <div class="company-data">
@@ -90,12 +90,13 @@
 
           </div>
         </div>
-        <div ng-if="startup.closed" class="no-score">Closed</div>
-        <div ng-if="startup.acquired && !startup.closed" class="no-score">Acquired</div>
-        <div ng-if="startup.public && !startup.closed && !startup.acquired" class="no-score">Public</div>
-        <div ng-if="startup.fundraisePercentile > 0 && startup.fundraisePercentile < 100" class="company-momentum-score" ng-class="colorScore({{startup.fundraisePercentile | number : 0}})">{{startup.fundraisePercentile | number : 0}}</div>
-        <div ng-if="startup.fundraisePercentile == 100" class="company-momentum-score-small" ng-class="colorScore({{startup.fundraisePercentile | number : 0}})">{{startup.fundraisePercentile | number : 0}}</div>
-        <div ng-if="startup.fundraisePercentile == 0 && !startup.public && !startup.closed && !startup.acquired" class="no-score">N/A</div>
+        <div ng-if="startup.closed" class="no-score vertical-align">Closed</div>
+        <div ng-if="startup.acquired && !startup.closed" class="no-score vertical-align">Acq</div>
+        <div ng-if="startup.public && !startup.closed && !startup.acquired" class="no-score vertical-align">Public</div>
+        <div ng-if="startup.fundraisePercentile > 0" class="company-momentum-score vertical-align" ng-class="colorScore({{startup.fundraisePercentile | number : 0}})">{{startup.fundraisePercentile == 100 ? 99 : startup.fundraisePercentile | number : 0}}</div>
+<!--         <div ng-if="startup.fundraisePercentile == 100" class="company-momentum-score-small" ng-class="colorScore({{startup.fundraisePercentile | number : 0}})">{{startup.fundraisePercentile == 100 ? 99 : startup.fundraisePercentile | number : 0}}</div> -->
+<!-- && startup.fundraisePercentile < 100-->
+        <div ng-if="startup.fundraisePercentile == 0 && !startup.public && !startup.closed && !startup.acquired" class="no-score vertical-align">N/A</div>
       </ion-item>
     </ion-list>
 
