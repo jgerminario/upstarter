@@ -24,7 +24,8 @@
     "passport-linkedin-oauth2": "*",
     "express-session": "*",
     "dotenv": "*",
-    "jwt-simple": "*"
+    "jwt-simple": "*",
+    "mongo-sanitize": "*"
   },
   "devDependencies": {
     "mocha": "*",

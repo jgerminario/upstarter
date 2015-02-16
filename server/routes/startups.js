@@ -6,6 +6,7 @@ var request = require('request');
 var Startup = require('../models/startups');
 var startupAPI = require('../helpers/seeds');
 var organizationEndpoint = require('../helpers/api');
+var sanitize = require('mongo-sanitize');
 
 /////////////////////////////////
 /// endpoints for our client ///
@@ -24,15 +25,15 @@ var organizationEndpoint = require('../helpers/api');
 // GET list of all company names - for client
 router.get('/', function(req, res) {
   var query, limit, string, full, default_limit, location, miles, radians, lat, lon, employees;
-  string = querystring.parse(url.parse(req.url).query).string;
-  full = querystring.parse(url.parse(req.url).query).full;
-  employees = querystring.parse(url.parse(req.url).query).employees;
+  string = sanitize(querystring.parse(url.parse(req.url).query).string);
+  full = sanitize(querystring.parse(url.parse(req.url).query).full);
+  employees = sanitize(querystring.parse(url.parse(req.url).query).employees);
 
   // console.log(location + " " + radians);
   
   // e.g. ?location=100,37.123,-122.321
   if (querystring.parse(url.parse(req.url).query).location){
-    location = querystring.parse(url.parse(req.url).query).location.split(",");
+    location = sanitize(querystring.parse(url.parse(req.url).query).location).split(",");
     miles = location[0];
     radians = miles*0.00098;
     lat = location[1];
@@ -51,7 +52,7 @@ router.get('/', function(req, res) {
 
   // e.g. ?string=goog
   if (string){
-    query = query.where({'name': new RegExp('.*' + string + '.*', "i")});
+    query = query.where({'name': new RegExp('.*' + sanitize(string) + '.*', "i")});
   }
 
   // e.g. ?full=true
@@ -102,7 +103,7 @@ router.get('/', function(req, res) {
 
 router.get('/:slug', function(req, res) { // lotus-development-corporation
 
-  var orgSlug  = 'organization/' + req.params.slug
+  var orgSlug  = 'organization/' + sanitize(req.params.slug)
   var query = Startup.find( { slug: orgSlug } )
 
   query.exec(function (err, data) {
