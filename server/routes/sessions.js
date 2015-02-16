@@ -40,7 +40,7 @@ router.get('/auth/linkedin',
   function(req, res){});
 
 router.get('/auth/linkedin/callback',
-  passport.authenticate('linkedin', { failureRedirect: 'http://localhost:8100/' }),
+  passport.authenticate('linkedin', { failureRedirect: 'http://upstarter-server.herokuapp.com/' }),
   function(req, res) {
      User.findOne({ email: req.user._json.emailAddress}, function(err, user){
         if (user) {
@@ -54,7 +54,7 @@ router.get('/auth/linkedin/callback',
           user.save(function(error){
             if (error) {throw error}
           })
-          res.redirect('http://localhost:8100/#/?token='+user.token)
+          res.redirect('http://upstarter-server.herokuapp.com/#/?token='+user.token)
         } else {
             var following = []
             req.user._json.following.companies.values.forEach(function(company){
@@ -73,7 +73,7 @@ router.get('/auth/linkedin/callback',
             newUser.save(function(error){
               if (error) {throw error}
             })
-            res.redirect('http://localhost:8100/#/?token='+newUser.token)
+            res.redirect('http://upstarter-server.herokuapp.com/#/?token='+newUser.token)
         }
       })
 
