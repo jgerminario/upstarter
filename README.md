@@ -4,6 +4,8 @@
 <img src="imgs/Upstarter.png" alt="Upstarter"/>
 </p>
 
+*Upstarter is still under development. Please see Known Issues section if you experience problems with the demo*
+
 [Upstarter](http://upstarter-client.herokuapp.com) gives job hunters investor-grade insight into the heated startup market, straight from a convenient hybrid mobile app.
 
 Drawing on over 90,000 startups, Upstarter rank orders top companies by a "Momentum Score". Factoring in fundraising history, expenditures and employee count, the Momentum Score is a startup's percentile ranking compared to similar companies.
@@ -49,6 +51,10 @@ Upstarter is in pre-release alpha testing and will be deployed to iOS and Androi
 * Data requests access a remote Heroku server at upstarter-server.herokuapp.com, which may take a few moments to bootup after a period of low request volume. It could also result in slow search.
 
 * Currently not all startups have employee data, leading to a number of startups without Momentum Scores. Alternatives have been identified and will be implemented.
+
+* Intermittent error occurs where server crashes on Heroku without rebooting, causing client application to show no results. Looking into cause of error.
+
+* CrunchBase employee data is not always accurate. Exploring how to pull from other data sources to come up with more accurate numbers.
 
 
 ## Technologies
