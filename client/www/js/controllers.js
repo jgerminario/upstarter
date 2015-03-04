@@ -213,7 +213,11 @@ angular.module('upstarter.controllers', [])
 
   var startupConnections = []
   if (Authenticate.token) {
-    $http.get('http://upstarter-server.herokuapp.com/users/connections/'+Authenticate.token).success(function(data){
+    $http.get('http://upstarter-server.herokuapp.com/users/connections/'+Authenticate.token)
+      .error(function(message){
+        console.log(message);
+      })
+      .success(function(data){
       console.log(data)
       console.log(data.values)
       console.log(data.values[0])

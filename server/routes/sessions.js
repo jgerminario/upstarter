@@ -35,10 +35,12 @@ passport.use(new LinkedinStrategy({
   }
 ));
 
+// To avoid 404 state on '/'
 router.get('/', function(req, res){
   res.send("<h1>Upstarter</h1>");
 });
 
+// Initial route for making the request
 router.get('/auth/linkedin',
   passport.authenticate('linkedin', { state: 'SOME STATE' }),
   function(req, res){});
@@ -47,8 +49,8 @@ router.get('/auth/linkedin/callback',
   passport.authenticate('linkedin', { failureRedirect: 'http://localhost:8100/' }),
   function(req, res) {
      User.findOne({ email: req.user._json.emailAddress}, function(err, user){
-        if (user) {
-          var token = jwt.encode({token: req.session.accessToken}, user.linkedin.id);
+        if (user) { // If user already exists
+          var token = jwt.encode({token: req.session.accessToken}, user.linkedin.id); // Encode token so not able to be accessed, will send to client
           user.token = token
           var following = []
           req.user._json.following.companies.values.forEach(function(company){
@@ -59,7 +61,7 @@ router.get('/auth/linkedin/callback',
             if (error) {throw error}
           })
           res.redirect('http://localhost:8100/#/?token='+user.token)
-        } else {
+        } else { // If user doesn't yet exist
             var following = []
             req.user._json.following.companies.values.forEach(function(company){
               following.push(company.name)
