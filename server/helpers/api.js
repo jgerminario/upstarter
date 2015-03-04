@@ -37,7 +37,13 @@ var organizationEndpoint = (function (){
 
 
   var parseFields = function (id, error, response, body, res){
-    if (error) { return console.log(error) }
+    if (error) { 
+      console.log(error); 
+      if (response.statusCode == 404) {
+        console.log("Org not found"); // TODO: delete a startup from DB if not found in Crunchbase
+        res.status(404).send("Org not found");
+      }
+    }
       if (response.statusCode != 200) { return console.log(response.body); }
         if (!error && response.statusCode == 200 && JSON.parse(body).data.properties) {
           var json_body, name, path, closed, acquired, public, founded_on, homepage_url,short_description, description, total_funding_usd, number_of_investments, number_of_employees, officesArray, offices,headquarters, categories, primary_image, websites, founders, fundraiseRounds, geo;

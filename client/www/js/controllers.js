@@ -118,9 +118,12 @@ angular.module('upstarter.controllers', [])
           angular.forEach($scope.startups, function(startup,index){
             // console.log(startup)
             if(!startup.short_description){
-              Startup(startup.slug).then(function(data){
+              Startup(startup.slug).then(function(data, error){
+                console.log(error);
                 console.log(data);
-                $scope.startups[index] = data;
+                if (data){
+                  $scope.startups[index] = data;
+                }
                 // if(startup.momentumScore > 0 && startup.fundraisePercentile == 0){
                 //   StartupScore(startup.slug).then(function(percentile){
                 //     $scope.startups[index].fundraisePercentile = percentile;

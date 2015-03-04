@@ -52,7 +52,7 @@ router.get('/', function(req, res) {
 
   // e.g. ?string=goog
   if (string){
-    query = query.where({'name': new RegExp('.*' + sanitize(string) + '.*', "i")});
+    query = query.where({'name': new RegExp('.*' + string + '.*', "i")});
   }
 
   // e.g. ?full=true

@@ -35,6 +35,10 @@ passport.use(new LinkedinStrategy({
   }
 ));
 
+router.get('/', function(req, res){
+  res.send("<h1>Upstarter</h1>");
+});
+
 router.get('/auth/linkedin',
   passport.authenticate('linkedin', { state: 'SOME STATE' }),
   function(req, res){});
