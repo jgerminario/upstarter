@@ -37,12 +37,13 @@ var organizationEndpoint = (function (){
 
 
   var parseFields = function (id, error, response, body, res){
+    if (response.statusCode == 404){
+        console.log("Org not found"); // TODO: delete a startup from DB if not found in Crunchbase
+        return res.status(404).send("Org not found");
+    }
     if (error) { 
       console.log(error); 
-      if (response.statusCode == 404) {
-        console.log("Org not found"); // TODO: delete a startup from DB if not found in Crunchbase
-        res.status(404).send("Org not found");
-      }
+      console.log(response.statusCode);
     }
       if (response.statusCode != 200) { return console.log(response.body); }
         if (!error && response.statusCode == 200 && JSON.parse(body).data.properties) {
