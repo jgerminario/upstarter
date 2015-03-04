@@ -60,9 +60,9 @@ angular.module('upstarter.controllers', [])
       }
       timer= $timeout(function(){
         params.location = distance + "," + lat + "," + lon;
-        console.log(params.location)
+        // console.log(params.location)
         StartupNames(params).then(function(data){
-          console.log(data.data)
+          // console.log(data.data)
           $scope.startups = data.data;
           // angular.forEach($scope.startups, function(startup){
           //   // console.log(startup)
@@ -85,7 +85,7 @@ angular.module('upstarter.controllers', [])
       }
       timer= $timeout(function(){
         params.employees = employees;
-        console.log(params.employees);
+        // console.log(params.employees);
         StartupNames(params).then(function(data){
           // console.log(data.data)
           $scope.startups = data.data;
@@ -114,15 +114,22 @@ angular.module('upstarter.controllers', [])
         StartupNames(params).then(function(data){
           // console.log(data.data)
           $scope.startups = data.data;
-          console.log(data);
+          // console.log(data);
           angular.forEach($scope.startups, function(startup,index){
             // console.log(startup)
             if(!startup.short_description){
               Startup(startup.slug).then(function(data, error){
-                console.log(error);
+                // console.log(error);
                 console.log(data);
-                if (data){
+                if (data.error) {
+                  console.log('removing startup')
+                  $scope.startups[index].name = null; // will remove startups that no longer have data available in CrunchBase
+                }
+                else if (data){
                   $scope.startups[index] = data;
+                } else {
+                  console.log('removing startup')
+                  // $scope.startups[index].name = null;
                 }
                 // if(startup.momentumScore > 0 && startup.fundraisePercentile == 0){
                 //   StartupScore(startup.slug).then(function(percentile){
@@ -218,9 +225,9 @@ angular.module('upstarter.controllers', [])
         console.log(message);
       })
       .success(function(data){
-      console.log(data)
-      console.log(data.values)
-      console.log(data.values[0])
+      // console.log(data)
+      // console.log(data.values)
+      // console.log(data.values[0])
       angular.forEach(data.values, function(connection,key){
         // data.values.forEach(function(connection){
           if (connection.positions){
@@ -231,7 +238,7 @@ angular.module('upstarter.controllers', [])
                     if (position.company.name.match($scope.startup.name)){
                       startupConnections.push(connection)
                       $scope.startupConnections = startupConnections
-                      console.log($scope.startupConnections)
+                      // console.log($scope.startupConnections)
                     }
                   }
                 }

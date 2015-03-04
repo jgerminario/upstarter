@@ -49,7 +49,7 @@ angular.module('upstarter.services', ['ngResource'])
     contentType: "application/json",
   })
     .success(function(data,status){
-      console.log(data);
+      // console.log(data);
       // var company_array = data;
       // console.log(data)
       return data;
@@ -104,6 +104,10 @@ angular.module('upstarter.services', ['ngResource'])
     contentType: "application/json",
   })
     .success(function(data, status){
+      // console.log(status)
+      if (status == 404){
+        console.log("startup not found");
+      }
       console.log(data);
       var momentumScore = document.getElementsByClassName('the-number');
       var momentumScoreNumber
@@ -126,7 +130,7 @@ angular.module('upstarter.services', ['ngResource'])
     })
 
     .error(function(){
-      deferred.reject('There was an error');
+      return deferred.resolve({error: "error"});
     });
   return deferred.promise;
   };
