@@ -69,10 +69,13 @@ var seedHelper = (function(){
           console.log("beginning seed");
 
           setInterval(function (){
-            if (i>startups.length){ throw new Error("All records have been updated")}
+            if (i>startups.length){ return console.log("All records have been updated");}
               console.log('processing number ' + i);
             startupAPI.updateStartup(startups[i]);
             i++;
+            if (new Date().getHours == 9 && new Date().getMinutes == 58) {
+              process.exit(0); // This is used to restart web worker at a set interval while these background jobs are running. Will crash worker and restart it.
+            }
           }, 36000);
         });
       }

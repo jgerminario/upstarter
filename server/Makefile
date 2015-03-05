@@ -21,6 +21,6 @@ console:
 startseed:
 	curl "http://upstarter-server.herokuapp.com/startups/seed"
 
-restartseed:
-	node -e 'process.exit(0)'
-	curl "http://upstarter-server.herokuapp.com/startups/seed"
+# restartseed:
+# 	# node -e 'process.exit(0)'
+# 	curl "http://upstarter-server.herokuapp.com/startups/seed"
