@@ -46,7 +46,7 @@ router.get('/auth/linkedin',
   function(req, res){});
 
 router.get('/auth/linkedin/callback',
-  passport.authenticate('linkedin', { failureRedirect: 'http://localhost:8100/' }),
+  passport.authenticate('linkedin', { failureRedirect: '/' }),
   function(req, res) {
      User.findOne({ email: req.user._json.emailAddress}, function(err, user){
         if (user) { // If user already exists
@@ -60,7 +60,7 @@ router.get('/auth/linkedin/callback',
           user.save(function(error){
             if (error) {throw error}
           })
-          res.redirect('http://localhost:8100/#/?token='+user.token)
+          res.redirect('/#/?token='+user.token)
         } else { // If user doesn't yet exist
             var following = []
             req.user._json.following.companies.values.forEach(function(company){
@@ -79,7 +79,7 @@ router.get('/auth/linkedin/callback',
             newUser.save(function(error){
               if (error) {throw error}
             })
-            res.redirect('http://localhost:8100/#/?token='+newUser.token)
+            res.redirect('/#/?token='+newUser.token)
         }
       })
 
