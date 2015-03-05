@@ -5,6 +5,7 @@ var querystring = require('querystring');
 var request = require('request');
 var Startup = require('../models/startups');
 var startupAPI = require('../helpers/seeds');
+var seedHelper = require('../helpers/kue_bg_jobs');
 var organizationEndpoint = require('../helpers/api');
 var sanitize = require('mongo-sanitize');
 
@@ -97,7 +98,14 @@ router.get('/', function(req, res) {
 //    startupAPI.updateStartup();
 // });
 
+router.get('/seed', function(req, res){
+  seedHelper.startSeed();
+  res.send("seed has started");
+});
 
+router.get('/stop_seed', function(req, res){
+
+});
 
 // GET individual company listing //
 

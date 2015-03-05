@@ -1,21 +1,14 @@
 
 // var kue = require('kue'),
   // jobs = kue.createQueue();//need redis credentials?
-var mongoose = require('mongoose');
-var express = require('express');
-var router = express.Router();
-var request = require('request');
-var Startup = require('../models/startups');
-var organizationEndpoint = require('./api.js');
-var startupAPI = require('./seeds');
+  var mongoose = require('mongoose');
+  var express = require('express');
+  var router = express.Router();
+  var request = require('request');
+  var Startup = require('../models/startups');
+  var organizationEndpoint = require('./api.js');
+  var startupAPI = require('./seeds');
 
-mongoose.connect('mongodb://admin:upstarter@ds041157.mongolab.com:41157/upstarter');
-
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function (callback) {
-  console.log("connection started")
-});
 
 
 
@@ -34,43 +27,56 @@ db.once('open', function (callback) {
 // jobs.process('api_job', function (job, done){
 //  done();
 // });
-var shuffle_array = function(array) {
-  var counter = array.length, 
-  temp, 
-  index;
+var seedHelper = (function(){
+  var shuffle_array = function(array) {  // no longer used
+    var counter = array.length, 
+    temp, 
+    index;
 
-    // While there are elements in the array
-  while (counter > 0) {
-      // Pick a random index
-      index = Math.floor(Math.random() * counter);
+      // While there are elements in the array
+      while (counter > 0) {
+        // Pick a random index
+        index = Math.floor(Math.random() * counter);
 
-      counter--;
+        counter--;
 
-      temp = array[counter];
-      array[counter] = array[index];
-      array[index] = temp;
-    }
+        temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+      }
 
-    return array;
-};
+      return array;
+    };
 
-console.log("starting 'find' operation (this may take a while)");
+    return {
+      startSeed: function(){
+        mongoose.connect('mongodb://admin:upstarter@ds041157.mongolab.com:41157/upstarter');
 
-Startup.where('description').exists(false).exec(function(err, data){
-  var i = 0,
-    startups = data;
-    // startups = shuffle_array(data);
-  if (err) {console.log(err); }
+        var db = mongoose.connection;
+        db.on('error', console.error.bind(console, 'connection error:'));
+        db.once('open', function (callback) {
+          console.log("connection started")
+        });
 
-  console.log("beginning seed");
+        console.log("starting 'find' operation (this may take a while)");
 
-  setInterval(function (){
-    if (i>startups.length){ throw new Error("All records have been updated")}
-    console.log('processing number ' + i);
-    startupAPI.updateStartup(startups[i]);
-    i++;
+        Startup.where('description').exists(false).exec(function(err, data){
+          var i = 0,
+          startups = data;
+          // startups = shuffle_array(data);
+          if (err) {console.log(err); }
 
-  }, 36000);
-});
+          console.log("beginning seed");
 
-// module.exports = router;
+          setInterval(function (){
+            if (i>startups.length){ throw new Error("All records have been updated")}
+              console.log('processing number ' + i);
+            startupAPI.updateStartup(startups[i]);
+            i++;
+          }, 36000);
+        });
+      }
+    };   
+  })();
+
+  module.exports = seedHelper;

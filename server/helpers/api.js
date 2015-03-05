@@ -37,10 +37,7 @@ var organizationEndpoint = (function (){
 
 
   var parseFields = function (id, error, response, body, res){
-    if (response.statusCode == 404){
-        console.log("Org not found"); // TODO: delete a startup from DB if not found in Crunchbase
-        return res.status(404).send("Org not found");
-    }
+
     if (error) { 
       console.log(error); 
       console.log(response.statusCode);
@@ -172,8 +169,17 @@ var organizationEndpoint = (function (){
 
 
       Startup.findByIdAndUpdate(id, attributes, function(err, startup){
-        if (err) { console.log(err); }
-        if (startup.momentumScore > 0 && startup.acquired != true && startup.public != true && startup.closed != true && startup.number_of_employees > 0){
+        if (err) { 
+          console.log(err.code); 
+          console.log(err.name); 
+          if (err.code == 11000){
+            Startup.remove({_id: id}, function(e,d){
+              if (e){console.log(e);}
+              console.log(d);
+            });
+          }
+        }
+        else if (startup.momentumScore > 0 && startup.acquired != true && startup.public != true && startup.closed != true && startup.number_of_employees > 0){
           Startup.individualFundraisePercentile(startup.id, function(startup){
             if (res){
               res.send(startup);
@@ -197,6 +203,16 @@ var organizationEndpoint = (function (){
     sendCBRequest: function(id, permalink, res){
       var user_key = process.env.CB_KEY;
       request('https://api.crunchbase.com/v/2/' + permalink + '?user_key=' + user_key, function(error, response, body){
+        if (response.statusCode == 404){
+          console.log("Org not found"); 
+          Startup.remove({slug: permalink}, function(err, data){
+            if (err) { console.log(err); }
+            console.log("entry deleted:", data);
+          });
+          if (res){
+            return res.status(404).send("Org not found");
+          }
+        }
         parseFields(id, error, response, body, res);
       });
     },
@@ -204,8 +220,8 @@ var organizationEndpoint = (function (){
     fetchStartups: function(pageNum) {
       var user_key = process.env.CB_KEY;
       request('https://api.crunchbase.com/v/2/organizations?organization_types=company&user_key=' + user_key + '&page=' + pageNum + '&order=created_at+DESC', function (error, response, body) {
-        saveStartupPage(error, response, body)
-      })
+        saveStartupPage(error, response, body);
+      });
     }
   };
 
