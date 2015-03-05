@@ -48,7 +48,9 @@ router.get('/auth/linkedin',
 router.get('/auth/linkedin/callback',
   passport.authenticate('linkedin', { failureRedirect: '/' }),
   function(req, res) {
+    console.log("here are our headers")
     console.log(req.headers);
+    console.log("Here is our referrer")
     console.log(req.headers.referer);
      User.findOne({ email: req.user._json.emailAddress}, function(err, user){
         if (user) { // If user already exists
