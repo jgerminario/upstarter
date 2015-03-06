@@ -1,7 +1,7 @@
-# Upstarter
+# [Upstarter](http://upstarter-client.herokuapp.com)
 
-<p align="center">
-<img src="imgs/Upstarter.png" alt="Upstarter"/>
+<p align="center"><a href="http://upstarter-client.herokuapp.com">
+<img src="imgs/Upstarter.png" alt="Upstarter"/></a>
 </p>
 
 *Upstarter is still under development. Please see Known Issues section if you experience problems with the demo*
@@ -44,15 +44,13 @@ If you have linked your LinkedIn account, you will also see your connections wit
 
 ## How to get access
 
-Upstarter is in pre-release alpha testing and will be deployed to iOS and Android stores before the end of February. Demo the app by cloning the repository and running ```ionic serve``` from the 'client' folder.
+Upstarter is in pre-release alpha testing and will be deployed to iOS and Android stores before the end of February. Demo the app on [Heroku here](http://upstarter-client.herokuapp.com)
 
 ## Known issues
 
 * Data requests access a remote Heroku server at upstarter-server.herokuapp.com, which may take a few moments to bootup after a period of low request volume. It could also result in slow search.
 
 * Currently not all startups have employee data, leading to a number of startups without Momentum Scores. Alternatives have been identified and will be implemented.
-
-* Intermittent error occurs where server crashes on Heroku without rebooting, causing client application to show no results. Looking into cause of error.
 
 * CrunchBase employee data is not always accurate. Exploring how to pull from other data sources to come up with more accurate numbers.
 
