@@ -74,7 +74,7 @@ var seedHelper = (function(){
             startupAPI.updateStartup(startups[i]);
             i++;
             if (new Date().getHours == 9 && new Date().getMinutes == 58) {
-              process.exit(0); // This is used to restart web worker at a set interval while these background jobs are running. Will crash worker and restart it.
+              return "Stopping seed"; // This is used to stop web worker at a set interval while these background jobs are running to avoid having too many build up
             }
           }, 36000);
         });
