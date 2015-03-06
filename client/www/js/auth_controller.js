@@ -1,10 +1,14 @@
 angular.module('upstarter.auth.controllers', [])
 
-.controller("LoginCtrl", ["$scope", "$rootScope", '$location', '$window', '$http', 'Authenticate', '$cookieStore', function($scope, $rootScope, $location, $window, $http, Authenticate, $cookieStore) {
+.controller("LoginCtrl", ["$scope", "$rootScope", '$location', '$window', '$http', 'Authenticate', '$cookieStore', 'InitialSeed', function($scope, $rootScope, $location, $window, $http, Authenticate, $cookieStore, InitialSeed) {
 
     $scope.login = function(){
       $window.location.href = 'http://upstarter-server.herokuapp.com/auth/linkedin';
     }
+
+    InitialSeed.then(function(data){
+      window.localStorage["initialSeed"] = JSON.stringify(data)
+    });
 
     $scope.logout = function() {
       document.cookie = 'token=; Max-Age=0'

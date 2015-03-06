@@ -134,10 +134,8 @@ angular.module('upstarter.controllers', [])
       }, 400);
     };
 
-    InitialSeed.then(function(data){
-      $scope.startups = data;
+    $scope.startups = JSON.parse(localStorage["initialSeed"]);
       // console.log(data)
-    });
     // // cities - filter radius instead
 
     // $scope.colorScore = colorScore.colorScore
