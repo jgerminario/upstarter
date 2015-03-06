@@ -79,7 +79,7 @@
           <div class="company-info item-text-wrap">
             <div ng-if="startup.headquarters.length == 1"   class="company-info-tidbit">{{startup.headquarters[0].city}}, {{startup.headquarters[0].country}}</div>
 
-            <div ng-if="(!startup.headquarters || startup.headquarters.length == 0) && (startup.offices.length > 0" class="company-info-tidbit">{{startup.offices[0].city}}, {{startup.offices[0].country}}</div>
+            <div ng-if="(!startup.headquarters || startup.headquarters.length == 0) && (startup.offices.length > 0)" class="company-info-tidbit">{{startup.offices[0].city}}, {{startup.offices[0].country}}</div>
 
             <div ng-if="(startup.headquarters.length == 0 || !startup.headquarters) && (startup.offices.length == 0 || !startup.offices)" class="company-info-tidbit">No Location Data</div>
 
