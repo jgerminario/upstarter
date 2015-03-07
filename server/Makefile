@@ -17,3 +17,10 @@ console:
 	var Startup = require("./models/startups"); \
 	repl = require("repl").start("> "); \
 	console.log("Loaded with Mongoose ORM methods available, press enter to continue");'
+
+startseed:
+	curl "http://upstarter-server.herokuapp.com/startups/seed"
+
+# restartseed:
+# 	# node -e 'process.exit(0)'
+# 	curl "http://upstarter-server.herokuapp.com/startups/seed"

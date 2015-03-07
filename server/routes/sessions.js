@@ -35,16 +35,24 @@ passport.use(new LinkedinStrategy({
   }
 ));
 
+// To avoid 404 state on '/'
+router.get('/', function(req, res){
+  res.send("<h1>Upstarter</h1>");
+});
+
+// Initial route for making the request
 router.get('/auth/linkedin',
   passport.authenticate('linkedin', { state: 'SOME STATE' }),
   function(req, res){});
 
 router.get('/auth/linkedin/callback',
-  passport.authenticate('linkedin', { failureRedirect: 'http://localhost:8100/' }),
+  passport.authenticate('linkedin', { failureRedirect: 'http://upstarter-client.herokuapp.com/#/login' }), //TODO: any way to get req.headers.referer for the failureRedirect here
   function(req, res) {
+    // console.log("here are our headers")
+    // console.log(req.headers);
      User.findOne({ email: req.user._json.emailAddress}, function(err, user){
-        if (user) {
-          var token = jwt.encode({token: req.session.accessToken}, user.linkedin.id);
+        if (user) { // If user already exists
+          var token = jwt.encode({token: req.session.accessToken}, user.linkedin.id); // Encode token so not able to be accessed, will send to client
           user.token = token
           var following = []
           req.user._json.following.companies.values.forEach(function(company){
@@ -54,8 +62,8 @@ router.get('/auth/linkedin/callback',
           user.save(function(error){
             if (error) {throw error}
           })
-          res.redirect('http://localhost:8100/#/?token='+user.token)
-        } else {
+          res.redirect(req.headers.referer + '#/?token='+user.token)
+        } else { // If user doesn't yet exist
             var following = []
             req.user._json.following.companies.values.forEach(function(company){
               following.push(company.name)
@@ -73,7 +81,7 @@ router.get('/auth/linkedin/callback',
             newUser.save(function(error){
               if (error) {throw error}
             })
-            res.redirect('http://localhost:8100/#/?token='+newUser.token)
+            res.redirect(req.headers.referer + '#/?token='+newUser.token)
         }
       })
 
@@ -115,7 +123,7 @@ router.get('/logout', function(req, res){
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login');
+  res.redirect(req.headers.referer + 'login');
 }
 
 module.exports = router;
