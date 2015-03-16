@@ -1,6 +1,18 @@
 angular.module('upstarter.controllers', [])
 
-.controller('SearchCtrl', ['$scope', '$timeout', 'InitialSeed', 'Startup', 'StartupNames', 'colorScore', 'EmployeeRange', 'Geolocation', '$location', '$cookieStore', function($scope, $timeout, InitialSeed, Startup, StartupNames, colorScore, EmployeeRange, Geolocation, $location, $cookieStore) {
+.controller('SearchCtrl', ['$scope', '$timeout', 'InitialSeed', 'Startup', 'StartupNames', 'colorScore', 'EmployeeRange', 'Geolocation', '$location', '$cookieStore', 'Authenticate', '$http', function($scope, $timeout, InitialSeed, Startup, StartupNames, colorScore, EmployeeRange, Geolocation, $location, $cookieStore, Authenticate, $http) {
+    if (Authenticate.token){
+      $http.get('http://upstarter-server.herokuapp.com/users/connections/'+Authenticate.token)
+        .error(function(message){
+          console.log(message);
+        })
+        .success(function(data){
+          window.localStorage["connections"] = JSON.stringify(data);
+        });
+    } else {
+      window.localStorage["connections"] = null;
+    }
+
     $scope.distance = 100;
     $scope.employees = 1000;
 
@@ -135,20 +147,19 @@ angular.module('upstarter.controllers', [])
 }])
 
 .controller('StartupDetailCtrl', ['$scope','Startup', '$stateParams', '$http', 'colorScore', 'Authenticate', function($scope, Startup, $stateParams, $http, colorScore, Authenticate) {
-
+  $scope.connectionMsg = null;
 
   Startup($stateParams.startupName).then(function(data){
     $scope.startup = data[0];
-  });
 
-  var startupConnections = [];
-  if (Authenticate.token) {
-    $http.get('http://upstarter-server.herokuapp.com/users/connections/'+Authenticate.token)
-      .error(function(message){
-        console.log(message);
-      })
-      .success(function(data){
-      angular.forEach(data.values, function(connection,key){
+    var startupConnections = [];
+    if (Authenticate.token && localStorage["connections"]) {
+      console.log("hey")
+      connections = JSON.parse(localStorage["connections"]);
+      console.log(connections.values);
+      console.log($scope.startup.name);
+      $scope.connectionMsg = "No connections found";
+        angular.forEach(connections.values, function(connection,key){
           if (connection.positions){
             if (connection.positions.values) {
               connection.positions.values.forEach(function(position){
@@ -157,6 +168,11 @@ angular.module('upstarter.controllers', [])
                     if (position.company.name.match($scope.startup.name)){
                       startupConnections.push(connection);
                       $scope.startupConnections = startupConnections;
+                      if ($scope.startupConnections.length === 0) {
+                        $scope.connectionMsg = "No connections found";
+                      } else {
+                        $scope.connectionMsg = null;
+                      }
                     }
                   }
                 }
@@ -164,8 +180,10 @@ angular.module('upstarter.controllers', [])
             }
           }
         });
-    });
-  }
+    } else {
+      $scope.connectionMsg = "Log into LinkedIn to see your connections";
+    }
+  });
 
     $scope.colorScore = function(score) {
       console.log("the score is " + score)

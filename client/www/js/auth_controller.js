@@ -19,7 +19,7 @@ angular.module('upstarter.auth.controllers', [])
   	  $window.location.reload(true);
 	  }
 
-	  $scope.token = Authenticate.token
+	  $scope.token = Authenticate.token;
 
     // $scope.login = function(){
     // 	Authentication.login()
