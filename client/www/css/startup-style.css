@@ -7,7 +7,18 @@
   background-image: url("../img/ajax-loader.gif");
   background-repeat: no-repeat;
   background-position: center center;
-  vertical-align: center;
+  z-index: 2;
+}
+
+.dark-background {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: #000;
+  z-index: 3;
+  opacity: 0.2;
+  height: 100vh;
+  width: 100vw;
 }
 
 .company-logo {

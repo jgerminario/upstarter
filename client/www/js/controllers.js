@@ -39,6 +39,8 @@ angular.module('upstarter.controllers', [])
           $scope.startups = data.data;
           if (data.data.length == 0){
             $scope.empty = "No results found";
+          } else {
+            $scope.empty = null;
           }
         });
       }, 300);
@@ -58,6 +60,8 @@ angular.module('upstarter.controllers', [])
           $scope.startups = data.data;
           if (data.data.length == 0){
             $scope.empty = "No results found";
+          } else {
+            $scope.empty = null;
           }
         });
       }, 300);
@@ -78,20 +82,23 @@ angular.module('upstarter.controllers', [])
           if (data.data.length == 0){
             $scope.empty = "No results found";
           }
-          angular.forEach($scope.startups, function(startup,index){
-            if(!startup.short_description){
-              Startup(startup.slug).then(function(data, error){
-                if (data.error) {
-                  $scope.startups[index].name = null; // will remove startups that no longer have data available in CrunchBase
-                }
-                else if (data){
-                  $scope.startups[index] = data;
-                } else {
-                  console.log('removing startup');
-                }
-              });
-            }
-          });
+          else {
+            $scope.empty = null;
+            angular.forEach($scope.startups, function(startup,index){
+              if(!startup.short_description){
+                Startup(startup.slug).then(function(data, error){
+                  if (data.error) {
+                    $scope.startups[index].name = null; // will remove startups that no longer have data available in CrunchBase
+                  }
+                  else if (data){
+                    $scope.startups[index] = data;
+                  } else {
+                    console.log('removing startup');
+                  }
+                });
+              }
+            });
+          }
           console.log($scope.startups);
         });
       }, 300);
