@@ -4,10 +4,13 @@ angular.module('upstarter.auth.controllers', [])
 
     $scope.login = function(){
       $window.location.href = 'http://upstarter-server.herokuapp.com/auth/linkedin';
-    }
+    };
 
+    $scope.loading = true;
+    
     InitialSeed.then(function(data){
-      window.localStorage["initialSeed"] = JSON.stringify(data)
+      $scope.loading = null;
+      window.localStorage["initialSeed"] = JSON.stringify(data);
     });
 
     $scope.logout = function() {
@@ -16,7 +19,7 @@ angular.module('upstarter.auth.controllers', [])
   	  $window.location.reload(true);
 	  }
 
-	  $scope.token = Authenticate.token
+	  $scope.token = Authenticate.token;
 
     // $scope.login = function(){
     // 	Authentication.login()

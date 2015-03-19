@@ -1,32 +1,18 @@
 angular.module('upstarter.controllers', [])
 
-.controller('TestCtrl', ['$scope', '$http', 'Startup', function($scope, $http,Startup) {
-  $scope.test = "This is a test"
-    // Startup.query().$promise.then(function(data){
-    //   console.log(data)
-    // })
-    // console.log()
-    $scope.startup = Startup.query();
-    $http({
-      method: 'GET',
-      // url: "http://upstarter-server.herokuapp.com/startups",
-      url: "http://localhost:3000/startups/chevron",
-      contentType: "application/json",
-      // beforeSend: function(xhr) {
-      // var str = "token 0HnLNRufyvmfYCPYvgkiM2jS3";
-      // xhr.setRequestHeader("authorization", str);
-      // }
-    })
-      .success(function(data,status){
-        console.log(data);
-      });
+.controller('SearchCtrl', ['$scope', '$timeout', 'InitialSeed', 'Startup', 'StartupNames', 'colorScore', 'EmployeeRange', 'Geolocation', '$location', '$cookieStore', 'Authenticate', '$http', function($scope, $timeout, InitialSeed, Startup, StartupNames, colorScore, EmployeeRange, Geolocation, $location, $cookieStore, Authenticate, $http) {
+    if (Authenticate.token){
+      $http.get('http://upstarter-server.herokuapp.com/users/connections/'+Authenticate.token)
+        .error(function(message){
+          console.log(message);
+        })
+        .success(function(data){
+          window.localStorage["connections"] = JSON.stringify(data);
+        });
+    } else {
+      window.localStorage["connections"] = null;
+    }
 
-    // $http.get("http://api.crunchbase.com/v/2/organization/crowdtilt?user_key=2c7e457b872b77f865562e75967f76ef").success(function(data){
-    // });
-}])
-
-
-.controller('SearchCtrl', ['$scope', '$timeout', 'InitialSeed', 'Startup', 'StartupNames', 'colorScore', 'EmployeeRange', 'Geolocation', '$location', '$cookieStore', function($scope, $timeout, InitialSeed, Startup, StartupNames, colorScore, EmployeeRange, Geolocation, $location, $cookieStore) {
     $scope.distance = 100;
     $scope.employees = 1000;
 
@@ -39,138 +25,115 @@ angular.module('upstarter.controllers', [])
       "location": distance + "," + lat + "," + lon,
       "employees": ""
       // must look like "5,31.722,-123.342"
-         // "string": "test"
     };
 
   navigator.geolocation.getCurrentPosition(function(position){
-    // Geolocation.onSuccess(position);
     window.localStorage['lon'] = position.coords.longitude;
     window.localStorage['lat'] = position.coords.latitude;
-    lat = window.localStorage['lat']
-    lon = window.localStorage['lon']
+    lat = window.localStorage['lat'];
+    lon = window.localStorage['lon'];
 
     params.location = distance + "," + lat + "," + lon;
-  }, Geolocation.onError)
+  }, Geolocation.onError);
 
 
  $scope.search_radius = function(radius){
-      distance = radius
+      $scope.loading = true;
+      $scope.empty = null;
+      distance = radius;
        if(timer){
         $timeout.cancel(timer);
       }
       timer= $timeout(function(){
         params.location = distance + "," + lat + "," + lon;
-        // console.log(params.location)
         StartupNames(params).then(function(data){
-          // console.log(data.data)
+          $scope.loading = null;
           $scope.startups = data.data;
-          // angular.forEach($scope.startups, function(startup){
-          //   // console.log(startup)
-          //   if(!startup.short_description){
-          //     Startup(startup.slug).then(function(data){
-          //       console.log(data);
-          //     });
-          //   }
-          // });
-          // console.log($scope.startups);
+          if (data.data.length == 0){
+            $scope.empty = "No results found";
+          } else {
+            $scope.empty = null;
+          }
         });
-      }, 400);
+      }, 300);
 
- }
+ };
 
  $scope.search_employees = function(employees){
-
-       if(timer){
-        $timeout.cancel(timer);
-      }
-      timer= $timeout(function(){
-        params.employees = employees;
-        // console.log(params.employees);
-        StartupNames(params).then(function(data){
-          // console.log(data.data)
-          $scope.startups = data.data;
-          // angular.forEach($scope.startups, function(startup){
-          //   // console.log(startup)
-          //   if(!startup.short_description){
-          //     Startup(startup.slug).then(function(data){
-          //       console.log(data);
-          //     });
-          //   }
-          // });
-          // console.log($scope.startups);
-        });
-      }, 400);
-}
-
-
-      // console.log(StartupNames(params));
-    var timer = false;
-    $scope.setSearch = function(string){
+      $scope.loading = true;
+      $scope.empty = null;
       if(timer){
         $timeout.cancel(timer);
       }
-      timer= $timeout(function(){
+      timer = $timeout(function(){
+        params.employees = employees;
+        StartupNames(params).then(function(data){
+          $scope.loading = null;
+          $scope.startups = data.data;
+          if (data.data.length == 0){
+            $scope.empty = "No results found";
+          } else {
+            $scope.empty = null;
+          }
+        });
+      }, 300);
+};
+
+    var timer = false;
+    $scope.setSearch = function(string){
+      $scope.loading = true;
+      $scope.empty = null;
+      if(timer){
+        $timeout.cancel(timer);
+      }
+      timer = $timeout(function(){
         params.string = string;
         StartupNames(params).then(function(data){
-          // console.log(data.data)
+          $scope.loading = null;
           $scope.startups = data.data;
-          // console.log(data);
-          angular.forEach($scope.startups, function(startup,index){
-            // console.log(startup)
-            if(!startup.short_description){
-              Startup(startup.slug).then(function(data, error){
-                // console.log(error);
-                console.log(data);
-                if (data.error) {
-                  console.log('removing startup')
-                  $scope.startups[index].name = null; // will remove startups that no longer have data available in CrunchBase
-                }
-                else if (data){
-                  $scope.startups[index] = data;
-                } else {
-                  console.log('removing startup')
-                  // $scope.startups[index].name = null;
-                }
-                // if(startup.momentumScore > 0 && startup.fundraisePercentile == 0){
-                //   StartupScore(startup.slug).then(function(percentile){
-                //     $scope.startups[index].fundraisePercentile = percentile;
-                //   });
-                // }
-              });
-            }
-          });
+          if (data.data.length == 0){
+            $scope.empty = "No results found";
+          }
+          else {
+            $scope.empty = null;
+            angular.forEach($scope.startups, function(startup,index){
+              if(!startup.short_description){
+                Startup(startup.slug).then(function(data, error){
+                  if (data.error) {
+                    $scope.startups[index].name = null; // will remove startups that no longer have data available in CrunchBase
+                  }
+                  else if (data){
+                    $scope.startups[index] = data;
+                  } else {
+                    console.log('removing startup');
+                  }
+                });
+              }
+            });
+          }
           console.log($scope.startups);
         });
-      }, 400);
+      }, 300);
     };
 
     $scope.startups = JSON.parse(localStorage["initialSeed"]);
-      // console.log(data)
-    // // cities - filter radius instead
 
-    // $scope.colorScore = colorScore.colorScore
-
-    // // watch for {name search, distance change, employee count change}, then make a new AJAX call
-
-    // if (!$cookieStore.get('userId')) {
     if ($location.search().token) {
-      // console.log($location.search().userId)
-      $cookieStore.put('token', $location.search().token)
+      $cookieStore.put('token', $location.search().token);
     }
-    // }
 
     $scope.colorScore = function(score) {
       if (score > 80) {
-        return "hot-startup"
+        return "hot-startup";
       }
       else if (parseInt(score) > 60) {
-        return "lukewarm-startup"
+        return "lukewarm-startup";
       }
       else if (parseInt(score) > 40) {
-        return "not-so-good-startup"
+        return "not-so-good-startup";
       }
       else if (parseInt(score) < 40) {
-        return "cold-startup"
+        return "cold-startup";
       }
     }
     // $scope.$watch('main.searchInput.name', function(e) { console.log('something changed'); },true);
@@ -183,72 +146,45 @@ angular.module('upstarter.controllers', [])
 
 }])
 
-
-
-// .controller('SliderCtrl', ['$scope', 'EmployeeRange',function($scope, EmployeeRange){
-
-
-//   $scope.value = EmployeeRange.data;
-//   $scope.options = {
-//     from: 0,
-//     to: 10000,
-//     step: 1,
-//     dimension: "  employees",
-//     scale: [0, '|', '|', 5000, '|' , , '|', 10],
-//       css: {
-//           background: {"background-color": "silver"},
-//           before: {"background-color": "purple"},
-//           default: {"background-color": "white"},
-//           after: {"background-color": "green"},
-//           pointer: {"background-color": "red"}
-//         }
-//   };
-// }])
-
-
-
 .controller('StartupDetailCtrl', ['$scope','Startup', '$stateParams', '$http', 'colorScore', 'Authenticate', function($scope, Startup, $stateParams, $http, colorScore, Authenticate) {
-
-  // console.log($stateParams.startupName);
+  $scope.connectionMsg = null;
 
   Startup($stateParams.startupName).then(function(data){
     $scope.startup = data[0];
-    // console.log(data);
-  });
 
-  var startupConnections = []
-  if (Authenticate.token) {
-    $http.get('http://upstarter-server.herokuapp.com/users/connections/'+Authenticate.token)
-      .error(function(message){
-        console.log(message);
-      })
-      .success(function(data){
-      // console.log(data)
-      // console.log(data.values)
-      // console.log(data.values[0])
-      angular.forEach(data.values, function(connection,key){
-        // data.values.forEach(function(connection){
+    var startupConnections = [];
+    if (Authenticate.token && localStorage["connections"]) {
+      console.log("hey")
+      connections = JSON.parse(localStorage["connections"]);
+      console.log(connections.values);
+      console.log($scope.startup.name);
+      $scope.connectionMsg = "No connections found";
+        angular.forEach(connections.values, function(connection,key){
           if (connection.positions){
             if (connection.positions.values) {
               connection.positions.values.forEach(function(position){
                 if (position.company){
                   if (position.company.name){
                     if (position.company.name.match($scope.startup.name)){
-                      startupConnections.push(connection)
-                      $scope.startupConnections = startupConnections
-                      // console.log($scope.startupConnections)
+                      startupConnections.push(connection);
+                      $scope.startupConnections = startupConnections;
+                      if ($scope.startupConnections.length === 0) {
+                        $scope.connectionMsg = "No connections found";
+                      } else {
+                        $scope.connectionMsg = null;
+                      }
                     }
                   }
                 }
-              })
+              });
             }
           }
-        })
-    })
-  }
-  // $scope.colorScore = colorScore.colorScore
+        });
+    } else {
+      $scope.connectionMsg = "Log into LinkedIn to see your connections";
+    }
+  });
 
-  // $scope.colorScore() = colorScore.colorScore()
     $scope.colorScore = function(score) {
       console.log("the score is " + score)
       if (parseInt(score) > 80) {
@@ -263,12 +199,7 @@ angular.module('upstarter.controllers', [])
       else if (parseInt(score) < 40) {
         return "cold-startup"
       }
-    }
+    };
 
-//     $scope.startup = Startups.getStartup($stateParams.startupName)
-//     var thing = $stateParams.getStartup($scope.startup.startupName)
-// console.log(thing)
-// console.log($scope.startup.startupName)
-
-}])
+}]);
 
