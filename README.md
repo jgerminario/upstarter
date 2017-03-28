@@ -1,12 +1,10 @@
-# [Upstarter](http://upstarter-client.herokuapp.com)
+# Upstarter
 
-<p align="center"><a href="http://upstarter-client.herokuapp.com">
-<img src="imgs/Upstarter.png" alt="Upstarter"/></a>
+<p align="center">
+<img src="imgs/Upstarter.png" alt="Upstarter"/>
 </p>
 
-*Upstarter is still under development. Please see Known Issues section if you experience problems with the demo*
-
-[Upstarter](http://upstarter-client.herokuapp.com) gives job hunters investor-grade insight into the heated startup market, straight from a convenient hybrid mobile app.
+Upstarter gives job hunters investor-grade insight into the heated startup market, straight from a convenient hybrid mobile app.
 
 Drawing on over 90,000 startups, Upstarter rank orders top companies by a "Momentum Score". Factoring in fundraising history, expenditures and employee count, the Momentum Score is a startup's percentile ranking compared to similar companies.
 
@@ -42,18 +40,7 @@ If you have linked your LinkedIn account, you will also see your connections wit
 <img src="imgs/connections.png" alt="Upstarter connections"/>
 </p>
 
-## How to get access
-
-Upstarter is in pre-release alpha testing and will be deployed to iOS and Android stores before the end of February. Demo the app on [Heroku here](http://upstarter-client.herokuapp.com)
-
-## Known issues
-
-* Data requests access a remote Heroku server at upstarter-server.herokuapp.com, which may take a few moments to bootup after a period of low request volume. It could also result in slow search.
-
-* Currently not all startups have employee data, leading to a number of startups without Momentum Scores. Alternatives have been identified and will be implemented.
-
-* CrunchBase employee data is not always accurate. Exploring how to pull from other data sources to come up with more accurate numbers.
-
+Product demo is available on [Heroku here](https://upstarter-client.herokuapp.com) (but not actively maintained, no guarantees!)
 
 ## Technologies
   * **Node + Express.js**: Backend framework
@@ -71,5 +58,3 @@ Upstarter is in pre-release alpha testing and will be deployed to iOS and Androi
   * **Istanbul**: Backend test coverage
   * **Android Store and Apple Store**: Deployment (in progress)
   * **Local storage**: For optimizing frontend experience
-
-Please submit any feedback or suggestions in the issues of this repository. Onwards and upwards!
