@@ -44,7 +44,7 @@ Product demo is available on [Heroku here](https://upstarter-client.herokuapp.co
 
 ## Technologies
   * **Node + Express.js**: Backend framework
-  * **MongoDB + Mongoose**: Database and ORM ([blog post on Mongoose ORM REPL](http://germinar.io/blog/2015/01/29/mongoose-repl-shell-console/)
+  * **MongoDB + Mongoose**: Database and ORM
   * **Geospatial Mongo queries and geolocation**: Developed for radius search
   * **Crunchbase API**: API for information on startups
   * **Background jobs**: Several node background job files manage API calls made to Crunchbase, Momentum Score calculations, and other data tasks
@@ -56,5 +56,4 @@ Product demo is available on [Heroku here](https://upstarter-client.herokuapp.co
   * **LinkedIn oAuth**: For connections data
   * **JWT/Passport**: oAuth helpers
   * **Istanbul**: Backend test coverage
-  * **Android Store and Apple Store**: Deployment (in progress)
   * **Local storage**: For optimizing frontend experience
